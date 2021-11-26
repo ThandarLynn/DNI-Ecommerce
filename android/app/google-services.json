@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "666809986491",
+    "project_id": "dni-ecommerce",
+    "storage_bucket": "dni-ecommerce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666809986491:android:1bfef4cc86da76f3ad689e",
+        "android_client_info": {
+          "package_name": "com.tdl.dni_ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666809986491-jdjhpeaurp1shl3ge6jbddho5pvgrcc1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tdl.dni_ecommerce",
+            "certificate_hash": "7299c2fa654faa57fbff7c6e425237ea4711c0f4"
+          }
+        },
+        {
+          "client_id": "666809986491-hkccinuann8ttlnrmmjv1vq118aqsuqi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_OCour8lf-9e9oskAPaBAovdpypfaZBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "666809986491-hkccinuann8ttlnrmmjv1vq118aqsuqi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "666809986491-hcabhdt3qhsr2rkmgovcul4gtgdsr2j0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tdl.dni.ecommerce"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
