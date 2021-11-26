@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:dni_ecommerce/app_provider_dependencies.dart';
 import 'package:dni_ecommerce/constant/router.dart' as router;
 import 'package:dni_ecommerce/utils/utils.dart';
