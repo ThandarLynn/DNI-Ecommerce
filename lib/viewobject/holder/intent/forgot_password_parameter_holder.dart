@@ -11,7 +11,7 @@ class ForgotPasswordParameterHolder
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> map = <String, dynamic>{};
 
-    map['user_email'] = userEmail;
+    map['email'] = userEmail;
 
     return map;
   }
@@ -19,7 +19,7 @@ class ForgotPasswordParameterHolder
   @override
   ForgotPasswordParameterHolder fromMap(dynamic dynamicData) {
     return ForgotPasswordParameterHolder(
-      userEmail: dynamicData['user_email'],
+      userEmail: dynamicData['email'],
     );
   }
 

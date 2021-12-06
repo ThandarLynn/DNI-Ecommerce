@@ -376,7 +376,7 @@ class __HomeLatestProductHorizontalListWidgetState
                                             product.id, //'latest',
                                     product: product,
                                     onTap: () async {
-                                      print(product.defaultPhoto.imgPath);
+                                      // print(product.defaultPhoto.imgPath);
 
                                       final ProductDetailIntentHolder holder =
                                           ProductDetailIntentHolder(

@@ -14,7 +14,13 @@ import 'package:dni_ecommerce/viewobject/holder/checkout_intent_holder.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/checkout_status_intent_holder.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/product_detail_intent_holder.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/product_list_intent_holder.dart';
+import 'package:dni_ecommerce/viewobject/transaction_header.dart';
+import 'package:dni_ecommerce/ui/transaction/detail/transaction_item_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:dni_ecommerce/ui/privacy_policy/privacy_policy_container_view.dart';
+import 'package:dni_ecommerce/ui/user/forgot_password/forgot_password_container_view.dart';
+import 'package:dni_ecommerce/ui/user/password_update/change_password_view.dart';
+import 'package:dni_ecommerce/ui/user/reset_password/reset_password_view.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -63,10 +69,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
     //           VerifyEmailContainerView(userId: userId));
 
-    // case '${RoutePaths.user_forgot_password_container}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           ForgotPasswordContainerView());
+    case '${RoutePaths.user_forgot_password_container}':
+      return PageRouteBuilder<dynamic>(
+          pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
+              ForgotPasswordContainerView());
 
     // case '${RoutePaths.setting}':
     //   return MaterialPageRoute<dynamic>(
@@ -126,10 +132,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //               shippingMethodProvider:
     //                   creditCardInterntHolder.shippingMethodProvider));
 
-    // case '${RoutePaths.user_update_password}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           ChangePasswordView());
+    case '${RoutePaths.user_update_password}':
+      return PageRouteBuilder<dynamic>(
+          pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
+              ChangePasswordView());
+
+    case '${RoutePaths.reset_password}':
+      return PageRouteBuilder<dynamic>(
+          pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
+              ResetPasswordView());
 
     //             case '${RoutePaths.contactUs}':
     //   return MaterialPageRoute<dynamic>(
@@ -228,10 +239,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 transactionHeader: checkoutStatusIntentHolder.transactionHeader,
               ));
 
-    // case '${RoutePaths.privacyPolicy}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           PrivacyPolicyContainerView());
+    case '${RoutePaths.privacyPolicy}':
+      return PageRouteBuilder<dynamic>(
+          pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
+              PrivacyPolicyContainerView());
 
     // case '${RoutePaths.blogList}':
     //   return PageRouteBuilder<dynamic>(
@@ -258,14 +269,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
     //           HistoryListContainerView());
 
-    // case '${RoutePaths.transactionDetail}':
-    //   final Object args = settings.arguments;
-    //   final TransactionHeader transaction = args ?? TransactionHeader;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           TransactionItemListView(
-    //             transaction: transaction,
-    //           ));
+    case '${RoutePaths.transactionDetail}':
+      final Object args = settings.arguments;
+      final TransactionHeader transaction = args ?? TransactionHeader;
+      return PageRouteBuilder<dynamic>(
+          pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
+              TransactionItemListView(
+                transaction: transaction,
+              ));
 
     case '${RoutePaths.productDetail}':
       final Object args = settings.arguments;

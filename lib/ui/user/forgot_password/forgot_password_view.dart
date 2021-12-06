@@ -6,7 +6,6 @@ import 'package:dni_ecommerce/constant/route_paths.dart';
 import 'package:dni_ecommerce/provider/user/user_provider.dart';
 import 'package:dni_ecommerce/repository/user_repository.dart';
 import 'package:dni_ecommerce/ui/common/dialog/error_dialog.dart';
-import 'package:dni_ecommerce/ui/common/dialog/success_dialog.dart';
 import 'package:dni_ecommerce/ui/common/dialog/warning_dialog_view.dart';
 import 'package:dni_ecommerce/ui/common/app_button_widget.dart';
 import 'package:dni_ecommerce/utils/app_progress_dialog.dart';
@@ -273,13 +272,17 @@ class __SendButtonWidgetState extends State<_SendButtonWidget> {
                   AppProgressDialog.dismissDialog();
 
                   if (_apiStatus.data != null) {
-                    showDialog<dynamic>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return SuccessDialog(
-                            message: _apiStatus.data.message,
-                          );
-                        });
+                    Navigator.pushNamed(
+                      context,
+                      RoutePaths.reset_password,
+                    );
+                    // showDialog<dynamic>(
+                    //     context: context,
+                    //     builder: (BuildContext context) {
+                    //       return SuccessDialog(
+                    //         message: _apiStatus.data.message,
+                    //       );
+                    //     });
                   } else {
                     showDialog<dynamic>(
                         context: context,

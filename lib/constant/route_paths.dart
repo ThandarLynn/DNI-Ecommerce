@@ -25,6 +25,7 @@ class RoutePaths {
   static const String user_google_signin_container =
       '/user_google_signin_container';
   static const String user_update_password = '/user_update_password';
+  static const String reset_password = '/reset_password';
   static const String user_register_container = '/user_register_container';
   static const String login = '/login';
   static const String login_container = '/login_container';

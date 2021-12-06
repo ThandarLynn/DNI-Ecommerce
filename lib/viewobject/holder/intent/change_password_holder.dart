@@ -4,17 +4,21 @@ import 'package:flutter/cupertino.dart';
 class ChangePasswordParameterHolder
     extends AppHolder<ChangePasswordParameterHolder> {
   ChangePasswordParameterHolder(
-      {@required this.userId, @required this.userPassword});
+      {@required this.token,
+      @required this.password,
+      @required this.passwordConfirm});
 
-  final String userId;
-  final String userPassword;
+  final String token;
+  final String password;
+  final String passwordConfirm;
 
   @override
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> map = <String, dynamic>{};
 
-    map['user_id'] = userId;
-    map['user_password'] = userPassword;
+    map['token'] = token;
+    map['password'] = password;
+    map['password_confirm'] = passwordConfirm;
 
     return map;
   }
@@ -22,8 +26,9 @@ class ChangePasswordParameterHolder
   @override
   ChangePasswordParameterHolder fromMap(dynamic dynamicData) {
     return ChangePasswordParameterHolder(
-      userId: dynamicData['user_id'],
-      userPassword: dynamicData['user_password'],
+      token: dynamicData['token'],
+      password: dynamicData['password'],
+      passwordConfirm: dynamicData['password_confirm'],
     );
   }
 
@@ -31,11 +36,14 @@ class ChangePasswordParameterHolder
   String getParamKey() {
     String key = '';
 
-    if (userId != '') {
-      key += userId;
+    if (token != '') {
+      key += token;
     }
-    if (userPassword != '') {
-      key += userPassword;
+    if (password != '') {
+      key += password;
+    }
+    if (passwordConfirm != '') {
+      key += passwordConfirm;
     }
     return key;
   }

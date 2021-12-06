@@ -1,9 +1,3 @@
-///
-/// app_dimens.dart
-/// ----------------------------
-/// Developed by Panacea-Soft
-/// www.panacea-soft.com
-///
 class AppDimens {
   // General Spacing
   static const double space1 = 1;

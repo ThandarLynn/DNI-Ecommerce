@@ -126,14 +126,14 @@ class _ImageAndTextWidget extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '${Utils.getString('basket_list__price')}  ${basket.product.currencySymbol} ${Utils.getPriceFormat(basket.basketPrice)}',
+                                '${Utils.getString('basket_list__price')}  \$ ${Utils.getPriceFormat(basket.basketPrice)}',
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               const SizedBox(
                                 height: AppDimens.space8,
                               ),
                               Text(
-                                '${Utils.getString('basket_list__sub_total')} ${basket.product.currencySymbol} ${Utils.getPriceFormat(subTotalPrice.toString())}',
+                                '${Utils.getString('basket_list__sub_total')} \$ ${Utils.getPriceFormat(subTotalPrice.toString())}',
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               _AttributeAndColorWidget(basket: basket),

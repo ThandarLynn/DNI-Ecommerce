@@ -1,6 +1,7 @@
 import 'package:dni_ecommerce/config/app_colors.dart';
 import 'package:dni_ecommerce/constant/app_constant.dart';
 import 'package:dni_ecommerce/constant/app_dimens.dart';
+import 'package:dni_ecommerce/ui/common/app_ui_widget.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,26 +48,26 @@ class ProductHorizontalListItem extends StatelessWidget {
                           borderRadius: BorderRadius.all(
                               Radius.circular(AppDimens.space8)),
                         ),
-                        //   child: ClipPath(
-                        //     child: AppNetworkImage(
-                        //       photoKey: '$coreTagKey$AppConst.HERO_TAG__IMAGE',
-                        //       defaultPhoto: product.defaultPhoto,
-                        //       width: AppDimens.space180,
-                        //       height: double.infinity,
-                        //       boxfit: BoxFit.cover,
-                        //       onTap: () {
-                        //         print(product.defaultPhoto.imgParentId);
-                        //         onTap();
-                        //       },
-                        //     ),
-                        //     clipper: const ShapeBorderClipper(
-                        //         shape: RoundedRectangleBorder(
-                        //             borderRadius: BorderRadius.only(
-                        //                 topLeft:
-                        //                     Radius.circular(AppDimens.space8),
-                        //                 topRight:
-                        //                     Radius.circular(AppDimens.space8)))),
-                        //   ),
+                        child: ClipPath(
+                          child: AppNetworkImageWithUrl(
+                            photoKey: '$coreTagKey$AppConst.HERO_TAG__IMAGE',
+                            imagePath: product.image,
+                            width: AppDimens.space180,
+                            height: double.infinity,
+                            boxfit: BoxFit.cover,
+                            onTap: onTap,
+                            // onTap: () {
+                            //   onTap();
+                            // },
+                          ),
+                          clipper: const ShapeBorderClipper(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft:
+                                          Radius.circular(AppDimens.space8),
+                                      topRight:
+                                          Radius.circular(AppDimens.space8)))),
+                        ),
                       ),
                     ),
                     Padding(
@@ -101,7 +102,7 @@ class ProductHorizontalListItem extends StatelessWidget {
                                 child: Material(
                                   type: MaterialType.transparency,
                                   child: Text(
-                                      '${product.currencySymbol}${Utils.getPriceFormat(product.unitPrice)}',
+                                      '\$${Utils.getPriceFormat(product.unitPrice)}',
                                       textAlign: TextAlign.start,
                                       style: Theme.of(context)
                                           .textTheme
@@ -116,7 +117,7 @@ class ProductHorizontalListItem extends StatelessWidget {
                                 padding: const EdgeInsets.only(
                                     left: AppDimens.space8,
                                     right: AppDimens.space8),
-                                child: product.isDiscount == AppConst.ONE
+                                child: (product.originalPrice != AppConst.ZERO)
                                     ? Hero(
                                         tag:
                                             '$coreTagKey$AppConst.HERO_TAG__ORIGINAL_PRICE',
@@ -125,7 +126,7 @@ class ProductHorizontalListItem extends StatelessWidget {
                                         child: Material(
                                             color: AppColors.transparent,
                                             child: Text(
-                                                '${product.currencySymbol}${Utils.getPriceFormat(product.originalPrice)}',
+                                                '\$${Utils.getPriceFormat(product.originalPrice)}',
                                                 textAlign: TextAlign.start,
                                                 style: Theme.of(context)
                                                     .textTheme
@@ -152,7 +153,7 @@ class ProductHorizontalListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                        child: product.isDiscount == AppConst.ONE
+                        child: (product.originalPrice != AppConst.ZERO)
                             ? Container(
                                 width: AppDimens.space52,
                                 height: AppDimens.space24,
@@ -164,7 +165,12 @@ class ProductHorizontalListItem extends StatelessWidget {
                                         color: AppColors.mainColor),
                                     Center(
                                       child: Text(
-                                        '-${product.discountPercent}%',
+                                        '-' +
+                                            Utils.calculateDiscountPercent(
+                                                    product.originalPrice,
+                                                    product.unitPrice)
+                                                .toString() +
+                                            '%',
                                         textAlign: TextAlign.start,
                                         style: Theme.of(context)
                                             .textTheme

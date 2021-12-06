@@ -158,7 +158,7 @@ class _MainAppState extends State<MainApp> {
             themedWidgetBuilder: (BuildContext context, ThemeData theme) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: 'Panacea-Soft',
+                title: 'Thandar-Lynn',
                 theme: theme,
                 initialRoute: '/',
                 onGenerateRoute: router.generateRoute,

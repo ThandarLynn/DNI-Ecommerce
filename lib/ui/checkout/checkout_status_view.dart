@@ -193,19 +193,19 @@ class _CheckoutStatusViewState extends State<CheckoutStatusView> {
                               ),
                               _TransactionNoTextWidget(
                                 transationInfoText:
-                                    '${widget.transactionHeader.currencySymbol} ${Utils.getPriceFormat(widget.transactionHeader.totalItemAmount)}',
+                                    '\$ ${Utils.getPriceFormat(widget.transactionHeader.totalItemAmount)}',
                                 title:
                                     '${Utils.getString('transaction_detail__total_item_price')} :',
                               ),
                               _TransactionNoTextWidget(
                                 transationInfoText:
-                                    '${widget.transactionHeader.currencySymbol} ${Utils.getPriceFormat(widget.transactionHeader.discountAmount)}',
+                                    '\$ ${Utils.getPriceFormat(widget.transactionHeader.discountAmount)}',
                                 title:
                                     '${Utils.getString('transaction_detail__discount')} :',
                               ),
                               _TransactionNoTextWidget(
                                 transationInfoText:
-                                    '${widget.transactionHeader.currencySymbol} ${Utils.getPriceFormat(widget.transactionHeader.cuponDiscountAmount)}',
+                                    '\$ ${Utils.getPriceFormat(widget.transactionHeader.cuponDiscountAmount)}',
                                 title:
                                     '${Utils.getString('transaction_detail__coupon_discount')} :',
                               ),
@@ -215,25 +215,25 @@ class _CheckoutStatusViewState extends State<CheckoutStatusView> {
                               _dividerWidget,
                               _TransactionNoTextWidget(
                                 transationInfoText:
-                                    '${widget.transactionHeader.currencySymbol} ${Utils.getPriceFormat(widget.transactionHeader.subTotalAmount)}',
+                                    '\$ ${Utils.getPriceFormat(widget.transactionHeader.subTotalAmount)}',
                                 title:
                                     '${Utils.getString('transaction_detail__sub_total')} :',
                               ),
                               _TransactionNoTextWidget(
                                 transationInfoText:
-                                    '${widget.transactionHeader.currencySymbol} ${Utils.getPriceFormat(widget.transactionHeader.taxAmount)}',
+                                    '\$ ${Utils.getPriceFormat(widget.transactionHeader.taxAmount)}',
                                 title:
                                     '${Utils.getString('transaction_detail__tax')}(${provider.psValueHolder.overAllTaxLabel} %) :',
                               ),
                               _TransactionNoTextWidget(
                                 transationInfoText:
-                                    '${widget.transactionHeader.currencySymbol} ${Utils.getPriceFormat(widget.transactionHeader.shippingMethodAmount)}',
+                                    '\$ ${Utils.getPriceFormat(widget.transactionHeader.shippingMethodAmount)}',
                                 title:
                                     '${Utils.getString('transaction_detail__shipping_cost')} :',
                               ),
                               _TransactionNoTextWidget(
                                 transationInfoText:
-                                    '${widget.transactionHeader.currencySymbol} ${Utils.getPriceFormat(widget.transactionHeader.shippingAmount)}',
+                                    '\$ ${Utils.getPriceFormat(widget.transactionHeader.shippingAmount)}',
                                 title:
                                     '${Utils.getString('transaction_detail__shipping_tax')}(${provider.psValueHolder.shippingTaxLabel} %) :',
                               ),
@@ -243,7 +243,7 @@ class _CheckoutStatusViewState extends State<CheckoutStatusView> {
                               _dividerWidget,
                               _TransactionNoTextWidget(
                                 transationInfoText:
-                                    '${widget.transactionHeader.currencySymbol} ${Utils.getPriceFormat(widget.transactionHeader.balanceAmount)}',
+                                    '\$ ${Utils.getPriceFormat(widget.transactionHeader.balanceAmount)}',
                                 title:
                                     '${Utils.getString('transaction_detail__total')} :',
                               ),

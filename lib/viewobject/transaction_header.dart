@@ -116,7 +116,7 @@ class TransactionHeader extends AppObject<TransactionHeader> {
   TransactionHeader fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
       return TransactionHeader(
-          id: dynamicData['id'],
+          id: dynamicData['order_id'],
           userId: dynamicData['user_id'],
           subTotalAmount: dynamicData['subtotal'],
           discountAmount: dynamicData['discount'],
@@ -131,9 +131,9 @@ class TransactionHeader extends AppObject<TransactionHeader> {
           totalItemCount: dynamicData['total_item_count'],
           contactName: dynamicData['contact_name'],
           cuponDiscountAmount: dynamicData['coupon_discount_amount'],
-          contactPhone: dynamicData['contact_phone'],
+          contactPhone: dynamicData['mobile'],
           paymentMethod: dynamicData['payment_method'],
-          addedDate: dynamicData['added_date'],
+          addedDate: dynamicData['order_date'],
           addedUserId: dynamicData['added_user_id'],
           updatedDate: dynamicData['updated_date'],
           updatedUserId: dynamicData['updated_user_id'],
@@ -142,8 +142,8 @@ class TransactionHeader extends AppObject<TransactionHeader> {
           currencySymbol: dynamicData['currency_symbol'],
           currencyShortForm: dynamicData['currency_short_form'],
           transCode: dynamicData['trans_code'],
-          billingFirstName: dynamicData['billing_first_name'],
-          billingLastName: dynamicData['billing_last_name'],
+          billingFirstName: dynamicData['first_name'],
+          billingLastName: dynamicData['last_name'],
           billingCompany: dynamicData['billing_company'],
           billingAddress1: dynamicData['billing_address_1'],
           billingAddress2: dynamicData['billing_address_2'],
@@ -166,7 +166,7 @@ class TransactionHeader extends AppObject<TransactionHeader> {
           shippingPhone: dynamicData['shipping_phone'],
           isZoneShipping: dynamicData['is_zone_shipping'],
           addedDateStr: dynamicData['added_date_str'],
-          transStatusTitle: dynamicData['trans_status_title']);
+          transStatusTitle: dynamicData['status']);
     } else {
       return null;
     }
@@ -176,7 +176,7 @@ class TransactionHeader extends AppObject<TransactionHeader> {
   Map<String, dynamic> toMap(dynamic object) {
     if (object != null) {
       final Map<String, dynamic> data = <String, dynamic>{};
-      data['id'] = object.id;
+      data['order_id'] = object.id;
       data['user_id'] = object.userId;
       data['subtotal'] = object.subTotalAmount;
       data['discount'] = object.discountAmount;
@@ -191,9 +191,9 @@ class TransactionHeader extends AppObject<TransactionHeader> {
       data['total_item_amount'] = object.totalItemAmount;
       data['total_item_count'] = object.totalItemCount;
       data['contact_name'] = object.contactName;
-      data['contact_phone'] = object.contactPhone;
+      data['mobile'] = object.contactPhone;
       data['payment_method'] = object.paymentMethod;
-      data['added_date'] = object.addedDate;
+      data['order_date'] = object.addedDate;
       data['added_user_id'] = object.addedUserId;
       data['updated_date'] = object.updatedDate;
       data['updated_user_id'] = object.updatedUserId;
@@ -202,8 +202,8 @@ class TransactionHeader extends AppObject<TransactionHeader> {
       data['currency_symbol'] = object.currencySymbol;
       data['currency_short_form'] = object.currencyShortForm;
       data['trans_code'] = object.transCode;
-      data['billing_first_name'] = object.billingFirstName;
-      data['billing_last_name'] = object.billingLastName;
+      data['first_name'] = object.billingFirstName;
+      data['last_name'] = object.billingLastName;
       data['billing_company'] = object.billingCompany;
       data['billing_address_1'] = object.billingAddress1;
       data['billing_address_2'] = object.billingAddress1;
@@ -211,7 +211,7 @@ class TransactionHeader extends AppObject<TransactionHeader> {
       data['billing_state'] = object.billingState;
       data['billing_city'] = object.billingCity;
       data['billing_postal_code'] = object.billingPostalCode;
-      data['billing_email'] = object.billingEmail;
+      data['email'] = object.billingEmail;
       data['billing_phone'] = object.billingPhone;
       data['shipping_first_name'] = object.shippingFirstName;
       data['shipping_last_name'] = object.shippingLastName;
@@ -226,7 +226,7 @@ class TransactionHeader extends AppObject<TransactionHeader> {
       data['shipping_phone'] = object.shippingPhone;
       data['is_zone_shipping'] = object.isZoneShipping;
       data['added_date_str'] = object.addedDateStr;
-      data['trans_status_title'] = object.transStatusTitle;
+      data['status'] = object.transStatusTitle;
       return data;
     } else {
       return null;

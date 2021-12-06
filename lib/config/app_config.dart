@@ -13,16 +13,13 @@ class AppConfig {
   /// API URL
   /// Change your backend url
   ///
-  static const String app_base_url =
-      'https://dailyneeditem.com'; //'https://www.panacea-soft.com/flutter-store-admin';
+  static const String app_base_url = 'https://dailyneeditem.com';
 
   static const String app_url = app_base_url + '/api/';
 
   static const String app_image_url = '';
-  //app_base_url + '/uploads/';
 
   static const String app_image_thumbs_url = '';
-      //app_base_url + '/uploads/thumbnail/';
 
   static const String GOOGLE_PLAY_STORE_URL =
       'https://play.google.com/store/apps';

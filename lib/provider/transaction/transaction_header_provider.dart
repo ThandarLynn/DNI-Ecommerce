@@ -187,9 +187,11 @@ class TransactionHeaderProvider extends AppProvider {
         basketList[i].product.discountAmount,
         basketList[i].qty,
         basketList[i].product.discountValue,
-        basketList[i].product.discountPercent,
+        Utils.calculateDiscountPercent(basketList[i].product.originalPrice,
+                basketList[i].product.unitPrice)
+            .toString(),
         basketList[i].product.currencyShortForm,
-        basketList[i].product.currencySymbol,
+        '\$',
         basketList[i].product.productUnit,
         basketList[i].product.productMeasurement,
         basketList[i].product.shippingCost,
@@ -218,7 +220,7 @@ class TransactionHeaderProvider extends AppProvider {
       razorId: razorId,
       paymentMethodNonce: clientNonce,
       transStatusId: AppConst.ONE, // 3 = completed
-      currencySymbol: basketList[0].product.currencySymbol,
+      currencySymbol: '\$',
       currencyShortForm: basketList[0].product.currencyShortForm,
       billingFirstName: user.billingFirstName,
       billingLastName: user.billingLastName,

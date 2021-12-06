@@ -32,6 +32,12 @@ class Utils {
     LaunchReview.launch(writeReview: writeReview, iOSAppId: iOSAppId);
   }
 
+  static int calculateDiscountPercent(String originalPrice, String unitPrice) {
+    final double discountPrice =
+        (double.parse(originalPrice) - double.parse(unitPrice)) / 100;
+    return discountPrice.toInt();
+  }
+
   static dynamic launchURL() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     print(packageInfo.packageName);
@@ -162,23 +168,23 @@ class Utils {
     // if (psValueHolder == null ||
     //     psValueHolder.userIdToVerify == null ||
     //     psValueHolder.userIdToVerify == '') {
-      if (psValueHolder == null ||
-          psValueHolder == null ||
-          psValueHolder.loginUserId == null ||
-          psValueHolder.loginUserId == '') {
-        final dynamic returnData = await Navigator.pushNamed(
-          context,
-          RoutePaths.login_container,
-        );
+    if (psValueHolder == null ||
+        psValueHolder == null ||
+        psValueHolder.loginUserId == null ||
+        psValueHolder.loginUserId == '') {
+      final dynamic returnData = await Navigator.pushNamed(
+        context,
+        RoutePaths.login_container,
+      );
 
-        if (returnData != null && returnData is User) {
-          final User user = returnData;
-          psValueHolder = Provider.of<AppValueHolder>(context, listen: false);
-          psValueHolder.loginUserId = user.userId;
-        }
-      } else {
-        onLoginSuccess();
+      if (returnData != null && returnData is User) {
+        final User user = returnData;
+        psValueHolder = Provider.of<AppValueHolder>(context, listen: false);
+        psValueHolder.loginUserId = user.userId;
       }
+    } else {
+      onLoginSuccess();
+    }
     // } else {
     //   Navigator.pushNamed(context, RoutePaths.user_verify_email_container,
     //       arguments: psValueHolder.userIdToVerify);

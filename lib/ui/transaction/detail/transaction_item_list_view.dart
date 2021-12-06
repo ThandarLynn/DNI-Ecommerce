@@ -255,20 +255,20 @@ class _TransactionNoWidget extends StatelessWidget {
             ),
             _TransactionNoTextWidget(
               transationInfoText:
-                  '${transaction.currencySymbol} ${Utils.getPriceFormat(transaction.totalItemAmount)}',
+                  '\$ ${Utils.getPriceFormat(transaction.totalItemAmount)}',
               title:
                   '${Utils.getString('transaction_detail__total_item_price')} :',
             ),
             _TransactionNoTextWidget(
               transationInfoText: transaction.discountAmount == '0'
                   ? '-'
-                  : '${transaction.currencySymbol} ${Utils.getPriceFormat(transaction.discountAmount)}',
+                  : '\$ ${Utils.getPriceFormat(transaction.discountAmount)}',
               title: '${Utils.getString('transaction_detail__discount')} :',
             ),
             _TransactionNoTextWidget(
               transationInfoText: transaction.cuponDiscountAmount == '0'
                   ? '-'
-                  : '${transaction.currencySymbol} ${Utils.getPriceFormat(transaction.cuponDiscountAmount)}',
+                  : '\$ ${Utils.getPriceFormat(transaction.cuponDiscountAmount)}',
               title:
                   '${Utils.getString('transaction_detail__coupon_discount')} :',
             ),
@@ -278,24 +278,24 @@ class _TransactionNoWidget extends StatelessWidget {
             _dividerWidget,
             _TransactionNoTextWidget(
               transationInfoText:
-                  '${transaction.currencySymbol} ${Utils.getPriceFormat(transaction.subTotalAmount)}',
+                  '\$ ${Utils.getPriceFormat(transaction.subTotalAmount)}',
               title: '${Utils.getString('transaction_detail__sub_total')} :',
             ),
             _TransactionNoTextWidget(
               transationInfoText:
-                  '${transaction.currencySymbol} ${Utils.getPriceFormat(transaction.taxAmount)}',
+                  '\$ ${Utils.getPriceFormat(transaction.taxAmount)}',
               title:
                   '${Utils.getString('transaction_detail__tax')}(${valueHolder.overAllTaxLabel} %) :',
             ),
             _TransactionNoTextWidget(
               transationInfoText:
-                  '${transaction.currencySymbol} ${Utils.getPriceFormat(transaction.shippingMethodAmount)}',
+                  '\$ ${Utils.getPriceFormat(transaction.shippingMethodAmount)}',
               title:
                   '${Utils.getString('transaction_detail__shipping_cost')} :',
             ),
             _TransactionNoTextWidget(
               transationInfoText:
-                  '${transaction.currencySymbol} ${Utils.getPriceFormat(transaction.shippingAmount)}',
+                  '\$ ${Utils.getPriceFormat(transaction.shippingAmount)}',
               title:
                   '${Utils.getString('transaction_detail__shipping_tax')}(${valueHolder.shippingTaxLabel} %) :',
             ),
@@ -305,7 +305,7 @@ class _TransactionNoWidget extends StatelessWidget {
             _dividerWidget,
             _TransactionNoTextWidget(
               transationInfoText:
-                  '${transaction.currencySymbol} ${Utils.getPriceFormat(transaction.balanceAmount)}',
+                  '\$ ${Utils.getPriceFormat(transaction.balanceAmount)}',
               title: '${Utils.getString('transaction_detail__total')} :',
             ),
             const SizedBox(

@@ -46,6 +46,7 @@ abstract class AppApi {
         headers: <String, String>{
           'content-type': 'application/json',
           'Accept': 'application/json',
+          HttpHeaders.authorizationHeader: token,
           'Authorization': 'Bearer $token',
         },
       );

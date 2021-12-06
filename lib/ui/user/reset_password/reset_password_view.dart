@@ -11,15 +11,16 @@ import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:dni_ecommerce/viewobject/common/api_status.dart';
 import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/change_password_holder.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ChangePasswordView extends StatefulWidget {
+class ResetPasswordView extends StatefulWidget {
   @override
-  _ChangePasswordViewState createState() => _ChangePasswordViewState();
+  _ResetPasswordViewState createState() => _ResetPasswordViewState();
 }
 
-class _ChangePasswordViewState extends State<ChangePasswordView> {
+class _ResetPasswordViewState extends State<ResetPasswordView> {
   UserRepository userRepo;
   AppValueHolder psValueHolder;
   final TextEditingController passwordController = TextEditingController();
@@ -34,7 +35,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
       height: AppDimens.space8,
     );
     return AppWidgetWithAppBar<UserProvider>(
-        appBarTitle: Utils.getString('change_password__title') ?? '',
+        appBarTitle: Utils.getString('reset_password__title') ?? '',
         initProvider: () {
           return UserProvider(repo: userRepo, psValueHolder: psValueHolder);
         },
@@ -98,7 +99,7 @@ class PsButtonWidget extends StatelessWidget {
             if (passwordController.text == confirmPasswordController.text) {
               if (await Utils.checkInternetConnectivity()) {
                 final ChangePasswordParameterHolder contactUsParameterHolder =
-                    ChangePasswordParameterHolder(
+                   ChangePasswordParameterHolder(
                         token: provider.psValueHolder.userToken,
                         password: passwordController.text,
                         passwordConfirm: passwordController.text);

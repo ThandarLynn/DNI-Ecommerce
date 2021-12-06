@@ -240,13 +240,13 @@ class _CheckoutButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double totalPrice = 0.0;
     int qty = 0;
-    String currencySymbol;
+    // final String currencySymbol;
 
     for (Basket basket in provider.basketList.data) {
       totalPrice += double.parse(basket.basketPrice) * double.parse(basket.qty);
 
       qty += int.parse(basket.qty);
-      currencySymbol = basket.product.currencySymbol;
+      // currencySymbol = '\$';
     }
 
     return Container(
@@ -274,7 +274,7 @@ class _CheckoutButtonWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Text(
-                  '${Utils.getString('checkout__price')} $currencySymbol ${Utils.getPriceFormat(totalPrice.toString())}',
+                  '${Utils.getString('checkout__price')} \$ ${Utils.getPriceFormat(totalPrice.toString())}',
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
                 Text(

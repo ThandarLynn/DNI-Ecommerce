@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:dni_ecommerce/ui/common/app_back_button_with_circle_bg_widget.dart';
-import 'package:dni_ecommerce/ui/common/smooth_star_rating_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dni_ecommerce/config/app_colors.dart';
 import 'package:dni_ecommerce/constant/app_constant.dart';
@@ -27,7 +26,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-
 import 'description_tile_view.dart';
 
 class ProductDetailView extends StatefulWidget {
@@ -279,10 +277,10 @@ class _ProductDetailState extends State<ProductDetailView>
                         flexibleSpace: FlexibleSpaceBar(
                           background: Container(
                             color: AppColors.backgroundColor,
-                            child: AppNetworkImage(
+                            child: AppNetworkImageWithUrl(
                               photoKey: widget
                                   .heroTagImage, //'latest${widget.product.defaultPhoto.imgId}',
-                              defaultPhoto: widget.productDetail.defaultPhoto,
+                              imagePath: widget.productDetail.image,
                               width: double.infinity,
                               //  height: double.infinity,
                               onTap: () {
@@ -311,6 +309,9 @@ class _ProductDetailState extends State<ProductDetailView>
                                   heroTagOriginalPrice:
                                       widget.heroTagOriginalPrice,
                                   heroTagUnitPrice: widget.heroTagUnitPrice),
+                              // DetailInfoTileView(
+                              //   productDetail: widget.productDetail,
+                              // ),
                               const SizedBox(
                                 height: AppDimens.space40,
                               ),
@@ -405,13 +406,13 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
                       height: AppDimens.space1,
                       color: AppColors.mainColor,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: AppDimens.space16, bottom: AppDimens.space4),
-                      child: _HeaderRatingWidget(
-                        productDetail: widget.productDetail,
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(
+                    //       top: AppDimens.space16, bottom: AppDimens.space4),
+                    //   child: _HeaderRatingWidget(
+                    //     productDetail: widget.productDetail,
+                    //   ),
+                    // ),
                   ],
                 )),
             Container(
@@ -429,7 +430,8 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
-                    widget.productDetail.highlightInformation ?? '',
+                    ' This product is very good. loream jj lasjd  kj aa os fl lsjfskk l...',
+                    // widget.productDetail.description?? '',
                     style: Theme.of(context).textTheme.bodyText2.copyWith(
                         letterSpacing: 0.8, fontSize: 16, height: 1.3),
                   ),
@@ -480,9 +482,7 @@ class __FavouriteWidgetState extends State<_FavouriteWidget> {
     favouriteRepo = Provider.of<ProductRepository>(context);
     psValueHolder = Provider.of<AppValueHolder>(context);
 
-    if (widget.productDetail != null &&
-        widget.productDetail != null &&
-        widget.productDetail.isFavourited != null) {
+    if (widget.productDetail != null) {
       return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -538,165 +538,165 @@ class __FavouriteWidgetState extends State<_FavouriteWidget> {
   }
 }
 
-class _HeaderRatingWidget extends StatefulWidget {
-  const _HeaderRatingWidget({
-    Key key,
-    @required this.productDetail,
-  }) : super(key: key);
+// class _HeaderRatingWidget extends StatefulWidget {
+//   const _HeaderRatingWidget({
+//     Key key,
+//     @required this.productDetail,
+//   }) : super(key: key);
 
-  final Product productDetail;
+//   final Product productDetail;
 
-  @override
-  __HeaderRatingWidgetState createState() => __HeaderRatingWidgetState();
-}
+//   @override
+//   __HeaderRatingWidgetState createState() => __HeaderRatingWidgetState();
+// }
 
-class __HeaderRatingWidgetState extends State<_HeaderRatingWidget> {
-  @override
-  Widget build(BuildContext context) {
-    dynamic result;
-    if (widget.productDetail != null) {
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          InkWell(
-            onTap: () async {
-              result = await Navigator.pushNamed(context, RoutePaths.ratingList,
-                  arguments: widget.productDetail.id);
+// class __HeaderRatingWidgetState extends State<_HeaderRatingWidget> {
+//   @override
+//   Widget build(BuildContext context) {
+//     dynamic result;
+//     if (widget.productDetail != null) {
+//       return Row(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: <Widget>[
+//           InkWell(
+//             onTap: () async {
+//               result = await Navigator.pushNamed(context, RoutePaths.ratingList,
+//                   arguments: widget.productDetail.id);
 
-              if (result != null && result) {
-                setState(() {});
-              }
-              print(
-                  'totalRatingValue ${widget.productDetail.ratingDetail.totalRatingValue}');
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SmoothStarRating(
-                    key:
-                        Key(widget.productDetail.ratingDetail.totalRatingValue),
-                    rating: double.parse(
-                        widget.productDetail.ratingDetail.totalRatingValue),
-                    allowHalfRating: false,
-                    isReadOnly: true,
-                    starCount: 5,
-                    size: AppDimens.space16,
-                    color: AppColors.ratingColor,
-                    borderColor: AppColors.grey.withAlpha(100),
-                    onRated: (double v) async {},
-                    spacing: 0.0),
-                const SizedBox(
-                  height: AppDimens.space10,
-                ),
-                GestureDetector(
-                    onTap: () async {
-                      result = await Navigator.pushNamed(
-                          context, RoutePaths.ratingList,
-                          arguments: widget.productDetail.id);
+//               if (result != null && result) {
+//                 setState(() {});
+//               }
+//               // print(
+//               //     'totalRatingValue ${widget.productDetail.ratingDetail.totalRatingValue}');
+//             },
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: <Widget>[
+//                 SmoothStarRating(
+//                     key:
+//                         Key(widget.productDetail.ratingDetail.totalRatingValue),
+//                     rating: double.parse(
+//                         widget.productDetail.ratingDetail.totalRatingValue),
+//                     allowHalfRating: false,
+//                     isReadOnly: true,
+//                     starCount: 5,
+//                     size: AppDimens.space16,
+//                     color: AppColors.ratingColor,
+//                     borderColor: AppColors.grey.withAlpha(100),
+//                     onRated: (double v) async {},
+//                     spacing: 0.0),
+//                 const SizedBox(
+//                   height: AppDimens.space10,
+//                 ),
+//                 GestureDetector(
+//                     onTap: () async {
+//                       result = await Navigator.pushNamed(
+//                           context, RoutePaths.ratingList,
+//                           arguments: widget.productDetail.id);
 
-                      if (result != null && result) {
-                        // setState(() {
+//                       if (result != null && result) {
+//                         // setState(() {
 
-                        // });
-                      }
-                    },
-                    child: (widget.productDetail.overallRating != '0')
-                        ? Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                widget.productDetail.ratingDetail
-                                        .totalRatingValue ??
-                                    '',
-                                textAlign: TextAlign.left,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    .copyWith(),
-                              ),
-                              const SizedBox(
-                                width: AppDimens.space4,
-                              ),
-                              Text(
-                                '${Utils.getString('product_detail__out_of_five_stars')}(' +
-                                    widget.productDetail.ratingDetail
-                                        .totalRatingCount +
-                                    ' ${Utils.getString('product_detail__reviews')})',
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    .copyWith(),
-                              ),
-                            ],
-                          )
-                        : Text(Utils.getString('product_detail__no_rating'))),
-                const SizedBox(
-                  height: AppDimens.space10,
-                ),
-                if (widget.productDetail.isAvailable == '1')
-                  Text(
-                    Utils.getString('product_detail__in_stock'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .copyWith(color: AppColors.mainDarkColor),
-                  )
-                else
-                  Container(),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                if (widget.productDetail.isFeatured == '0')
-                  Container()
-                else
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/images/baseline_feature_circle_24.png',
-                        width: AppDimens.space32,
-                        height: AppDimens.space32,
-                      ),
-                      const SizedBox(
-                        width: AppDimens.space8,
-                      ),
-                      Text(
-                        Utils.getString('product_detail__featured_products'),
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
-                              color: AppColors.mainColor,
-                            ),
-                      ),
-                    ],
-                  ),
-                const SizedBox(
-                  height: AppDimens.space8,
-                ),
-                Text(
-                  widget.productDetail.code ?? '',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2
-                      .copyWith(color: AppColors.mainDarkColor),
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-    } else {
-      return Container();
-    }
-  }
-}
+//                         // });
+//                       }
+//                     },
+//                     child: (widget.productDetail.overallRating != '0')
+//                         ? Row(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             children: <Widget>[
+//                               Text(
+//                                 widget.productDetail.ratingDetail
+//                                         .totalRatingValue ??
+//                                     '',
+//                                 textAlign: TextAlign.left,
+//                                 style: Theme.of(context)
+//                                     .textTheme
+//                                     .bodyText2
+//                                     .copyWith(),
+//                               ),
+//                               const SizedBox(
+//                                 width: AppDimens.space4,
+//                               ),
+//                               Text(
+//                                 '${Utils.getString('product_detail__out_of_five_stars')}(' +
+//                                     widget.productDetail.ratingDetail
+//                                         .totalRatingCount +
+//                                     ' ${Utils.getString('product_detail__reviews')})',
+//                                 overflow: TextOverflow.ellipsis,
+//                                 style: Theme.of(context)
+//                                     .textTheme
+//                                     .bodyText2
+//                                     .copyWith(),
+//                               ),
+//                             ],
+//                           )
+//                         : Text(Utils.getString('product_detail__no_rating'))),
+//                 const SizedBox(
+//                   height: AppDimens.space10,
+//                 ),
+//                 if (widget.productDetail.isAvailable == '1')
+//                   Text(
+//                     Utils.getString('product_detail__in_stock'),
+//                     style: Theme.of(context)
+//                         .textTheme
+//                         .bodyText2
+//                         .copyWith(color: AppColors.mainDarkColor),
+//                   )
+//                 else
+//                   Container(),
+//               ],
+//             ),
+//           ),
+//           Expanded(
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.end,
+//               mainAxisSize: MainAxisSize.max,
+//               crossAxisAlignment: CrossAxisAlignment.end,
+//               children: <Widget>[
+//                 if (widget.productDetail.isFeatured == '0')
+//                   Container()
+//                 else
+//                   Row(
+//                     mainAxisAlignment: MainAxisAlignment.end,
+//                     children: <Widget>[
+//                       Image.asset(
+//                         'assets/images/baseline_feature_circle_24.png',
+//                         width: AppDimens.space32,
+//                         height: AppDimens.space32,
+//                       ),
+//                       const SizedBox(
+//                         width: AppDimens.space8,
+//                       ),
+//                       Text(
+//                         Utils.getString('product_detail__featured_products'),
+//                         overflow: TextOverflow.ellipsis,
+//                         style: Theme.of(context).textTheme.bodyText2.copyWith(
+//                               color: AppColors.mainColor,
+//                             ),
+//                       ),
+//                     ],
+//                   ),
+//                 const SizedBox(
+//                   height: AppDimens.space8,
+//                 ),
+//                 Text(
+//                   widget.productDetail.code ?? '',
+//                   style: Theme.of(context)
+//                       .textTheme
+//                       .bodyText2
+//                       .copyWith(color: AppColors.mainDarkColor),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       );
+//     } else {
+//       return Container();
+//     }
+//   }
+// }
 
 class _HeaderPriceWidget extends StatefulWidget {
   const _HeaderPriceWidget({
@@ -753,14 +753,14 @@ class __HeaderPriceWidgetState extends State<_HeaderPriceWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                if (widget.product.isDiscount == AppConst.ONE)
+                if (widget.product.originalPrice != AppConst.ZERO)
                   Hero(
                       tag: widget.heroTagOriginalPrice,
                       flightShuttleBuilder: Utils.flightShuttleBuilder,
                       child: Material(
                           color: AppColors.transparent,
                           child: Text(
-                            '${widget.product.currencySymbol}${widget.originalPriceFormatString}',
+                            '\$${widget.originalPriceFormatString}',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2
@@ -778,7 +778,7 @@ class __HeaderPriceWidgetState extends State<_HeaderPriceWidget> {
                   child: Material(
                       color: AppColors.transparent,
                       child: Text(
-                        '${widget.product.currencySymbol}${widget.unitPriceFormatString}',
+                        '\$${widget.unitPriceFormatString}',
                         //overflow: TextOverflow.ellipsis,
                         style: Theme.of(context)
                             .textTheme
@@ -792,7 +792,7 @@ class __HeaderPriceWidgetState extends State<_HeaderPriceWidget> {
           const SizedBox(
             width: AppDimens.space16,
           ),
-          if (widget.product.isDiscount == AppConst.ONE)
+          if (widget.product.originalPrice != AppConst.ZERO)
             Card(
               elevation: 0,
               color: AppColors.mainColor,
@@ -807,7 +807,12 @@ class __HeaderPriceWidgetState extends State<_HeaderPriceWidget> {
                     left: AppDimens.space4, right: AppDimens.space4),
                 child: Align(
                   child: Text(
-                    '- ${widget.product.discountPercent} %',
+                    '-' +
+                        Utils.calculateDiscountPercent(
+                                widget.product.originalPrice,
+                                widget.product.unitPrice)
+                            .toString() +
+                        '%',
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2
@@ -957,8 +962,7 @@ class __AddToBasketAndBuyButtonWidgetState
             id: widget.intentbasketSelectedAttributeList[i].id,
             name: widget.intentbasketSelectedAttributeList[i].name,
             price: widget.intentbasketSelectedAttributeList[i].price,
-            currencySymbol:
-                widget.intentbasketSelectedAttributeList[i].currencySymbol));
+            currencySymbol: '\$'));
       }
     }
     // Future<void> updatePrice(double price, double totalOriginalPrice) async {
@@ -1237,13 +1241,13 @@ class __ImageAndTextForBottomSheetWidgetState
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(bottom: AppDimens.space8),
-                  child: (widget.product.isDiscount == AppConst.ONE)
+                  child: (widget.product.originalPrice != AppConst.ZERO)
                       ? Row(
                           children: <Widget>[
                             Text(
                               widget.price != null
-                                  ? '${widget.product.currencySymbol} ${Utils.getPriceFormat(widget.price.toString())}'
-                                  : '${widget.product.currencySymbol} ${Utils.getPriceFormat(widget.product.unitPrice)}',
+                                  ? '\$ ${Utils.getPriceFormat(widget.price.toString())}'
+                                  : '\$ ${Utils.getPriceFormat(widget.product.unitPrice)}',
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
@@ -1254,7 +1258,7 @@ class __ImageAndTextForBottomSheetWidgetState
                               width: AppDimens.space8,
                             ),
                             Text(
-                              '${widget.product.currencySymbol} ${Utils.getPriceFormat(widget.product.originalPrice)}',
+                              '\$ ${Utils.getPriceFormat(widget.product.originalPrice)}',
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
@@ -1266,8 +1270,8 @@ class __ImageAndTextForBottomSheetWidgetState
                         )
                       : Text(
                           widget.price != null
-                              ? '${widget.product.currencySymbol} ${Utils.getPriceFormat(widget.price.toString())}'
-                              : '${widget.product.currencySymbol} ${Utils.getPriceFormat(widget.product.unitPrice)}',
+                              ? '\$ ${Utils.getPriceFormat(widget.price.toString())}'
+                              : '\$ ${Utils.getPriceFormat(widget.product.unitPrice)}',
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .textTheme

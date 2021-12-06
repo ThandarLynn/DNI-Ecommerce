@@ -3,6 +3,7 @@ import 'package:dni_ecommerce/ui/common/app_expansion_tile.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class DescriptionTileView extends StatelessWidget {
   const DescriptionTileView({
@@ -23,18 +24,19 @@ class DescriptionTileView extends StatelessWidget {
           title: _expansionTileTitleWidget,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(
-                  bottom: AppDimens.space16,
-                  left: AppDimens.space16,
-                  right: AppDimens.space16),
-              child: Text(
-                productDetail.description ?? '',
-                style: Theme.of(context).textTheme.bodyText2.copyWith(
-                      height: 1.3,
-                      letterSpacing: 0.5,
-                    ),
-              ),
-            )
+                padding: const EdgeInsets.only(
+                    bottom: AppDimens.space16,
+                    left: AppDimens.space16,
+                    right: AppDimens.space16),
+                child: HtmlWidget(productDetail.description)
+                // Text(
+                //   ,
+                //   style: Theme.of(context).textTheme.bodyText2.copyWith(
+                //         height: 1.3,
+                //         letterSpacing: 0.5,
+                //       ),
+                // ),
+                )
           ],
         ),
       );

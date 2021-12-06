@@ -1,10 +1,3 @@
-///
-/// ps_static static constants.dart
-/// ----------------------------
-/// Developed by Panacea-Soft
-/// www.panacea-soft.com
-///
-
 import 'package:dni_ecommerce/config/app_config.dart';
 import 'package:intl/intl.dart';
 

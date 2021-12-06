@@ -135,19 +135,19 @@ class _ItemWidget extends StatelessWidget {
             ),
             _TransactionNoTextWidget(
               transationInfoText:
-                  '${transaction.currencySymbol}  ${Utils.getPriceFormat(transaction.originalPrice)}',
+                  '\$  ${Utils.getPriceFormat(transaction.originalPrice)}',
               title: '${Utils.getString('transaction_detail__price')} :',
             ),
             _TransactionNoTextWidget(
               transationInfoText: transaction.discountAmount != null
-                  ? ' ${transaction.currencySymbol} ${Utils.getPriceFormat(transaction.discountAmount.toString())}'
-                  : '${transaction.currencySymbol} 0.0',
+                  ? ' \$ ${Utils.getPriceFormat(transaction.discountAmount.toString())}'
+                  : '\$ 0.0',
               title:
                   '${Utils.getString('transaction_detail__discount_avaiable_amount')} :',
             ),
             _TransactionNoTextWidget(
               transationInfoText:
-                  '${transaction.currencySymbol} ${Utils.getPriceFormat(transaction.price.toString())}',
+                  '\$ ${Utils.getPriceFormat(transaction.price.toString())}',
               title: '${Utils.getString('transaction_detail__balance')} :',
             ),
             _TransactionNoTextWidget(
@@ -156,7 +156,7 @@ class _ItemWidget extends StatelessWidget {
             ),
             _TransactionNoTextWidget(
               transationInfoText:
-                  ' ${transaction.currencySymbol} ${Utils.getPriceFormat(balancePrice.toString())}',
+                  ' \$ ${Utils.getPriceFormat(balancePrice.toString())}',
               title: '${Utils.getString('transaction_detail__sub_total')} :',
             ),
             const SizedBox(

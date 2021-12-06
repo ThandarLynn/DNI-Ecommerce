@@ -25,7 +25,7 @@ class TransactionListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     animationController.forward();
-    if (transaction != null && transaction.transCode != null) {
+    if (transaction != null && transaction.id != null) {
       return AnimatedBuilder(
           animation: animationController,
           child: GestureDetector(
@@ -78,7 +78,7 @@ class _TransactionNoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget _textWidget = Text(
-      'Transaction No : ${transaction.transCode}' ?? '-',
+      'Transaction No : ${transaction.id}' ?? '-',
       textAlign: TextAlign.left,
       style: Theme.of(context).textTheme.subtitle2,
     );
@@ -110,7 +110,7 @@ class _TransactionNoWidget extends StatelessWidget {
             icon: const Icon(Icons.content_copy),
             iconSize: 24,
             onPressed: () {
-              Clipboard.setData(ClipboardData(text: transaction.transCode));
+              Clipboard.setData(ClipboardData(text: transaction.id));
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 backgroundColor: Theme.of(context).iconTheme.color,
                 content: Tooltip(
@@ -161,8 +161,7 @@ class _TransactionTextWidget extends StatelessWidget {
               .copyWith(fontWeight: FontWeight.normal),
         ),
         Text(
-          '${transaction.currencySymbol} ${Utils.getPriceFormat(transaction.balanceAmount)}' ??
-              '-',
+          '\$ ${Utils.getPriceFormat(transaction.balanceAmount)}' ?? '-',
           style: Theme.of(context).textTheme.bodyText2.copyWith(
               color: AppColors.mainColor, fontWeight: FontWeight.normal),
         )
@@ -197,7 +196,7 @@ class _TransactionTextWidget extends StatelessWidget {
           .bodyText2
           .copyWith(fontWeight: FontWeight.normal),
     );
-    if (transaction != null && transaction.transCode != null) {
+    if (transaction != null && transaction.id != null) {
       return Column(
         children: <Widget>[
           Padding(

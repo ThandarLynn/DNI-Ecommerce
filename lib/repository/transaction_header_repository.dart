@@ -18,7 +18,7 @@ class TransactionHeaderRepository extends AppRepository {
     _transactionHeaderDao = transactionHeaderDao;
   }
 
-  String primaryKey = 'id';
+  String primaryKey = 'order_id';
   AppApiService _psApiService;
   TransactionHeaderDao _transactionHeaderDao;
 
@@ -45,13 +45,13 @@ class TransactionHeaderRepository extends AppRepository {
       AppStatus status,
       {bool isNeedDelete = true,
       bool isLoadFromServer = true}) async {
-    final Finder finder = Finder(filter: Filter.equals('user_id', loginUserId));
+    final Finder finder = Finder();
     transactionListStream.sink.add(
         await _transactionHeaderDao.getAll(finder: finder, status: status));
 
     if (isConnectedToInternet) {
-      final AppResource<List<TransactionHeader>> _resource =
-          await _psApiService.getTransactionList(loginUserId,userToken, limit, offset);
+      final AppResource<List<TransactionHeader>> _resource = await _psApiService
+          .getTransactionList(loginUserId, userToken, limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         if (isNeedDelete) {
@@ -86,8 +86,8 @@ class TransactionHeaderRepository extends AppRepository {
         await _transactionHeaderDao.getAll(finder: finder, status: status));
 
     if (isConnectedToInternet) {
-      final AppResource<List<TransactionHeader>> _resource =
-          await _psApiService.getTransactionList(loginUserId, userToken,limit, offset);
+      final AppResource<List<TransactionHeader>> _resource = await _psApiService
+          .getTransactionList(loginUserId, userToken, limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _transactionHeaderDao.insertAll(primaryKey, _resource.data);

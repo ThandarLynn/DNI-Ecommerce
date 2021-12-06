@@ -40,10 +40,10 @@ class AppUrl {
   static const String app_post_app_user_login_url = 'login';
 
   static const String app_post_app_user_forgot_password_url =
-      'rest/users/reset';
+      'forgot';
 
   static const String app_post_app_user_change_password_url =
-      'rest/users/password_update';
+      'reset';
 
   static const String app_post_app_user_update_profile_url =
       'rest/users/profile_update/api_key/${AppConfig.app_api_key}';
@@ -79,7 +79,7 @@ class AppUrl {
 
   static const String app_bloglist_url = 'rest/feeds/get';
 
-  static const String app_transactionList_url = 'admin/orders';
+  static const String app_transactionList_url = 'userOrders';
 
   static const String app_transactionDetail_url = 'rest/transactiondetails/get';
 

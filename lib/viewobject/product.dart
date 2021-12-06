@@ -11,6 +11,7 @@ class Product extends AppObject<Product> {
       this.productUnit,
       this.productMeasurement,
       this.name,
+      this.image,
       this.description,
       this.originalPrice,
       this.unitPrice,
@@ -19,7 +20,7 @@ class Product extends AppObject<Product> {
       this.maximumOrder,
       this.searchTag,
       this.highlightInformation,
-      this.isDiscount,
+      // this.isDiscount,
       this.isFeatured,
       this.isAvailable,
       this.code,
@@ -45,7 +46,7 @@ class Product extends AppObject<Product> {
       this.currencySymbol,
       this.currencyShortForm,
       this.discountAmount,
-      this.discountPercent,
+      // this.discountPercent,
       this.discountValue,
       this.defaultPhoto,
       this.ratingDetail});
@@ -56,6 +57,7 @@ class Product extends AppObject<Product> {
   String productUnit;
   String productMeasurement;
   String name;
+  String image;
   String description;
   String originalPrice;
   String unitPrice;
@@ -64,7 +66,7 @@ class Product extends AppObject<Product> {
   String maximumOrder;
   String searchTag;
   String highlightInformation;
-  String isDiscount;
+  // String isDiscount;
   String isFeatured;
   String isAvailable;
   String code;
@@ -91,7 +93,7 @@ class Product extends AppObject<Product> {
   String currencySymbol;
   String currencyShortForm;
   String discountAmount;
-  String discountPercent;
+  // String discountPercent;
   String discountValue;
   RatingDetail ratingDetail;
 
@@ -105,11 +107,12 @@ class Product extends AppObject<Product> {
     if (dynamicData != null) {
       return Product(
           id: dynamicData['id'],
-          catId: dynamicData['cat_id'],
+          catId: dynamicData['category_id'],
           subCatId: dynamicData['sub_cat_id'],
           productUnit: dynamicData['product_unit'],
           productMeasurement: dynamicData['product_measurement'],
           name: dynamicData['name'],
+          image: dynamicData['image'],
           description: dynamicData['description'],
           originalPrice: dynamicData['regular_price'],
           unitPrice: dynamicData['sale_price'],
@@ -118,9 +121,9 @@ class Product extends AppObject<Product> {
           maximumOrder: dynamicData['maximum_order'],
           searchTag: dynamicData['search_tag'],
           highlightInformation: dynamicData['highlight_information'],
-          isDiscount: dynamicData['is_discount'],
+          // isDiscount: dynamicData['is_discount'],
           isFeatured: dynamicData['is_featured'],
-          isAvailable: dynamicData['is_available'],
+          isAvailable: dynamicData['stock_status'],
           code: dynamicData['code'],
           status: dynamicData['status'],
           addedDate: dynamicData['added_date'],
@@ -144,7 +147,7 @@ class Product extends AppObject<Product> {
           currencySymbol: dynamicData['currency_symbol'],
           currencyShortForm: dynamicData['currency_short_form'],
           discountAmount: dynamicData['discount_amount'],
-          discountPercent: dynamicData['discount_percent'],
+          // discountPercent: dynamicData['discount_percent'],
           discountValue: dynamicData['discount_value'],
           defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']),
           ratingDetail: RatingDetail().fromMap(dynamicData['rating_details']));
@@ -158,11 +161,12 @@ class Product extends AppObject<Product> {
     if (object != null) {
       final Map<String, dynamic> data = <String, dynamic>{};
       data['id'] = object.id;
-      data['cat_id'] = object.catId;
+      data['category_id'] = object.catId;
       data['sub_cat_id'] = object.subCatId;
       data['product_unit'] = object.productUnit;
       data['product_measurement'] = object.productMeasurement;
       data['name'] = object.name;
+      data['image'] = object.image;
       data['description'] = object.description;
       data['regular_price'] = object.originalPrice;
       data['sale_price'] = object.unitPrice;
@@ -171,9 +175,9 @@ class Product extends AppObject<Product> {
       data['maximum_order'] = object.maximumOrder;
       data['search_tag'] = object.searchTag;
       data['highlight_information'] = object.highlightInformation;
-      data['is_discount'] = object.isDiscount;
+      // data['is_discount'] = object.isDiscount;
       data['is_featured'] = object.isFeatured;
-      data['is_available'] = object.isAvailable;
+      data['stock_status'] = object.isAvailable;
       data['code'] = object.code;
       data['status'] = object.status;
       data['added_date'] = object.addedDate;
@@ -197,7 +201,7 @@ class Product extends AppObject<Product> {
       data['currency_symbol'] = object.currencySymbol;
       data['currency_short_form'] = object.currencyShortForm;
       data['discount_amount'] = object.discountAmount;
-      data['discount_percent'] = object.discountPercent;
+      // data['discount_percent'] = object.discountPercent;
       data['discount_value'] = object.discountValue;
       data['default_photo'] = DefaultPhoto().toMap(object.defaultPhoto);
       data['rating_details'] = RatingDetail().toMap(object.ratingDetail);

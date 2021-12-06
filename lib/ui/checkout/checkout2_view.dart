@@ -244,11 +244,11 @@ class _OrderSummaryWidget extends StatelessWidget {
   final BasketProvider basketProvider;
   @override
   Widget build(BuildContext context) {
-    String currencySymbol;
+    // String currencySymbol;
 
-    if (basketList.isNotEmpty) {
-      currencySymbol = basketList[0].product.currencySymbol;
-    }
+    // if (basketList.isNotEmpty) {
+    //   currencySymbol = '\$';
+    // }
 
     basketProvider.checkoutCalculationHelper.calculate(
         basketList: basketList,
@@ -291,18 +291,18 @@ class _OrderSummaryWidget extends StatelessWidget {
             ),
             _OrderSummeryTextWidget(
               transationInfoText:
-                  '${basketList[0].product.currencySymbol} ${basketProvider.checkoutCalculationHelper.totalOriginalPriceFormattedString}',
+                  '\$ ${basketProvider.checkoutCalculationHelper.totalOriginalPriceFormattedString}',
               title: '${Utils.getString('checkout__total_item_price')} :',
             ),
             _OrderSummeryTextWidget(
               transationInfoText:
-                  '$currencySymbol ${basketProvider.checkoutCalculationHelper.totalDiscountFormattedString}',
+                  '\$ ${basketProvider.checkoutCalculationHelper.totalDiscountFormattedString}',
               title: '${Utils.getString('checkout__discount')} :',
             ),
             _OrderSummeryTextWidget(
               transationInfoText: couponDiscount == '-'
                   ? '-'
-                  : '$currencySymbol ${basketProvider.checkoutCalculationHelper.couponDiscountFormattedString}',
+                  : '\$ ${basketProvider.checkoutCalculationHelper.couponDiscountFormattedString}',
               title: '${Utils.getString('checkout__coupon_discount')} :',
             ),
             _spacingWidget,
@@ -315,7 +315,7 @@ class _OrderSummaryWidget extends StatelessWidget {
             ),
             _OrderSummeryTextWidget(
               transationInfoText:
-                  '$currencySymbol ${basketProvider.checkoutCalculationHelper.taxFormattedString}',
+                  '\$ ${basketProvider.checkoutCalculationHelper.taxFormattedString}',
               title:
                   '${Utils.getString('checkout__tax')} (${psValueHolder.overAllTaxLabel} %) :',
             ),
@@ -341,7 +341,7 @@ class _OrderSummaryWidget extends StatelessWidget {
             //   ),
             _OrderSummeryTextWidget(
               transationInfoText:
-                  '$currencySymbol ${basketProvider.checkoutCalculationHelper.shippingTaxFormattedString}',
+                  '\$ ${basketProvider.checkoutCalculationHelper.shippingTaxFormattedString}',
               title:
                   '${Utils.getString('checkout__shipping_tax')} (${psValueHolder.shippingTaxLabel} %) :',
             ),
@@ -349,7 +349,7 @@ class _OrderSummaryWidget extends StatelessWidget {
             _dividerWidget,
             _OrderSummeryTextWidget(
               transationInfoText:
-                  '$currencySymbol ${basketProvider.checkoutCalculationHelper.totalPriceFormattedString}',
+                  '\$ ${basketProvider.checkoutCalculationHelper.totalPriceFormattedString}',
               title: '${Utils.getString('transaction_detail__total')} :',
             ),
             _spacingWidget,
