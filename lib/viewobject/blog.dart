@@ -1,5 +1,4 @@
 import 'package:dni_ecommerce/viewobject/common/app_object.dart';
-import 'default_photo.dart';
 
 class Blog extends AppObject<Blog> {
   Blog({
@@ -12,7 +11,7 @@ class Blog extends AppObject<Blog> {
     this.updatedDate,
     this.updatedUserId,
     this.addedDateStr,
-    this.defaultPhoto,
+    this.image,
   });
   String id;
   String name;
@@ -23,7 +22,7 @@ class Blog extends AppObject<Blog> {
   String updatedDate;
   String updatedUserId;
   String addedDateStr;
-  DefaultPhoto defaultPhoto;
+  String image;
 
   @override
   String getPrimaryKey() {
@@ -43,7 +42,7 @@ class Blog extends AppObject<Blog> {
         updatedDate: dynamicData['updated_date'],
         updatedUserId: dynamicData['updated_user_id'],
         addedDateStr: dynamicData['added_date_str'],
-        defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']),
+        image: dynamicData['image'],
       );
     } else {
       return null;
@@ -62,7 +61,7 @@ class Blog extends AppObject<Blog> {
       data['added_user_id'] = object.addedUserId;
       data['updated_user_id'] = object.updatedUserId;
       data['added_date_str'] = object.addedDateStr;
-      data['default_photo'] = DefaultPhoto().toMap(object.defaultPhoto);
+      data['image'] = object.image;
       return data;
     } else {
       return null;

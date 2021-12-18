@@ -40,7 +40,7 @@ class CategoryVerticalListItem extends StatelessWidget {
                             // Container(
                             //   child: AppNetworkImage(
                             //     photoKey: '',
-                            //     defaultPhoto: category.defaultPhoto,
+                            //     Image: category.Image,
                             //     width: AppDimens.space200,
                             //     height: double.infinity,
                             //     boxfit: BoxFit.cover,

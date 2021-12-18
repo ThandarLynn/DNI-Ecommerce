@@ -30,6 +30,21 @@ class HistoryProvider extends AppProvider {
         notifyListeners();
       }
     });
+
+    historyStream = StreamController<AppResource<Product>>.broadcast();
+    subscriptionObject =
+        historyStream.stream.listen((AppResource<Product> resource) {
+      _history = resource;
+
+      if (resource.status != AppStatus.BLOCK_LOADING &&
+          resource.status != AppStatus.PROGRESS_LOADING) {
+        isLoading = false;
+      }
+
+      if (!isDispose) {
+        notifyListeners();
+      }
+    });
   }
 
   HistoryRepository _repo;
@@ -40,9 +55,16 @@ class HistoryProvider extends AppProvider {
   AppResource<List<Product>> get historyList => _historyList;
   StreamSubscription<AppResource<List<Product>>> subscription;
   StreamController<AppResource<List<Product>>> historyListStream;
+
+  AppResource<Product> _history =
+      AppResource<Product>(AppStatus.NOACTION, '', null);
+  AppResource<Product> get history => _history;
+  StreamSubscription<AppResource<Product>> subscriptionObject;
+  StreamController<AppResource<Product>> historyStream;
   @override
   void dispose() {
     subscription.cancel();
+    subscriptionObject.cancel();
     isDispose = true;
     print('History Provider Dispose: $hashCode');
     super.dispose();
@@ -54,10 +76,28 @@ class HistoryProvider extends AppProvider {
         historyListStream, AppStatus.PROGRESS_LOADING);
   }
 
+  Future<dynamic> loadHistoryById(String productId) async {
+    isLoading = true;
+    await _repo.loadHistoryById(
+        historyStream, AppStatus.PROGRESS_LOADING, productId);
+  }
+
   Future<dynamic> addHistoryList(Product product) async {
     isLoading = true;
     await _repo.addAllHistoryList(
+        historyStream, AppStatus.PROGRESS_LOADING, product);
+  }
+
+  Future<dynamic> removeHistoryFromList(Product product) async {
+    isLoading = true;
+    await _repo.removeHistoryFromList(
         historyListStream, AppStatus.PROGRESS_LOADING, product);
+  }
+
+  Future<dynamic> removeHistoryList(Product product) async {
+    isLoading = true;
+    await _repo.removeHistoryList(
+        historyStream, AppStatus.PROGRESS_LOADING, product);
   }
 
   Future<void> resetHistoryList() async {

@@ -160,7 +160,7 @@ class _TransactionItemListViewState extends State<TransactionItemListView>
                         .resetTransactionDetailList(widget.transaction);
                   },
                 ),
-                PSProgressIndicator(provider.transactionDetailList.status)
+                AppProgressIndicator(provider.transactionDetailList.status)
               ]),
             );
           }),

@@ -120,6 +120,11 @@ class _HistoryListViewState extends State<HistoryListView>
                                       history: provider
                                           .historyList.data.reversed
                                           .toList()[index],
+                                      onDeleteTap: () {
+                                        provider.removeHistoryFromList(provider
+                                            .historyList.data.reversed
+                                            .toList()[index]);
+                                      },
                                       onTap: () {
                                         final Product product = provider
                                             .historyList.data.reversed

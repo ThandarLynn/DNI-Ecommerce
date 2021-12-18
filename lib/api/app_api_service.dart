@@ -3,12 +3,15 @@ import 'dart:io';
 import 'package:dni_ecommerce/viewobject/category.dart';
 import 'package:dni_ecommerce/viewobject/common/api_status.dart';
 import 'package:dni_ecommerce/viewobject/coupon_discount.dart';
+import 'package:dni_ecommerce/viewobject/gallery.dart';
 import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:dni_ecommerce/viewobject/shipping_city.dart';
 import 'package:dni_ecommerce/viewobject/shipping_country.dart';
+import 'package:dni_ecommerce/viewobject/sub_category.dart';
 import 'package:dni_ecommerce/viewobject/transaction_detail.dart';
 import 'package:dni_ecommerce/viewobject/transaction_header.dart';
 import 'package:dni_ecommerce/viewobject/user.dart';
+import 'package:dni_ecommerce/viewobject/blog.dart';
 
 import 'app_api.dart';
 import 'app_url.dart';
@@ -98,9 +101,10 @@ class AppApiService extends AppApi {
   /// User Change Password
   ///
   Future<AppResource<ApiStatus>> postChangePassword(
-      Map<dynamic, dynamic> jsonMap) async {
+      Map<dynamic, dynamic> jsonMap, String userToken) async {
     const String url = '${AppUrl.app_post_app_user_change_password_url}';
-    return await postData<ApiStatus, ApiStatus>(ApiStatus(), url, jsonMap);
+    return await postData<ApiStatus, ApiStatus>(ApiStatus(), url, jsonMap,
+        token: userToken);
   }
 
   ///
@@ -129,14 +133,14 @@ class AppApiService extends AppApi {
     return await postData<ApiStatus, ApiStatus>(ApiStatus(), url, jsonMap);
   }
 
-//   ///
-//   /// Touch Count
-//   ///
-//   Future<AppResource<ApiStatus>> postTouchCount(
-//       Map<dynamic, dynamic> jsonMap) async {
-//     const String url = '${AppUrl.app_post_app_touch_count_url}';
-//     return await postData<ApiStatus, ApiStatus>(ApiStatus(), url, jsonMap);
-//   }
+  ///
+  /// Touch Count
+  ///
+  Future<AppResource<ApiStatus>> postTouchCount(
+      Map<dynamic, dynamic> jsonMap) async {
+    const String url = '${AppUrl.app_post_app_touch_count_url}';
+    return await postData<ApiStatus, ApiStatus>(ApiStatus(), url, jsonMap);
+  }
 
 //   ///
 //   /// About App
@@ -150,13 +154,13 @@ class AppApiService extends AppApi {
   ///
   /// Get User
   ///
-  Future<AppResource<List<User>>> getUser(String userId) async {
-    final String url = '${AppUrl.app_user_url}/user_id/$userId';
+  Future<AppResource<User>> getUser(String userId, String userToken) async {
+    final String url = '${AppUrl.app_user_url}';
 
-    return await getServerCall<User, List<User>>(User(), url);
+    return await getServerCall<User, User>(User(), url, token: userToken);
   }
 
-  Future<AppResource<User>> postImageUpload(
+  Future<AppResource<User>> postGalleryUpload(
       String userId, String platformName, File imageFile) async {
     const String url = '${AppUrl.app_image_upload_url}';
 
@@ -207,14 +211,13 @@ class AppApiService extends AppApi {
 //         SubCategory(), url);
 //   }
 
-//   Future<AppResource<List<SubCategory>>> getAllSubCategoryList(
-//       String categoryId) async {
-//     final String url =
-//         '${AppUrl.app_subCategory_url}/cat_id/$categoryId';
+  Future<AppResource<List<SubCategory>>> getAllSubCategoryList(
+      String categoryId) async {
+    final String url = '${AppUrl.app_subCategory_url}/$categoryId';
 
-//     return await getServerCall<SubCategory, List<SubCategory>>(
-//         SubCategory(), url);
-//   }
+    return await getServerCall<SubCategory, List<SubCategory>>(
+        SubCategory(), url);
+  }
 
 //   //noti
 //   Future<AppResource<List<Noti>>> getNotificationList(
@@ -230,7 +233,10 @@ class AppApiService extends AppApi {
   ///
   Future<AppResource<List<Product>>> getProductList(
       Map<dynamic, dynamic> paramMap, int limit, int offset) async {
-    final String url = '${AppUrl.app_product_url}';
+    final String url = '${AppUrl.app_product_url}/name/' +
+        paramMap['searchterm'] +
+        '/cat_id/' +
+        paramMap['cat_id'] ??'';
 
     ///limit/$limit/offset/$offset
 
@@ -273,23 +279,24 @@ class AppApiService extends AppApi {
 //     return await getServerCall<ShopInfo, ShopInfo>(ShopInfo(), url);
 //   }
 
-//   ///Blog
-//   ///
+  ///Blog
+  ///
 
-//   Future<AppResource<List<Blog>>> getBlogList(int limit, int offset) async {
-//     final String url =
-//         '${AppUrl.app_bloglist_url}/limit/$limit/offset/$offset';
+  Future<AppResource<List<Blog>>> getBlogList(int limit, int offset) async {
+    final String url =
+        '${AppUrl.app_bloglist_url}'; //limit/$limit/offset/$offset
 
-//     return await getServerCall<Blog, List<Blog>>(Blog(), url);
-//   }
+    return await getServerCall<Blog, List<Blog>>(Blog(), url);
+  }
 
   ///Transaction
   ///
 
   Future<AppResource<List<TransactionHeader>>> getTransactionList(
       String userId, String userToken, int limit, int offset) async {
-    final String url =
-        '${AppUrl.app_transactionList_url}';///user_id/$userId/limit/$limit/offset/$offset
+    final String url = '${AppUrl.app_transactionList_url}';
+
+    ///user_id/$userId/limit/$limit/offset/$offset
 
     return await getServerCall<TransactionHeader, List<TransactionHeader>>(
         TransactionHeader(), url,
@@ -343,12 +350,21 @@ class AppApiService extends AppApi {
 //   }
 
   ///
-  /// Favourites
+  /// Top Selling
   ///
-  Future<AppResource<List<Product>>> getFavouritesList(
+  Future<AppResource<List<Product>>> getTopSellingProductList(
+      int limit, int offset) async {
+    final String url = '${AppUrl.app_topselling_productList_url}';
+
+    return await getServerCall<Product, List<Product>>(Product(), url);
+  }
+
+  ///
+  /// Top New
+  ///
+  Future<AppResource<List<Product>>> getTopNewProductList(
       String loginUserId, int limit, int offset) async {
-    final String url =
-        '${AppUrl.app_favouriteList_url}/login_user_id/$loginUserId/limit/$limit/offset/$offset';
+    final String url = '${AppUrl.app_topnew_productList_url}';
 
     return await getServerCall<Product, List<Product>>(Product(), url);
   }
@@ -435,20 +451,19 @@ class AppApiService extends AppApi {
     return await postData<Product, Product>(Product(), url, jsonMap);
   }
 
-//   ///
-//   /// Gallery
-//   ///
-//   Future<AppResource<List<DefaultPhoto>>> getImageList(
-//       String parentImgId,
-//       // String imageType,
-//       int limit,
-//       int offset) async {
-//     final String url =
-//         '${AppUrl.app_gallery_url}/img_parent_id/$parentImgId/limit/$limit/offset/$offset';
+  ///
+  /// Gallery
+  ///
+  Future<AppResource<List<Gallery>>> getGalleryList(
+      String parentImgId,
+      // String imageType,
+      int limit,
+      int offset) async {
+    final String url =
+        '${AppUrl.app_gallery_url}/$parentImgId'; //limit/$limit/offset/$offset
 
-//     return await getServerCall<DefaultPhoto, List<DefaultPhoto>>(
-//         DefaultPhoto(), url);
-//   }
+    return await getServerCall<Gallery, List<Gallery>>(Gallery(), url);
+  }
 
   ///
   /// Contact

@@ -99,7 +99,7 @@ class _CheckoutStatusViewState extends State<CheckoutStatusView> {
       create: (BuildContext context) {
         final UserProvider provider =
             UserProvider(repo: repo1, psValueHolder: valueHolder);
-        provider.getUser(provider.psValueHolder.loginUserId);
+        provider.getUser(provider.psValueHolder.loginUserId,provider.psValueHolder.userToken);
         _userProvider = provider;
         return _userProvider;
       },

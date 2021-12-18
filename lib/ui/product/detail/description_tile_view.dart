@@ -28,7 +28,8 @@ class DescriptionTileView extends StatelessWidget {
                     bottom: AppDimens.space16,
                     left: AppDimens.space16,
                     right: AppDimens.space16),
-                child: HtmlWidget(productDetail.description)
+                child: HtmlWidget(
+                    'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you')
                 // Text(
                 //   ,
                 //   style: Theme.of(context).textTheme.bodyText2.copyWith(

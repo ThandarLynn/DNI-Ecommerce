@@ -103,11 +103,11 @@ class User extends AppObject<User> {
         googleId: dynamicData['google_id'],
         userName: dynamicData['name'],
         userEmail: dynamicData['email'],
-        userPhone: dynamicData['user_phone'],
+        userPhone: dynamicData['mobile'],
         userPassword: dynamicData['user_password'],
         userAboutMe: dynamicData['user_about_me'],
-        userCoverPhoto: dynamicData['user_cover_photo'],
-        userProfilePhoto: dynamicData['profile_photo_url'],
+        userCoverPhoto: dynamicData['image'],
+        userProfilePhoto: dynamicData['image'],
         roleId: dynamicData['role_id'],
         status: dynamicData['status'],
         isBanned: dynamicData['is_banned'],
@@ -126,8 +126,8 @@ class User extends AppObject<User> {
         shippingFirstName: dynamicData['shipping_first_name'],
         shippingLastName: dynamicData['shipping_last_name'],
         shippingCompany: dynamicData['shipping_company'],
-        shippingAddress_1: dynamicData['shipping_address_1'],
-        shippingAddress_2: dynamicData['shipping_address_2'],
+        shippingAddress_1: dynamicData['line1'],
+        shippingAddress_2: dynamicData['line2'],
         shippingCountry: dynamicData['shipping_country'],
         shippingState: dynamicData['shipping_state'],
         shippingCity: dynamicData['shipping_city'],
@@ -155,11 +155,11 @@ class User extends AppObject<User> {
       data['google_id'] = object.googleId;
       data['name'] = object.userName;
       data['email'] = object.userEmail;
-      data['user_phone'] = object.userPhone;
+      data['mobile'] = object.userPhone;
       data['user_password'] = object.userPassword;
       data['user_about_me'] = object.userAboutMe;
-      data['user_cover_photo'] = object.userCoverPhoto;
-      data['profile_photo_url'] = object.userProfilePhoto;
+      data['image'] = object.userCoverPhoto;
+      data['image'] = object.userProfilePhoto;
       data['role_id'] = object.roleId;
       data['status'] = object.status;
       data['is_banned'] = object.isBanned;
@@ -178,8 +178,8 @@ class User extends AppObject<User> {
       data['shipping_first_name'] = object.shippingFirstName;
       data['shipping_last_name'] = object.shippingLastName;
       data['shipping_company'] = object.shippingCompany;
-      data['shipping_address_1'] = object.shippingAddress_1;
-      data['shipping_address_2'] = object.shippingAddress_2;
+      data['line1'] = object.shippingAddress_1;
+      data['line2'] = object.shippingAddress_2;
       data['shipping_country'] = object.shippingCountry;
       data['shipping_state'] = object.shippingState;
       data['shipping_city'] = object.shippingCity;

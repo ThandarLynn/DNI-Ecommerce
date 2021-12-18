@@ -1,11 +1,8 @@
 import 'package:dni_ecommerce/config/app_config.dart';
-import 'package:dni_ecommerce/constant/app_dimens.dart';
 import 'package:dni_ecommerce/constant/route_paths.dart';
 import 'package:dni_ecommerce/provider/transaction/transaction_header_provider.dart';
 import 'package:dni_ecommerce/repository/transaction_header_repository.dart';
-import 'package:dni_ecommerce/ui/common/app_button_widget.dart';
 import 'package:dni_ecommerce/ui/common/app_ui_widget.dart';
-import 'package:dni_ecommerce/ui/common/choose_filter_transaction_dialog.dart';
 import 'package:dni_ecommerce/ui/transaction/item/transaction_list_item.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
@@ -84,29 +81,29 @@ class _TransactionListViewState extends State<TransactionListView>
         // if (prsider.transactionList.data.isNotEmpty) {
         return Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(AppDimens.space16),
-              child: AppButtonWidget(
-                hasShadow: true,
-                width: double.infinity,
-                titleText: Utils.getString('transaction_list__filter_title'),
-                onPressed: () {
-                  showDialog<dynamic>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return ChooseFilterTransactionDialog(
-                          onDailyTap: () {
-                            provider
-                                .loadTransactionList(psValueHolder.loginUserId);
-                          },
-                          onWeeklyTap: () {},
-                          onMonthlyTap: () {},
-                          onYearlyTap: () {},
-                        );
-                      });
-                },
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(AppDimens.space16),
+            //   child: AppButtonWidget(
+            //     hasShadow: true,
+            //     width: double.infinity,
+            //     titleText: Utils.getString('transaction_list__filter_title'),
+            //     onPressed: () {
+            //       showDialog<dynamic>(
+            //           context: context,
+            //           builder: (BuildContext context) {
+            //             return ChooseFilterTransactionDialog(
+            //               onDailyTap: () {
+            //                 provider
+            //                     .loadTransactionList(psValueHolder.loginUserId);
+            //               },
+            //               onWeeklyTap: () {},
+            //               onMonthlyTap: () {},
+            //               onYearlyTap: () {},
+            //             );
+            //           });
+            //     },
+            //   ),
+            // ),
             // const PsAdMobBannerWidget(),
             // Visibility(
             //   visible: AppConfig.showAdMob &&
@@ -171,7 +168,7 @@ class _TransactionListViewState extends State<TransactionListView>
                       return provider.resetTransactionList();
                     },
                   ),
-                  PSProgressIndicator(provider.transactionList.status)
+                  AppProgressIndicator(provider.transactionList.status)
                 ],
               ),
             )

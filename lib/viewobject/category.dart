@@ -14,7 +14,7 @@ class Category extends AppObject<Category> {
     // this.updatedFlag,
     // this.touchCount,
     // this.addedDateStr,
-    // this.defaultPhoto,
+    // this.Image,
     // this.defaultIcon
   });
   String id;
@@ -27,7 +27,7 @@ class Category extends AppObject<Category> {
   // String updatedFlag;
   // String touchCount;
   // String addedDateStr;
-  // DefaultPhoto defaultPhoto;
+  // Image Image;
   // DefaultIcon? defaultIcon;
 
   @override
@@ -49,7 +49,7 @@ class Category extends AppObject<Category> {
         // updatedFlag: dynamicData['updated_flag'],
         // touchCount: dynamicData['touch_count'],
         // addedDateStr: dynamicData['added_date_str'],
-        // defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']),
+        // Image: Image().fromMap(dynamicData['default_photo']),
         // defaultIcon: DefaultIcon().fromMap(dynamicData['default_icon'])
       );
     } else {
@@ -71,7 +71,7 @@ class Category extends AppObject<Category> {
       // data['updated_flag'] = object.updatedFlag;
       // data['touch_count'] = object.touchCount;
       // data['added_date_str'] = object.addedDateStr;
-      // data['default_photo'] = DefaultPhoto().toMap(object.defaultPhoto);
+      // data['default_photo'] = Image().toMap(object.Image);
       // data['default_icon'] = DefaultIcon().toMap(object.defaultIcon);
       return data;
     } else {

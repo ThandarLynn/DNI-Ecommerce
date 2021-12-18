@@ -6,14 +6,13 @@ import 'package:dni_ecommerce/viewobject/default_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:dni_ecommerce/viewobject/default_photo.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
 
 class AppNetworkImage extends StatelessWidget {
   const AppNetworkImage(
       {Key key,
       @required this.photoKey,
-      @required this.defaultPhoto,
+      @required this.image,
       this.width,
       this.height,
       this.onTap,
@@ -25,11 +24,11 @@ class AppNetworkImage extends StatelessWidget {
   final Function onTap;
   final String photoKey;
   final BoxFit boxfit;
-  final DefaultPhoto defaultPhoto;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
-    if (defaultPhoto.imgPath == '') {
+    if (image == '') {
       return GestureDetector(
           onTap: onTap,
           child: Image.asset(
@@ -39,11 +38,10 @@ class AppNetworkImage extends StatelessWidget {
             fit: boxfit,
           ));
     } else {
-      final String fullImagePath =
-          '${AppConfig.app_image_url}${defaultPhoto.imgPath}';
+      final String fullImagePath = '${AppConfig.app_image_url}$image';
       print('img path : $fullImagePath');
       final String thumbnailImagePath =
-          '${AppConfig.app_image_thumbs_url}${defaultPhoto.imgPath}';
+          '${AppConfig.app_image_thumbs_url}$image';
 
       return Hero(
         transitionOnUserGestures: true,
@@ -675,16 +673,16 @@ class PsFileCircleImage extends StatelessWidget {
   }
 }
 
-class PSProgressIndicator extends StatefulWidget {
-  const PSProgressIndicator(this._status, {this.message});
+class AppProgressIndicator extends StatefulWidget {
+  const AppProgressIndicator(this._status, {this.message});
   final AppStatus _status;
   final String message;
 
   @override
-  _PSProgressIndicator createState() => _PSProgressIndicator();
+  _AppProgressIndicator createState() => _AppProgressIndicator();
 }
 
-class _PSProgressIndicator extends State<PSProgressIndicator> {
+class _AppProgressIndicator extends State<AppProgressIndicator> {
   @override
   Widget build(BuildContext context) {
     if (widget._status == AppStatus.ERROR &&

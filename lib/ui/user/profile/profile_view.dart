@@ -18,6 +18,7 @@ class ProfileView extends StatefulWidget {
     this.animationController,
     @required this.flag,
     this.userId,
+    this.userToken,
     @required this.scaffoldKey,
   }) : super(key: key);
 
@@ -25,6 +26,7 @@ class ProfileView extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final int flag;
   final String userId;
+  final String userToken;
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -47,16 +49,16 @@ class _ProfilePageState extends State<ProfileView>
         //   child:
         CustomScrollView(scrollDirection: Axis.vertical, slivers: <Widget>[
       _ProfileDetailWidget(
-        animationController: widget.animationController,
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-          CurvedAnimation(
-            parent: widget.animationController,
-            curve:
-                const Interval((1 / 4) * 2, 1.0, curve: Curves.fastOutSlowIn),
+          animationController: widget.animationController,
+          animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+              parent: widget.animationController,
+              curve:
+                  const Interval((1 / 4) * 2, 1.0, curve: Curves.fastOutSlowIn),
+            ),
           ),
-        ),
-        userId: widget.userId,
-      ),
+          userId: widget.userId,
+          userToken: widget.userToken),
       _TransactionListViewWidget(
         scaffoldKey: widget.scaffoldKey,
         animationController: widget.animationController,
@@ -177,11 +179,13 @@ class _ProfileDetailWidget extends StatefulWidget {
     this.animationController,
     this.animation,
     @required this.userId,
+    @required this.userToken,
   }) : super(key: key);
 
   final AnimationController animationController;
   final Animation<double> animation;
   final String userId;
+  final String userToken;
 
   @override
   __ProfileDetailWidgetState createState() => __ProfileDetailWidgetState();
@@ -190,9 +194,9 @@ class _ProfileDetailWidget extends StatefulWidget {
 class __ProfileDetailWidgetState extends State<_ProfileDetailWidget> {
   @override
   Widget build(BuildContext context) {
-    const Widget _dividerWidget = Divider(
-      height: 1,
-    );
+    // const Widget _dividerWidget = Divider(
+    //   height: 1,
+    // );
     UserRepository userRepository;
     AppValueHolder psValueHolder;
     UserProvider provider;
@@ -207,9 +211,10 @@ class __ProfileDetailWidgetState extends State<_ProfileDetailWidget> {
             print(provider.getCurrentFirebaseUser());
             if (provider.psValueHolder.loginUserId == null ||
                 provider.psValueHolder.loginUserId == '') {
-              provider.getUser(widget.userId);
+              provider.getUser(widget.userId, widget.userToken);
             } else {
-              provider.getUser(provider.psValueHolder.loginUserId);
+              provider.getUser(provider.psValueHolder.loginUserId,
+                  provider.psValueHolder.userToken);
             }
             return provider;
           },
@@ -228,9 +233,9 @@ class __ProfileDetailWidgetState extends State<_ProfileDetailWidget> {
                         // _dividerWidget,
                         // _FavAndSettingWidget(userProvider: provider),
                         // _dividerWidget,
-                        _JoinDateWidget(userProvider: provider),
-                        _dividerWidget,
-                        _OrderAndSeeAllWidget(),
+                        // _JoinDateWidget(userProvider: provider),
+                        // _dividerWidget,
+                        // _OrderAndSeeAllWidget(),
                       ],
                     ),
                   ),
@@ -250,37 +255,37 @@ class __ProfileDetailWidgetState extends State<_ProfileDetailWidget> {
   }
 }
 
-class _JoinDateWidget extends StatelessWidget {
-  const _JoinDateWidget({this.userProvider});
-  final UserProvider userProvider;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(AppDimens.space16),
-        child: Align(
-            alignment: Alignment.centerLeft,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  Utils.getString('profile__join_on'),
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-                const SizedBox(
-                  width: AppDimens.space2,
-                ),
-                Text(
-                  userProvider.user.data.addedDate == ''
-                      ? ''
-                      : Utils.getDateFormat(userProvider.user.data.addedDate),
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-              ],
-            )));
-  }
-}
+// class _JoinDateWidget extends StatelessWidget {
+//   const _JoinDateWidget({this.userProvider});
+//   final UserProvider userProvider;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//         padding: const EdgeInsets.all(AppDimens.space16),
+//         child: Align(
+//             alignment: Alignment.centerLeft,
+//             child: Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: <Widget>[
+//                 Text(
+//                   Utils.getString('profile__join_on'),
+//                   textAlign: TextAlign.start,
+//                   style: Theme.of(context).textTheme.bodyText2,
+//                 ),
+//                 const SizedBox(
+//                   width: AppDimens.space2,
+//                 ),
+//                 Text(
+//                   userProvider.user.data.userName == ''
+//                       ? ''
+//                       : userProvider.user.data.userName,
+//                   textAlign: TextAlign.start,
+//                   style: Theme.of(context).textTheme.bodyText2,
+//                 ),
+//               ],
+//             )));
+//   }
+// }
 
 // class _FavAndSettingWidget extends StatelessWidget {
 //   const _FavAndSettingWidget({this.userProvider});
@@ -462,45 +467,45 @@ class _JoinDateWidget extends StatelessWidget {
 //   }
 // }
 
-class _OrderAndSeeAllWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          RoutePaths.transactionList,
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(
-            top: AppDimens.space20,
-            left: AppDimens.space16,
-            right: AppDimens.space16,
-            bottom: AppDimens.space16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            Text(Utils.getString('profile__order'),
-                textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.subtitle1),
-            InkWell(
-              child: Text(
-                Utils.getString('profile__view_all'),
-                textAlign: TextAlign.start,
-                style: Theme.of(context)
-                    .textTheme
-                    .caption
-                    .copyWith(color: AppColors.mainColor),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class _OrderAndSeeAllWidget extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onTap: () {
+//         Navigator.pushNamed(
+//           context,
+//           RoutePaths.transactionList,
+//         );
+//       },
+//       child: Padding(
+//         padding: const EdgeInsets.only(
+//             top: AppDimens.space20,
+//             left: AppDimens.space16,
+//             right: AppDimens.space16,
+//             bottom: AppDimens.space16),
+//         child: Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           crossAxisAlignment: CrossAxisAlignment.end,
+//           children: <Widget>[
+//             Text(Utils.getString('profile__order'),
+//                 textAlign: TextAlign.start,
+//                 style: Theme.of(context).textTheme.subtitle1),
+//             InkWell(
+//               child: Text(
+//                 Utils.getString('profile__view_all'),
+//                 textAlign: TextAlign.start,
+//                 style: Theme.of(context)
+//                     .textTheme
+//                     .caption
+//                     .copyWith(color: AppColors.mainColor),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class _ImageAndTextWidget extends StatelessWidget {
   const _ImageAndTextWidget({this.userProvider});
@@ -516,55 +521,130 @@ class _ImageAndTextWidget extends StatelessWidget {
     const Widget _spacingWidget = SizedBox(
       height: AppDimens.space4,
     );
+    final Widget _imageInCenterWidget = Positioned(
+        top: 110,
+        child: Stack(
+          children: <Widget>[
+            Container(
+              width: 90,
+              height: 90,
+              child: PsNetworkCircleImageForUser(
+                photoKey: '',
+                imagePath: userProvider.user.data.userProfilePhoto,
+                width: double.infinity,
+                height: AppDimens.space200,
+                boxfit: BoxFit.cover,
+                onTap: () async {},
+              ),
+            ),
+            // Positioned(
+            //   top: 1,
+            //   right: 1,
+            //   child: _editWidget,
+            // ),
+          ],
+        ));
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(
           top: AppDimens.space16, bottom: AppDimens.space16),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: <Widget>[
-          Row(
+          Stack(
+            alignment: Alignment.topCenter,
             children: <Widget>[
-              const SizedBox(width: AppDimens.space16),
               Container(
-                  width: AppDimens.space80,
-                  height: AppDimens.space80,
-                  child: _imageWidget),
-              const SizedBox(width: AppDimens.space16),
+                width: double.infinity,
+                height: AppDimens.space160,
+                child: _imageWidget,
+              ),
+              Container(
+                color: AppColors.white.withAlpha(100),
+                width: double.infinity,
+                height: AppDimens.space160,
+              ),
+              Container(
+                width: double.infinity,
+                height: AppDimens.space220,
+              ),
+              _imageInCenterWidget,
             ],
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
+          Container(
+            margin: const EdgeInsets.symmetric(
+                horizontal: AppDimens.space16, vertical: AppDimens.space16),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  userProvider.user.data.userName,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                _spacingWidget,
-                Text(
-                  userProvider.user.data.userPhone != ''
-                      ? userProvider.user.data.userPhone
-                      : Utils.getString('profile__phone_no'),
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2
-                      .copyWith(color: AppColors.textPrimaryLightColor),
-                ),
-                _spacingWidget,
-                Text(
-                  userProvider.user.data.userAboutMe != ''
-                      ? userProvider.user.data.userAboutMe
-                      : Utils.getString('profile__about_me'),
-                  style: Theme.of(context)
-                      .textTheme
-                      .caption
-                      .copyWith(color: AppColors.textPrimaryLightColor),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                // Row(
+                //   children: <Widget>[
+                //     const SizedBox(width: AppDimens.space16),
+                //     Container(
+                //         width: AppDimens.space80,
+                //         height: AppDimens.space80,
+                //         child: _imageWidget),
+                //     const SizedBox(width: AppDimens.space16),
+                //   ],
+                // ),
+                // const SizedBox(width: 40),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Text(
+                        Utils.getString('edit_profile__user_name') + ':  ',
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const SizedBox(width: 16),
+                          Text(
+                            userProvider.user.data.userName,
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
+                      _spacingWidget,
+                      _spacingWidget,
+                      _spacingWidget,
+                      Text(
+                        Utils.getString('edit_profile__email') + ':  ',
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const SizedBox(width: 16),
+                          Text(
+                            userProvider.user.data.userEmail ?? '-',
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
+                      _spacingWidget,
+                      _spacingWidget,
+                      _spacingWidget,
+                      Text(
+                        Utils.getString('edit_profile__about_me') + ': ',
+                        style: Theme.of(context).textTheme.bodyText2,
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Row(children: <Widget>[
+                        const SizedBox(width: 16),
+                        Expanded(
+                            child: Text(
+                          'Ypesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letrase',
+                          style: Theme.of(context).textTheme.bodyText2,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                        )),
+                      ]),
+                    ],
+                  ),
                 ),
               ],
             ),

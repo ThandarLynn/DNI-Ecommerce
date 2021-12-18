@@ -1,11 +1,11 @@
 import 'package:dni_ecommerce/viewobject/common/app_object.dart';
 
-class DefaultPhoto extends AppObject<DefaultPhoto> {
-  DefaultPhoto(
+class Gallery extends AppObject<Gallery> {
+  Gallery(
       {this.imgId,
       this.imgParentId,
       this.imgType,
-      this.imgPath,
+      this.url,
       this.imgWidth,
       this.imgHeight,
       this.imgDesc});
@@ -13,7 +13,7 @@ class DefaultPhoto extends AppObject<DefaultPhoto> {
   String imgId;
   String imgParentId;
   String imgType;
-  String imgPath;
+  String url;
   String imgWidth;
   String imgHeight;
   String imgDesc;
@@ -24,13 +24,13 @@ class DefaultPhoto extends AppObject<DefaultPhoto> {
   }
 
   @override
-  DefaultPhoto fromMap(dynamic dynamicData) {
+  Gallery fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return DefaultPhoto(
-          imgId: dynamicData['img_id'],
-          imgParentId: dynamicData['img_parent_id'],
+      return Gallery(
+          imgId: dynamicData['image_id'],
+          imgParentId: dynamicData['product_id'],
           imgType: dynamicData['img_type'],
-          imgPath: dynamicData['img_path'],
+          url: dynamicData['url'],
           imgWidth: dynamicData['img_width'],
           imgHeight: dynamicData['img_height'],
           imgDesc: dynamicData['img_desc']);
@@ -43,10 +43,10 @@ class DefaultPhoto extends AppObject<DefaultPhoto> {
   Map<String, dynamic> toMap(dynamic object) {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (object != null) {
-      data['img_id'] = object.imgId;
-      data['img_parent_id'] = object.imgParentId;
+      data['image_id'] = object.imgId;
+      data['product_id'] = object.imgParentId;
       data['img_type'] = object.imgType;
-      data['img_path'] = object.imgPath;
+      data['url'] = object.url;
       data['img_width'] = object.imgWidth;
       data['img_height'] = object.imgHeight;
       data['img_desc'] = object.imgDesc;
@@ -57,8 +57,8 @@ class DefaultPhoto extends AppObject<DefaultPhoto> {
   }
 
   @override
-  List<DefaultPhoto> fromMapList(List<dynamic> dynamicDataList) {
-    final List<DefaultPhoto> defaultPhotoList = <DefaultPhoto>[];
+  List<Gallery> fromMapList(List<dynamic> dynamicDataList) {
+    final List<Gallery> defaultPhotoList = <Gallery>[];
 
     if (dynamicDataList != null) {
       for (dynamic dynamicData in dynamicDataList) {
@@ -71,11 +71,11 @@ class DefaultPhoto extends AppObject<DefaultPhoto> {
   }
 
   @override
-  List<Map<String, dynamic>> toMapList(List<DefaultPhoto> objectList) {
+  List<Map<String, dynamic>> toMapList(List<Gallery> objectList) {
     final List<Map<String, dynamic>> mapList = <Map<String, dynamic>>[];
 
     if (objectList != null) {
-      for (DefaultPhoto data in objectList) {
+      for (Gallery data in objectList) {
         if (data != null) {
           mapList.add(toMap(data));
         }

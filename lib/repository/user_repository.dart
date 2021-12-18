@@ -19,7 +19,7 @@ class UserRepository extends AppRepository {
 
   AppApiService _psApiService;
   UserDao _userDao;
-  final String _userPrimaryKey = 'user_id';
+  final String _userPrimaryKey = 'id';
   // final String _userLoginPrimaryKey = 'map_key';
 
   void sinkUserDetailStream(StreamController<AppResource<User>> userListStream,
@@ -130,7 +130,7 @@ class UserRepository extends AppRepository {
       File imageFile, bool isConnectedToInternet, AppStatus status,
       {bool isLoadFromServer = true}) async {
     final AppResource<User> _resource =
-        await _psApiService.postImageUpload(userId, platformName, imageFile);
+        await _psApiService.postGalleryUpload(userId, platformName, imageFile);
     if (_resource.status == AppStatus.SUCCESS) {
       // await _userLoginDao.deleteAll();
       await insert(_resource.data);
@@ -166,11 +166,12 @@ class UserRepository extends AppRepository {
 
   Future<AppResource<ApiStatus>> postChangePassword(
       Map<dynamic, dynamic> jsonMap,
+      String userToken,
       bool isConnectedToInternet,
       AppStatus status,
       {bool isLoadFromServer = true}) async {
     final AppResource<ApiStatus> _resource =
-        await _psApiService.postChangePassword(jsonMap);
+        await _psApiService.postChangePassword(jsonMap, userToken);
     if (_resource.status == AppStatus.SUCCESS) {
       return _resource;
     } else {
@@ -301,20 +302,24 @@ class UserRepository extends AppRepository {
     }
   }
 
-  Future<dynamic> getUser(StreamController<AppResource<User>> userListStream,
-      String loginUserId, bool isConnectedToInternet, AppStatus status,
+  Future<dynamic> getUser(
+      StreamController<AppResource<User>> userListStream,
+      String loginUserId,
+      String userToken,
+      bool isConnectedToInternet,
+      AppStatus status,
       {bool isLoadFromServer = true}) async {
-    final Finder finder = Finder(filter: Filter.equals('user_id', loginUserId));
+    final Finder finder = Finder(filter: Filter.equals('id', loginUserId));
     sinkUserDetailStream(
         userListStream, await _userDao.getOne(finder: finder, status: status));
 
     if (isConnectedToInternet) {
-      final AppResource<List<User>> _resource =
-          await _psApiService.getUser(loginUserId);
+      final AppResource<User> _resource =
+          await _psApiService.getUser(loginUserId, userToken);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _userDao.deleteWithFinder(finder);
-        await _userDao.insertAll(_userPrimaryKey, _resource.data);
+        await _userDao.insert(_userPrimaryKey, _resource.data);
       }
       sinkUserDetailStream(
           userListStream, await _userDao.getOne(finder: finder));

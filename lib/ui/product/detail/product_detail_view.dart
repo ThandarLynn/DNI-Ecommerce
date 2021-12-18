@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:dni_ecommerce/provider/product/touch_count_provider.dart';
 import 'package:dni_ecommerce/ui/common/app_back_button_with_circle_bg_widget.dart';
+import 'package:dni_ecommerce/viewobject/holder/touch_count_parameter_holder.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dni_ecommerce/config/app_colors.dart';
 import 'package:dni_ecommerce/constant/app_constant.dart';
@@ -63,7 +65,7 @@ class _ProductDetailState extends State<ProductDetailView>
   ProductRepository productRepo;
   HistoryRepository historyRepo;
   HistoryProvider historyProvider;
-  // TouchCountProvider touchCountProvider;
+  TouchCountProvider touchCountProvider;
   BasketProvider basketProvider;
   AppValueHolder valueHolder;
   AnimationController controller;
@@ -105,7 +107,7 @@ class _ProductDetailState extends State<ProductDetailView>
     valueHolder = Provider.of<AppValueHolder>(context);
     productRepo = Provider.of<ProductRepository>(context);
     historyRepo = Provider.of<HistoryRepository>(context);
-    basketRepository = Provider.of<BasketRepository>(context);
+    basketRepository = context.watch<BasketRepository>();
     userRepo = Provider.of<UserRepository>(context);
 
     return AppWidgetWithMultiProvider(
@@ -145,200 +147,197 @@ class _ProductDetailState extends State<ProductDetailView>
               return historyProvider;
             },
           ),
-          // ChangeNotifierProvider<TouchCountProvider>(
-          //   lazy: false,
-          //   create: (BuildContext context) {
-          //     touchCountProvider = TouchCountProvider(
-          //         repo: productRepo, psValueHolder: psValueHolder);
-          //     final String loginUserId = Utils.checkUserLoginId(psValueHolder);
+          ChangeNotifierProvider<TouchCountProvider>(
+            lazy: false,
+            create: (BuildContext context) {
+              touchCountProvider = TouchCountProvider(
+                  repo: productRepo, psValueHolder: valueHolder);
+              final String loginUserId = Utils.checkUserLoginId(valueHolder);
 
-          //     final TouchCountParameterHolder touchCountParameterHolder =
-          //         TouchCountParameterHolder(
-          //             typeId: widget.productId,
-          //             typeName: AppConst.FILTERING_TYPE_NAME_PRODUCT,
-          //             userId: loginUserId);
-          //     touchCountProvider
-          //         .postTouchCount(touchCountParameterHolder.toMap());
-          //     return touchCountProvider;
-          //   },
-          // )
+              final TouchCountParameterHolder touchCountParameterHolder =
+                  TouchCountParameterHolder(
+                      typeId: widget.productDetail.id,
+                      typeName: AppConst.FILTERING_TYPE_NAME_PRODUCT,
+                      userId: loginUserId);
+              touchCountProvider
+                  .postTouchCount(touchCountParameterHolder.toMap());
+              return touchCountProvider;
+            },
+          )
         ],
             child: Consumer<BasketProvider>(builder:
                 (BuildContext context, BasketProvider provider, Widget child) {
-              if (widget.productDetail != null) {
-                //   provider.updateProduct(provider.productDetail.data);
-                if (isCallFirstTime) {
-                  ///
-                  /// Load Basket List
-                  ///
-                  basketProvider =
-                      Provider.of<BasketProvider>(context, listen: false);
+              // if (widget.productDetail != null) {
+              //   provider.updateProduct(provider.productDetail.data);
+              if (isCallFirstTime) {
+                ///
+                /// Load Basket List
+                ///
+                basketProvider = context.read<BasketProvider>();
+                // Provider.of<BasketProvider>(context, listen: false);
 
-                  basketProvider.loadBasketList();
+                basketProvider.loadBasketList();
 
-                  ///
-                  /// Add to History
-                  ///
-                  // historyProvider.addHistoryList(widget.productDetail);
+                historyProvider.loadHistoryById(widget.productDetail.id);
 
-                  isCallFirstTime = false;
-                }
-                return Stack(
-                  children: <Widget>[
-                    CustomScrollView(slivers: <Widget>[
-                      SliverAppBar(
-                        automaticallyImplyLeading: true,
-                        brightness: Utils.getBrightnessForAppBar(context),
-                        expandedHeight: AppDimens.space300,
-                        iconTheme: Theme.of(context)
-                            .iconTheme
-                            .copyWith(color: AppColors.mainColorWithWhite),
-                        leading: AppBackButtonWithCircleBgWidget(
-                          isReadyToShow: isReadyToShowAppBarIcons,
-                        ),
-                        floating: false,
-                        pinned: false,
-                        stretch: true,
-                        actions: <Widget>[
-                          Consumer<BasketProvider>(builder:
-                              (BuildContext context,
-                                  BasketProvider basketProvider, Widget child) {
-                            return Visibility(
-                              visible: isReadyToShowAppBarIcons,
-                              child: Row(
-                                children: <Widget>[
-                                  InkWell(
-                                      child: Stack(
-                                        children: <Widget>[
-                                          Container(
-                                            width: AppDimens.space40,
-                                            height: AppDimens.space40,
-                                            margin: const EdgeInsets.only(
-                                                top: AppDimens.space8,
-                                                left: AppDimens.space8,
-                                                right: AppDimens.space8),
+                ///
+                /// Add to History
+                ///
+                // historyProvider.addHistoryList(widget.productDetail);
+
+                isCallFirstTime = false;
+              }
+              return Stack(
+                children: <Widget>[
+                  CustomScrollView(slivers: <Widget>[
+                    SliverAppBar(
+                      automaticallyImplyLeading: true,
+                      brightness: Utils.getBrightnessForAppBar(context),
+                      expandedHeight: AppDimens.space300,
+                      iconTheme: Theme.of(context)
+                          .iconTheme
+                          .copyWith(color: AppColors.mainColorWithWhite),
+                      leading: AppBackButtonWithCircleBgWidget(
+                        isReadyToShow: isReadyToShowAppBarIcons,
+                      ),
+                      floating: false,
+                      pinned: false,
+                      stretch: true,
+                      actions: <Widget>[
+                        Consumer<BasketProvider>(builder: (BuildContext context,
+                            BasketProvider basketProvider, Widget child) {
+                          return Visibility(
+                            visible: isReadyToShowAppBarIcons,
+                            child: Row(
+                              children: <Widget>[
+                                InkWell(
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Container(
+                                          width: AppDimens.space40,
+                                          height: AppDimens.space40,
+                                          margin: const EdgeInsets.only(
+                                              top: AppDimens.space8,
+                                              left: AppDimens.space8,
+                                              right: AppDimens.space8),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Icon(
+                                              Icons.shopping_basket,
+                                              color: AppColors.mainColor,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          right: AppDimens.space4,
+                                          top: AppDimens.space1,
+                                          child: Container(
+                                            width: AppDimens.space28,
+                                            height: AppDimens.space28,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: AppColors.black
+                                                  .withAlpha(200),
+                                            ),
                                             child: Align(
                                               alignment: Alignment.center,
-                                              child: Icon(
-                                                Icons.shopping_basket,
-                                                color: AppColors.mainColor,
+                                              child: Text(
+                                                basketProvider.basketList.data
+                                                            .length >
+                                                        99
+                                                    ? '99+'
+                                                    : basketProvider
+                                                        .basketList.data.length
+                                                        .toString(),
+                                                textAlign: TextAlign.left,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1
+                                                    .copyWith(
+                                                        color: AppColors.white),
+                                                maxLines: 1,
                                               ),
                                             ),
                                           ),
-                                          Positioned(
-                                            right: AppDimens.space4,
-                                            top: AppDimens.space1,
-                                            child: Container(
-                                              width: AppDimens.space28,
-                                              height: AppDimens.space28,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: AppColors.black
-                                                    .withAlpha(200),
-                                              ),
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  basketProvider.basketList.data
-                                                              .length >
-                                                          99
-                                                      ? '99+'
-                                                      : basketProvider
-                                                          .basketList
-                                                          .data
-                                                          .length
-                                                          .toString(),
-                                                  textAlign: TextAlign.left,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1
-                                                      .copyWith(
-                                                          color:
-                                                              AppColors.white),
-                                                  maxLines: 1,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          RoutePaths.basketList,
-                                        );
-                                      }),
-                                ],
-                              ),
-                            );
-                          })
-                        ],
-                        backgroundColor: AppColors.mainColorWithBlack,
-                        flexibleSpace: FlexibleSpaceBar(
-                          background: Container(
-                            color: AppColors.backgroundColor,
-                            child: AppNetworkImageWithUrl(
-                              photoKey: widget
-                                  .heroTagImage, //'latest${widget.product.defaultPhoto.imgId}',
-                              imagePath: widget.productDetail.image,
-                              width: double.infinity,
-                              //  height: double.infinity,
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, RoutePaths.galleryGrid,
-                                    arguments: widget.productDetail);
-                              },
+                                        ),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        RoutePaths.basketList,
+                                      );
+                                    }),
+                              ],
                             ),
+                          );
+                        })
+                      ],
+                      backgroundColor: AppColors.mainColorWithBlack,
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: Container(
+                          color: AppColors.backgroundColor,
+                          child: AppNetworkImageWithUrl(
+                            photoKey: widget
+                                .heroTagImage, //'latest${widget.product.Image.imgId}',
+                            imagePath: widget.productDetail.image,
+                            width: double.infinity,
+                            //  height: double.infinity,
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.galleryGrid,
+                                  arguments: widget.productDetail);
+                            },
                           ),
                         ),
                       ),
-                      SliverList(
-                        delegate: SliverChildListDelegate(<Widget>[
-                          Container(
-                            color: AppColors.baseColor,
-                            child: Column(children: <Widget>[
-                              _HeaderBoxWidget(
-                                  productDetail: widget.productDetail,
-                                  historyProvider: historyProvider,
-                                  originalPriceFormatString:
-                                      Utils.getPriceFormat(
-                                          widget.productDetail.originalPrice),
-                                  unitPriceFormatString: Utils.getPriceFormat(
-                                      widget.productDetail.unitPrice),
-                                  heroTagTitle: widget.heroTagTitle,
-                                  heroTagOriginalPrice:
-                                      widget.heroTagOriginalPrice,
-                                  heroTagUnitPrice: widget.heroTagUnitPrice),
-                              // DetailInfoTileView(
-                              //   productDetail: widget.productDetail,
-                              // ),
-                              const SizedBox(
-                                height: AppDimens.space40,
-                              ),
-                            ]),
-                          )
-                        ]),
-                      )
-                    ]),
-                    _AddToBasketAndBuyButtonWidget(
-                      controller: controller,
-                      basketProvider: basketProvider,
-                      productDetail: widget.productDetail,
-                      psValueHolder: valueHolder,
-                      intentQty: widget.intentQty ?? '',
-                      intentSelectedColorId: widget.intentSelectedColorId ?? '',
-                      intentSelectedColorValue:
-                          widget.intentSelectedColorValue ?? '',
-                      intentbasketPrice: widget.intentBasketPrice ?? '',
-                      intentbasketSelectedAttributeList:
-                          widget.intentBasketSelectedAttributeList ??
-                              <BasketSelectedAttribute>[],
+                    ),
+                    SliverList(
+                      delegate: SliverChildListDelegate(<Widget>[
+                        Container(
+                          color: AppColors.baseColor,
+                          child: Column(children: <Widget>[
+                            _HeaderBoxWidget(
+                                productDetail: widget.productDetail,
+                                historyProvider: historyProvider,
+                                originalPriceFormatString: Utils.getPriceFormat(
+                                    widget.productDetail.originalPrice),
+                                unitPriceFormatString: Utils.getPriceFormat(
+                                    widget.productDetail.unitPrice),
+                                heroTagTitle: widget.heroTagTitle,
+                                heroTagOriginalPrice:
+                                    widget.heroTagOriginalPrice,
+                                heroTagUnitPrice: widget.heroTagUnitPrice),
+                            // DetailInfoTileView(
+                            //   productDetail: widget.productDetail,
+                            // ),
+                            const SizedBox(
+                              height: AppDimens.space40,
+                            ),
+                          ]),
+                        )
+                      ]),
                     )
-                  ],
-                );
-              } else {
-                return Container();
-              }
+                  ]),
+                  _AddToBasketAndBuyButtonWidget(
+                    controller: controller,
+                    basketProvider: basketProvider,
+                    productDetail: widget.productDetail,
+                    psValueHolder: valueHolder,
+                    intentQty: widget.intentQty ?? '',
+                    intentSelectedColorId: widget.intentSelectedColorId ?? '',
+                    intentSelectedColorValue:
+                        widget.intentSelectedColorValue ?? '',
+                    intentbasketPrice: widget.intentBasketPrice ?? '',
+                    intentbasketSelectedAttributeList:
+                        widget.intentBasketSelectedAttributeList ??
+                            <BasketSelectedAttribute>[],
+                  )
+                ],
+              );
+              // } else {
+              //   return Container();
+              // }
             })));
   }
 }
@@ -385,7 +384,6 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
                 child: Column(
                   children: <Widget>[
                     _FavouriteWidget(
-                        historyProvider: widget.historyProvider,
                         productDetail: widget.productDetail,
                         heroTagTitle: widget.heroTagTitle),
                     const SizedBox(
@@ -401,6 +399,16 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
                     ),
                     const SizedBox(
                       height: AppDimens.space12,
+                    ),
+                    Divider(
+                      height: AppDimens.space1,
+                      color: AppColors.mainColor,
+                    ),
+                    Text(
+                      widget.productDetail.catName ??
+                          '' '/' + widget.productDetail.subCatName ??
+                          '',
+                      style: Theme.of(context).textTheme.headline5,
                     ),
                     Divider(
                       height: AppDimens.space1,
@@ -430,7 +438,7 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
-                    ' This product is very good. loream jj lasjd  kj aa os fl lsjfskk l...',
+                    'humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet',
                     // widget.productDetail.description?? '',
                     style: Theme.of(context).textTheme.bodyText2.copyWith(
                         letterSpacing: 0.8, fontSize: 16, height: 1.3),
@@ -444,9 +452,9 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
             const Divider(
               height: AppDimens.space1,
             ),
-            _HeaderButtonWidget(
-              productDetail: widget.productDetail,
-            ),
+            // _HeaderButtonWidget(
+            //   productDetail: widget.productDetail,
+            // ),
           ],
         ),
       );
@@ -458,15 +466,11 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
 
 class _FavouriteWidget extends StatefulWidget {
   const _FavouriteWidget(
-      {Key key,
-      @required this.productDetail,
-      @required this.heroTagTitle,
-      @required this.historyProvider})
+      {Key key, @required this.productDetail, @required this.heroTagTitle})
       : super(key: key);
 
   final Product productDetail;
   final String heroTagTitle;
-  final HistoryProvider historyProvider;
 
   @override
   __FavouriteWidgetState createState() => __FavouriteWidgetState();
@@ -476,17 +480,20 @@ class __FavouriteWidgetState extends State<_FavouriteWidget> {
   Widget icon;
   ProductRepository favouriteRepo;
   AppValueHolder psValueHolder;
+  HistoryProvider historyProvider;
 
   @override
   Widget build(BuildContext context) {
     favouriteRepo = Provider.of<ProductRepository>(context);
     psValueHolder = Provider.of<AppValueHolder>(context);
+    historyProvider = Provider.of<HistoryProvider>(context);
 
     if (widget.productDetail != null) {
       return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
+              flex: 2,
               child: Hero(
                   tag: widget.heroTagTitle,
                   child: Text(
@@ -494,43 +501,55 @@ class __FavouriteWidgetState extends State<_FavouriteWidget> {
                     style: Theme.of(context).textTheme.headline5,
                   )),
             ),
+            // Expanded(
+            //     flex: 1,
+            //     child: PSButtonWithIconWidget(
+            //         hasShadow: true,
+            //         icon: Icons.favorite,
+            //         width: 30,
+            //         titleText: 'Favourite',
+            //         onPressed: () async {
+            //           widget.historyProvider
+            //               .addHistoryList(widget.productDetail);
+            //         })),
             GestureDetector(
                 onTap: () {
-                  setState(() {
-                    widget.productDetail.isFavourited =
-                        widget.productDetail.isFavourited == AppConst.ONE
-                            ? '0'
-                            : '1';
-                  });
-                  widget.historyProvider.addHistoryList(widget.productDetail);
+                  if (historyProvider != null &&
+                      historyProvider.history != null &&
+                      historyProvider.history.data != null &&
+                      historyProvider.history.data.id != null) {
+                    historyProvider.removeHistoryList(widget.productDetail);
+                  } else {
+                    historyProvider.addHistoryList(widget.productDetail);
+                  }
                 },
-                child: (widget.productDetail != null)
-                    ? widget.productDetail.isFavourited == AppConst.ZERO
-                        ? icon = Container(
-                            padding: const EdgeInsets.only(
-                                top: AppDimens.space8,
-                                left: AppDimens.space8,
-                                right: AppDimens.space8,
-                                bottom: AppDimens.space6),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: AppColors.mainColor),
-                                shape: BoxShape.circle),
-                            child: Icon(Icons.favorite_border,
-                                color: AppColors.mainColor),
-                          )
-                        : icon = Container(
-                            padding: const EdgeInsets.only(
-                                top: AppDimens.space8,
-                                left: AppDimens.space8,
-                                right: AppDimens.space8,
-                                bottom: AppDimens.space6),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: AppColors.mainColor),
-                                shape: BoxShape.circle),
-                            child: Icon(Icons.favorite,
-                                color: AppColors.mainColor),
-                          )
-                    : icon = Container())
+                child: (historyProvider != null &&
+                        historyProvider.history != null &&
+                        historyProvider.history.data != null &&
+                        historyProvider.history.data.id != null)
+                    ? icon = Container(
+                        padding: const EdgeInsets.only(
+                            top: AppDimens.space8,
+                            left: AppDimens.space8,
+                            right: AppDimens.space8,
+                            bottom: AppDimens.space6),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.mainColor),
+                            shape: BoxShape.circle),
+                        child: Icon(Icons.favorite, color: AppColors.mainColor),
+                      )
+                    : icon = Container(
+                        padding: const EdgeInsets.only(
+                            top: AppDimens.space8,
+                            left: AppDimens.space8,
+                            right: AppDimens.space8,
+                            bottom: AppDimens.space6),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.mainColor),
+                            shape: BoxShape.circle),
+                        child: Icon(Icons.favorite_border,
+                            color: AppColors.mainColor),
+                      ))
           ]);
     } else {
       return Container();
@@ -834,70 +853,70 @@ class __HeaderPriceWidgetState extends State<_HeaderPriceWidget> {
   }
 }
 
-class _HeaderButtonWidget extends StatelessWidget {
-  const _HeaderButtonWidget({
-    Key key,
-    @required this.productDetail,
-  }) : super(key: key);
+// class _HeaderButtonWidget extends StatelessWidget {
+//   const _HeaderButtonWidget({
+//     Key key,
+//     @required this.productDetail,
+//   }) : super(key: key);
 
-  final Product productDetail;
-  @override
-  Widget build(BuildContext context) {
-    if (productDetail != null) {
-      return Container(
-        margin: const EdgeInsets.symmetric(
-            horizontal: AppDimens.space4, vertical: AppDimens.space12),
-        decoration: BoxDecoration(
-          color: AppColors.backgroundColor,
-          borderRadius:
-              const BorderRadius.all(Radius.circular(AppDimens.space8)),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-              top: AppDimens.space10, bottom: AppDimens.space10),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Text(
-                    productDetail.favouriteCount ?? '',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  const SizedBox(
-                    height: AppDimens.space8,
-                  ),
-                  Text(
-                    Utils.getString('product_detail__whih_list'),
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                ],
-              ),
-              Column(
-                children: <Widget>[
-                  Text(
-                    productDetail.touchCount ?? '',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  const SizedBox(
-                    height: AppDimens.space8,
-                  ),
-                  Text(
-                    Utils.getString('product_detail__seen'),
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      );
-    } else {
-      return const Card();
-    }
-  }
-}
+//   final Product productDetail;
+//   @override
+//   Widget build(BuildContext context) {
+//     if (productDetail != null) {
+//       return Container(
+//         margin: const EdgeInsets.symmetric(
+//             horizontal: AppDimens.space4, vertical: AppDimens.space12),
+//         decoration: BoxDecoration(
+//           color: AppColors.backgroundColor,
+//           borderRadius:
+//               const BorderRadius.all(Radius.circular(AppDimens.space8)),
+//         ),
+//         child: Padding(
+//           padding: const EdgeInsets.only(
+//               top: AppDimens.space10, bottom: AppDimens.space10),
+//           child: Row(
+//             mainAxisSize: MainAxisSize.max,
+//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//             children: <Widget>[
+//               Column(
+//                 children: <Widget>[
+//                   Text(
+//                     productDetail.favouriteCount ?? '',
+//                     style: Theme.of(context).textTheme.bodyText2,
+//                   ),
+//                   const SizedBox(
+//                     height: AppDimens.space8,
+//                   ),
+//                   Text(
+//                     Utils.getString('product_detail__whih_list'),
+//                     style: Theme.of(context).textTheme.caption,
+//                   ),
+//                 ],
+//               ),
+//               Column(
+//                 children: <Widget>[
+//                   Text(
+//                     productDetail.touchCount ?? '',
+//                     style: Theme.of(context).textTheme.bodyText2,
+//                   ),
+//                   const SizedBox(
+//                     height: AppDimens.space8,
+//                   ),
+//                   Text(
+//                     Utils.getString('product_detail__seen'),
+//                     style: Theme.of(context).textTheme.caption,
+//                   ),
+//                 ],
+//               )
+//             ],
+//           ),
+//         ),
+//       );
+//     } else {
+//       return const Card();
+//     }
+//   }
+// }
 
 class _AddToBasketAndBuyButtonWidget extends StatefulWidget {
   const _AddToBasketAndBuyButtonWidget({
@@ -1088,6 +1107,11 @@ class __AddToBasketAndBuyButtonWidgetState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
+                          // _ColorsWidget(
+                          //   product: widget.product,
+                          //   updateColorIdAndValue: updateColorIdAndValue,
+                          //   selectedColorId: colorId,
+                          // ),
                           Container(
                             margin: const EdgeInsets.only(
                                 top: AppDimens.space8,
@@ -1166,7 +1190,7 @@ class __AddToBasketAndBuyButtonWidgetState
                         titleText:
                             Utils.getString('product_detail__add_to_basket'),
                         onPressed: () async {
-                          if (widget.productDetail.isAvailable == '1') {
+                          if (widget.productDetail.isAvailable == 'instock') {
                             _showDrawer(false);
                           } else {
                             showDialog<dynamic>(
@@ -1194,6 +1218,87 @@ class __AddToBasketAndBuyButtonWidgetState
     }
   }
 }
+
+// class _ColorsWidget extends StatefulWidget {
+//   const _ColorsWidget({
+//     Key key,
+//     @required this.product,
+//     @required this.updateColorIdAndValue,
+//     @required this.selectedColorId,
+//   }) : super(key: key);
+
+//   final Product product;
+//   final Function updateColorIdAndValue;
+//   final String selectedColorId;
+//   @override
+//   __ColorsWidgetState createState() => __ColorsWidgetState();
+// }
+
+// class __ColorsWidgetState extends State<_ColorsWidget> {
+//   String _selectedColorId = '';
+
+//   @override
+//   Widget build(BuildContext context) {
+//     if (_selectedColorId == '') {
+//       _selectedColorId = widget.selectedColorId;
+//     }
+//     if (widget.product.itemColorList.isNotEmpty &&
+//         widget.product.itemColorList[0].id != '') {
+//       return Container(
+//         margin: const EdgeInsets.only(
+//             left: PsDimens.space12, right: PsDimens.space12),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: <Widget>[
+//             const SizedBox(
+//               height: PsDimens.space4,
+//             ),
+//             Text(
+//               Utils.getString(context, 'product_detail__available_color'),
+//               overflow: TextOverflow.ellipsis,
+//               maxLines: 1,
+//               softWrap: false,
+//             ),
+//             const SizedBox(
+//               height: PsDimens.space4,
+//             ),
+//             Container(
+//               height: 50,
+//               child: MediaQuery.removePadding(
+//                   context: context,
+//                   removeTop: true,
+//                   child: ListView.builder(
+//                       scrollDirection: Axis.horizontal,
+//                       itemCount: widget.product.itemColorList.length,
+//                       itemBuilder: (BuildContext context, int index) {
+//                         return ColorListItemView(
+//                           color: widget.product.itemColorList[index],
+//                           selectedColorId: _selectedColorId,
+//                           onColorTap: () {
+//                             setState(() {
+//                               _selectedColorId =
+//                                   widget.product.itemColorList[index].id;
+
+//                               widget.updateColorIdAndValue(
+//                                   _selectedColorId,
+//                                   widget
+//                                       .product.itemColorList[index].colorValue);
+//                             });
+//                           },
+//                         );
+//                       })),
+//             ),
+//             const SizedBox(
+//               height: PsDimens.space4,
+//             ),
+//           ],
+//         ),
+//       );
+//     } else {
+//       return Container();
+//     }
+//   }
+// }
 
 class _ImageAndTextForBottomSheetWidget extends StatefulWidget {
   const _ImageAndTextForBottomSheetWidget({
@@ -1225,9 +1330,9 @@ class __ImageAndTextForBottomSheetWidgetState
           Container(
             width: AppDimens.space60,
             height: AppDimens.space60,
-            child: AppNetworkImage(
+            child: AppNetworkImageWithUrl(
               photoKey: '',
-              defaultPhoto: widget.product.defaultPhoto,
+              imagePath: widget.product.image,
             ),
           ),
           const SizedBox(

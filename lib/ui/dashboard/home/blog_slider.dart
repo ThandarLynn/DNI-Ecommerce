@@ -58,9 +58,9 @@ class _CollectionProductSliderState extends State<BlogSliderView> {
                   children: <Widget>[
                     ClipRRect(
                       borderRadius: BorderRadius.circular(AppDimens.space8),
-                      child: AppNetworkImage(
+                      child: AppNetworkImageWithUrl(
                           photoKey: '',
-                          defaultPhoto: blog.defaultPhoto,
+                          imagePath: blog.image,
                           width: MediaQuery.of(context).size.width,
                           // height: double.infinity,
                           boxfit: BoxFit.cover,

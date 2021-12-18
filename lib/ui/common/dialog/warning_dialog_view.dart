@@ -72,7 +72,7 @@ class _NewDialog extends StatelessWidget {
                   top: AppDimens.space8,
                   bottom: AppDimens.space8),
               child: Text(
-                widget.message,
+                widget.message?? 'null',
                 style: Theme.of(context).textTheme.subtitle2,
               ),
             ),

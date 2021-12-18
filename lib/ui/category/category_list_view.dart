@@ -170,7 +170,7 @@ class _CategoryListViewState extends State<CategoryListView>
                                             // print(provider
                                             //     .categoryList
                                             //     .data[index]
-                                            //     .defaultPhoto
+                                            //     .Image
                                             //     .imgPath);
                                             // final ProductParameterHolder
                                             // if (AppConfig.isShowSubCategory) {
@@ -201,6 +201,8 @@ class _CategoryListViewState extends State<CategoryListView>
                                                 productParameterHolder =
                                                 ProductParameterHolder()
                                                     .getLatestParameterHolder();
+                                            productParameterHolder.searchTerm =
+                                                '0';
                                             productParameterHolder.catId =
                                                 provider.categoryList
                                                     .data[index].id;
@@ -234,7 +236,7 @@ class _CategoryListViewState extends State<CategoryListView>
                         )),
                   ),
                 ]),
-                PSProgressIndicator(provider.categoryList.status)
+                AppProgressIndicator(provider.categoryList.status)
               ]);
             })));
   }

@@ -166,6 +166,7 @@ class ButtonWidget extends StatelessWidget {
                       if (_apiStatus.data.status == 'success') {
                         return SuccessDialog(
                           message: _apiStatus.data.status,
+                          onPressed: () {}
                         );
                       } else {
                         return ErrorDialog(

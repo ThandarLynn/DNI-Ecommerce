@@ -494,6 +494,7 @@ class _Checkout1ViewState extends State<Checkout1View> {
             builder: (BuildContext contet) {
               return SuccessDialog(
                 message: Utils.getString('edit_profile__success'),
+                onPressed: () {}
               );
             });
       } else {

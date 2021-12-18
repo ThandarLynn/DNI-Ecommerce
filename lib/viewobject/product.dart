@@ -1,13 +1,16 @@
+import 'package:dni_ecommerce/viewobject/ItemColor.dart';
 import 'package:dni_ecommerce/viewobject/rating_detail.dart';
 
 import 'common/app_object.dart';
-import 'default_photo.dart';
+// import 'gallery.dart';
 
 class Product extends AppObject<Product> {
   Product(
       {this.id,
       this.catId,
       this.subCatId,
+      this.catName,
+      this.subCatName,
       this.productUnit,
       this.productMeasurement,
       this.name,
@@ -48,12 +51,14 @@ class Product extends AppObject<Product> {
       this.discountAmount,
       // this.discountPercent,
       this.discountValue,
-      this.defaultPhoto,
-      this.ratingDetail});
+      this.ratingDetail,
+      this.itemColorList});
 
   String id;
   String catId;
   String subCatId;
+  String catName;
+  String subCatName;
   String productUnit;
   String productMeasurement;
   String name;
@@ -84,7 +89,6 @@ class Product extends AppObject<Product> {
   String dynamicLink;
   String addedDateStr;
   String transStatus;
-  DefaultPhoto defaultPhoto;
   String isliked;
   String isFavourited;
   String isPurchased; // to remove later
@@ -96,6 +100,7 @@ class Product extends AppObject<Product> {
   // String discountPercent;
   String discountValue;
   RatingDetail ratingDetail;
+  List<ItemColor> itemColorList;
 
   @override
   String getPrimaryKey() {
@@ -109,6 +114,8 @@ class Product extends AppObject<Product> {
           id: dynamicData['id'],
           catId: dynamicData['category_id'],
           subCatId: dynamicData['sub_cat_id'],
+          catName: dynamicData['category_name'],
+          subCatName: dynamicData['sub_cat_name'],
           productUnit: dynamicData['product_unit'],
           productMeasurement: dynamicData['product_measurement'],
           name: dynamicData['name'],
@@ -149,7 +156,7 @@ class Product extends AppObject<Product> {
           discountAmount: dynamicData['discount_amount'],
           // discountPercent: dynamicData['discount_percent'],
           discountValue: dynamicData['discount_value'],
-          defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']),
+          itemColorList: ItemColor().fromMapList(dynamicData['colors']),
           ratingDetail: RatingDetail().fromMap(dynamicData['rating_details']));
     } else {
       return null;
@@ -163,6 +170,8 @@ class Product extends AppObject<Product> {
       data['id'] = object.id;
       data['category_id'] = object.catId;
       data['sub_cat_id'] = object.subCatId;
+      data['category_name'] = object.catName;
+      data['sub_cat_name'] = object.subCatName;
       data['product_unit'] = object.productUnit;
       data['product_measurement'] = object.productMeasurement;
       data['name'] = object.name;
@@ -203,7 +212,8 @@ class Product extends AppObject<Product> {
       data['discount_amount'] = object.discountAmount;
       // data['discount_percent'] = object.discountPercent;
       data['discount_value'] = object.discountValue;
-      data['default_photo'] = DefaultPhoto().toMap(object.defaultPhoto);
+      // data['default_photo'] = Gallery().toMap(object.Gallery);
+      data['colors'] = ItemColor().toMapList(object.itemColorList);
       data['rating_details'] = RatingDetail().toMap(object.ratingDetail);
       return data;
     } else {

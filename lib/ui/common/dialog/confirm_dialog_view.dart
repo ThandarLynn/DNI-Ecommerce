@@ -61,7 +61,7 @@ class NewDialog extends StatelessWidget {
     );
 
     final Widget _messageWidget = Text(
-      widget.description,
+      widget.description?? 'null',
       style: Theme.of(context).textTheme.subtitle2,
     );
     return Dialog(
@@ -73,11 +73,11 @@ class NewDialog extends StatelessWidget {
               height: AppDimens.space60,
               width: double.infinity,
               padding: const EdgeInsets.all(AppDimens.space8),
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(5),
                       topRight: Radius.circular(5)),
-                  color: AppColors.mainColor),
+                  color: Colors.grey),
               child: _headerWidget),
           _largeSpacingWidget,
           Container(
@@ -101,7 +101,7 @@ class NewDialog extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(widget.leftButtonText,
+              child: Text(widget.leftButtonText?? 'null',
                   style: Theme.of(context).textTheme.button),
             )),
             Container(
@@ -116,7 +116,7 @@ class NewDialog extends StatelessWidget {
                 widget.onAgreeTap();
               },
               child: Text(
-                widget.rightButtonText,
+                widget.rightButtonText?? 'null',
                 style: Theme.of(context)
                     .textTheme
                     .button

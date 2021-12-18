@@ -103,8 +103,10 @@ class PsButtonWidget extends StatelessWidget {
                         password: passwordController.text,
                         passwordConfirm: passwordController.text);
 
-                final AppResource<ApiStatus> _apiStatus = await provider
-                    .postChangePassword(contactUsParameterHolder.toMap());
+                final AppResource<ApiStatus> _apiStatus =
+                    await provider.postChangePassword(
+                        contactUsParameterHolder.toMap(),
+                        provider.psValueHolder.userToken);
 
                 if (_apiStatus.data != null) {
                   passwordController.clear();
@@ -114,8 +116,7 @@ class PsButtonWidget extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return SuccessDialog(
-                          message: _apiStatus.data.status,
-                        );
+                            message: _apiStatus.data.status, onPressed: () {});
                       });
                 } else {
                   showDialog<dynamic>(

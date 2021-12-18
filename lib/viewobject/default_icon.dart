@@ -58,16 +58,16 @@ class DefaultIcon extends AppObject<DefaultIcon> {
 
   @override
   List<DefaultIcon> fromMapList(List<dynamic> dynamicDataList) {
-    final List<DefaultIcon> defaultPhotoList = <DefaultIcon>[];
+    final List<DefaultIcon> imageList = <DefaultIcon>[];
 
     if (dynamicDataList != null) {
       for (dynamic dynamicData in dynamicDataList) {
         if (dynamicData != null) {
-          defaultPhotoList.add(fromMap(dynamicData));
+          imageList.add(fromMap(dynamicData));
         }
       }
     }
-    return defaultPhotoList;
+    return imageList;
   }
 
   @override

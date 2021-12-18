@@ -51,11 +51,11 @@ class ProductVeticalListItem extends StatelessWidget {
                                     Center(
                                       child: Text(
                                         '-' +
-                        Utils.calculateDiscountPercent(
-                                product.originalPrice,
-                                product.unitPrice)
-                            .toString() +
-                        '%',
+                                            Utils.calculateDiscountPercent(
+                                                    product.originalPrice,
+                                                    product.unitPrice)
+                                                .toString() +
+                                            '%',
                                         textAlign: TextAlign.start,
                                         style: Theme.of(context)
                                             .textTheme
@@ -97,7 +97,7 @@ class ProductVeticalListItem extends StatelessWidget {
                             height: double.infinity,
                             boxfit: BoxFit.cover,
                             onTap: () {
-                              // print(product.defaultPhoto.imgParentId);
+                              // print(product.Image.imgParentId);
                               onTap();
                             },
                           ),

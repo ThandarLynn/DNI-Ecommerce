@@ -167,7 +167,7 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
                                           return ProductVeticalListItem(
                                             coreTagKey:
                                                 provider.hashCode.toString() +
-                                                     provider.productList
+                                                    provider.productList
                                                         .data[index].id,
                                             animationController:
                                                 widget.animationController,
@@ -300,7 +300,7 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
                                 searchProductProvider: _searchProductProvider)),
                       ),
                     ),
-                    PSProgressIndicator(provider.productList.status),
+                    AppProgressIndicator(provider.productList.status),
                   ]),
                 ),
               )
@@ -368,95 +368,95 @@ class _BottomNavigationImageAndTextState
               ],
             ),
             onTap: () async {
-              // final Map<String, String> dataHolder = <String, String>{};
-              // dataHolder[AppConst.CATEGORY_ID] =
-              //     widget.searchProductProvider.productParameterHolder.catId;
-              // dataHolder[AppConst.SUB_CATEGORY_ID] =
-              //     widget.searchProductProvider.productParameterHolder.subCatId;
-              // final dynamic result = await Navigator.pushNamed(
-              //     context, RoutePaths.filterExpantion,
-              //     arguments: dataHolder);
+              final Map<String, String> dataHolder = <String, String>{};
+              dataHolder[AppConst.CATEGORY_ID] =
+                  widget.searchProductProvider.productParameterHolder.catId;
+              dataHolder[AppConst.SUB_CATEGORY_ID] =
+                  widget.searchProductProvider.productParameterHolder.subCatId;
+              final dynamic result = await Navigator.pushNamed(
+                  context, RoutePaths.filterExpantion,
+                  arguments: dataHolder);
 
-              // if (result != null) {
-              //   widget.searchProductProvider.productParameterHolder.catId =
-              //       result[AppConst.CATEGORY_ID];
-              //   widget.searchProductProvider.productParameterHolder.subCatId =
-              //       result[AppConst.SUB_CATEGORY_ID];
-              //   widget.searchProductProvider.resetLatestProductList(
-              //       widget.searchProductProvider.productParameterHolder);
+              if (result != null) {
+                widget.searchProductProvider.productParameterHolder.catId =
+                    result[AppConst.CATEGORY_ID];
+                widget.searchProductProvider.productParameterHolder.subCatId =
+                    result[AppConst.SUB_CATEGORY_ID];
+                widget.searchProductProvider.resetLatestProductList(
+                    widget.searchProductProvider.productParameterHolder);
 
-              //   if (result[AppConst.CATEGORY_ID] == '' &&
-              //       result[AppConst.SUB_CATEGORY_ID] == '') {
-              //     isClickBaseLineList = false;
-              //   } else {
-              //     isClickBaseLineList = true;
-              //   }
-              // }
+                if (result[AppConst.CATEGORY_ID] == '' &&
+                    result[AppConst.SUB_CATEGORY_ID] == '') {
+                  isClickBaseLineList = false;
+                } else {
+                  isClickBaseLineList = true;
+                }
+              }
             },
           ),
-          GestureDetector(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                AppIconWithCheck(
-                  icon: Icons.filter_list,
-                  color: isClickBaseLineTune
-                      ? AppColors.mainColor
-                      : AppColors.iconColor,
-                ),
-                Text(Utils.getString('search__filter'),
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        color: isClickBaseLineTune
-                            ? AppColors.mainColor
-                            : AppColors.textPrimaryColor))
-              ],
-            ),
-            onTap: () async {
-              // final dynamic result = await Navigator.pushNamed(
-              //     context, RoutePaths.itemSearch,
-              //     arguments:
-              //         widget.searchProductProvider.productParameterHolder);
-              // if (result != null) {
-              //   widget.searchProductProvider.productParameterHolder = result;
-              //   widget.searchProductProvider.resetLatestProductList(
-              //       widget.searchProductProvider.productParameterHolder);
+          // GestureDetector(
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: <Widget>[
+          //       AppIconWithCheck(
+          //         icon: Icons.filter_list,
+          //         color: isClickBaseLineTune
+          //             ? AppColors.mainColor
+          //             : AppColors.iconColor,
+          //       ),
+          //       Text(Utils.getString('search__filter'),
+          //           style: Theme.of(context).textTheme.bodyText1.copyWith(
+          //               color: isClickBaseLineTune
+          //                   ? AppColors.mainColor
+          //                   : AppColors.textPrimaryColor))
+          //     ],
+          //   ),
+          //   onTap: () async {
+          // final dynamic result = await Navigator.pushNamed(
+          //     context, RoutePaths.itemSearch,
+          //     arguments:
+          //         widget.searchProductProvider.productParameterHolder);
+          // if (result != null) {
+          //   widget.searchProductProvider.productParameterHolder = result;
+          //   widget.searchProductProvider.resetLatestProductList(
+          //       widget.searchProductProvider.productParameterHolder);
 
-              //   if (widget.searchProductProvider.productParameterHolder
-              //       .isFiltered()) {
-              //     isClickBaseLineTune = true;
-              //   } else {
-              //     isClickBaseLineTune = false;
-              //   }
-              // }
-            },
-          ),
-          GestureDetector(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                AppIconWithCheck(
-                  icon: Icons.sort,
-                  color: AppColors.mainColor,
-                ),
-                Text(Utils.getString('search__sort'),
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        color: isClickBaseLineTune
-                            ? AppColors.mainColor
-                            : AppColors.textPrimaryColor))
-              ],
-            ),
-            onTap: () async {
-              // final dynamic result = await Navigator.pushNamed(
-              //     context, RoutePaths.itemSort,
-              //     arguments:
-              //         widget.searchProductProvider.productParameterHolder);
-              // if (result != null) {
-              //   widget.searchProductProvider.productParameterHolder = result;
-              //   widget.searchProductProvider.resetLatestProductList(
-              //       widget.searchProductProvider.productParameterHolder);
-              // }
-            },
-          ),
+          //   if (widget.searchProductProvider.productParameterHolder
+          //       .isFiltered()) {
+          //     isClickBaseLineTune = true;
+          //   } else {
+          //     isClickBaseLineTune = false;
+          //   }
+          // }
+          //   },
+          // ),
+          // GestureDetector(
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: <Widget>[
+          //       AppIconWithCheck(
+          //         icon: Icons.sort,
+          //         color: AppColors.mainColor,
+          //       ),
+          //       Text(Utils.getString('search__sort'),
+          //           style: Theme.of(context).textTheme.bodyText1.copyWith(
+          //               color: isClickBaseLineTune
+          //                   ? AppColors.mainColor
+          //                   : AppColors.textPrimaryColor))
+          //     ],
+          //   ),
+          //   onTap: () async {
+          //     // final dynamic result = await Navigator.pushNamed(
+          //     //     context, RoutePaths.itemSort,
+          //     //     arguments:
+          //     //         widget.searchProductProvider.productParameterHolder);
+          //     // if (result != null) {
+          //     //   widget.searchProductProvider.productParameterHolder = result;
+          //     //   widget.searchProductProvider.resetLatestProductList(
+          //     //       widget.searchProductProvider.productParameterHolder);
+          //     // }
+          //   },
+          // ),
         ],
       ),
     );

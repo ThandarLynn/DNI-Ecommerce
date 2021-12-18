@@ -1,7 +1,7 @@
 import 'common/app_map_object.dart';
 
-class FavouriteProduct extends AppMapObject<FavouriteProduct> {
-  FavouriteProduct({this.id, int sorting}) {
+class TopSellingProduct extends AppMapObject<TopSellingProduct> {
+  TopSellingProduct({this.id, int sorting}) {
     super.sorting = sorting;
   }
   String id;
@@ -12,9 +12,9 @@ class FavouriteProduct extends AppMapObject<FavouriteProduct> {
   }
 
   @override
-  FavouriteProduct fromMap(dynamic dynamicData) {
+  TopSellingProduct fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return FavouriteProduct(
+      return TopSellingProduct(
           id: dynamicData['id'], sorting: dynamicData['sorting']);
     } else {
       return null;
@@ -34,8 +34,9 @@ class FavouriteProduct extends AppMapObject<FavouriteProduct> {
   }
 
   @override
-  List<FavouriteProduct> fromMapList(List<dynamic> dynamicDataList) {
-    final List<FavouriteProduct> favouriteProductMapList = <FavouriteProduct>[];
+  List<TopSellingProduct> fromMapList(List<dynamic> dynamicDataList) {
+    final List<TopSellingProduct> favouriteProductMapList =
+        <TopSellingProduct>[];
 
     if (dynamicDataList != null) {
       for (dynamic dynamicData in dynamicDataList) {

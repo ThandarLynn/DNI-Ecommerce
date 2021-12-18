@@ -149,7 +149,7 @@ class _CountryListViewState extends State<CountryListView>
                         .resetShippingCountryList(psValueHolder.shopId);
                   },
                 )),
-                PSProgressIndicator(provider.shippingCountryList.status)
+                AppProgressIndicator(provider.shippingCountryList.status)
               ]);
             }));
   }

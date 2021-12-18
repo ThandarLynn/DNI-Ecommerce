@@ -62,12 +62,16 @@ Future<void> main() async {
   //check is apple signin is available
   await Utils.checkAppleSignInAvailable();
 
-  runApp(EasyLocalization(
+  runApp(MultiProvider(
+        providers: <SingleChildWidget>[
+          ...providers,
+        ],
+        child: EasyLocalization(
       path: 'assets/langs',
       saveLocale: true,
       startLocale: AppConfig.defaultLanguage.toLocale(),
       supportedLocales: getSupportedLanguages(),
-      child: MainApp()));
+      child: MainApp())));
 }
 
 List<Locale> getSupportedLanguages() {
@@ -142,11 +146,7 @@ class _MainAppState extends State<MainApp> {
     // init Color
     AppColors.loadColor(context);
     print(EasyLocalization.of(context).locale.languageCode);
-    return MultiProvider(
-        providers: <SingleChildWidget>[
-          ...providers,
-        ],
-        child: DynamicTheme(
+    return DynamicTheme(
             defaultBrightness: Brightness.light,
             data: (Brightness brightness) {
               if (brightness == Brightness.light) {
@@ -172,6 +172,6 @@ class _MainAppState extends State<MainApp> {
                 supportedLocales: EasyLocalization.of(context).supportedLocales,
                 locale: EasyLocalization.of(context).locale,
               );
-            }));
+            });
   }
 }

@@ -4,11 +4,12 @@ import 'package:dni_ecommerce/api/app_api_service.dart';
 import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/api/common/app_status.dart';
 import 'package:dni_ecommerce/constant/app_constant.dart';
-import 'package:dni_ecommerce/db/favourite_product_dao.dart';
+import 'package:dni_ecommerce/db/top_selling_product_dao.dart';
 import 'package:dni_ecommerce/db/product_dao.dart';
 import 'package:dni_ecommerce/db/product_map_dao.dart';
 import 'package:dni_ecommerce/repository/Common/app_repository.dart';
-import 'package:dni_ecommerce/viewobject/favourite_product.dart';
+import 'package:dni_ecommerce/viewobject/common/api_status.dart';
+import 'package:dni_ecommerce/viewobject/top_selling_product.dart';
 import 'package:dni_ecommerce/viewobject/holder/product_parameter_holder.dart';
 import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:dni_ecommerce/viewobject/product_map.dart';
@@ -36,7 +37,7 @@ class ProductRepository extends AppRepository {
     }
   }
 
-  void sinkFavouriteProductListStream(
+  void sinkTopSellingProductListStream(
       StreamController<AppResource<List<Product>>> favouriteProductListStream,
       AppResource<List<Product>> dataList) {
     if (dataList != null && favouriteProductListStream != null) {
@@ -265,9 +266,8 @@ class ProductRepository extends AppRepository {
   //   }
   // }
 
-  Future<dynamic> getAllFavouritesList(
+  Future<dynamic> getTopSellingProductList(
       StreamController<AppResource<List<Product>>> favouriteProductListStream,
-      String loginUserId,
       bool isConnectedToInternet,
       int limit,
       int offset,
@@ -275,28 +275,28 @@ class ProductRepository extends AppRepository {
       {bool isLoadFromServer = true}) async {
     // Prepare Holder and Map Dao
     // final String paramKey = holder.getParamKey();
-    final FavouriteProductDao favouriteProductDao =
-        FavouriteProductDao.instance;
+    final TopSellingProductDao favouriteProductDao =
+        TopSellingProductDao.instance;
 
     // Load from Db and Send to UI
-    sinkFavouriteProductListStream(
+    sinkTopSellingProductListStream(
         favouriteProductListStream,
         await _productDao.getAllByJoin(
-            primaryKey, favouriteProductDao, FavouriteProduct(),
+            primaryKey, favouriteProductDao, TopSellingProduct(),
             status: status));
 
     // Server Call
     if (isConnectedToInternet) {
       final AppResource<List<Product>> _resource =
-          await _psApiService.getFavouritesList(loginUserId, limit, offset);
+          await _psApiService.getTopSellingProductList(limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         // Create Map List
-        final List<FavouriteProduct> favouriteProductMapList =
-            <FavouriteProduct>[];
+        final List<TopSellingProduct> favouriteProductMapList =
+            <TopSellingProduct>[];
         int i = 0;
         for (Product data in _resource.data) {
-          favouriteProductMapList.add(FavouriteProduct(
+          favouriteProductMapList.add(TopSellingProduct(
             id: data.id,
             sorting: i++,
           ));
@@ -315,39 +315,38 @@ class ProductRepository extends AppRepository {
       }
 
       // Load updated Data from Db and Send to UI
-      sinkFavouriteProductListStream(
+      sinkTopSellingProductListStream(
           favouriteProductListStream,
           await _productDao.getAllByJoin(
-              primaryKey, favouriteProductDao, FavouriteProduct()));
+              primaryKey, favouriteProductDao, TopSellingProduct()));
     }
   }
 
-  Future<dynamic> getNextPageFavouritesList(
+  Future<dynamic> getNextPageTopSellingProductList(
       StreamController<AppResource<List<Product>>> favouriteProductListStream,
-      String loginUserId,
       bool isConnectedToInternet,
       int limit,
       int offset,
       AppStatus status,
       {bool isLoadFromServer = true}) async {
-    final FavouriteProductDao favouriteProductDao =
-        FavouriteProductDao.instance;
+    final TopSellingProductDao favouriteProductDao =
+        TopSellingProductDao.instance;
     // Load from Db and Send to UI
-    sinkFavouriteProductListStream(
+    sinkTopSellingProductListStream(
         favouriteProductListStream,
         await _productDao.getAllByJoin(
-            primaryKey, favouriteProductDao, FavouriteProduct(),
+            primaryKey, favouriteProductDao, TopSellingProduct(),
             status: status));
 
     if (isConnectedToInternet) {
       final AppResource<List<Product>> _resource =
-          await _psApiService.getFavouritesList(loginUserId, limit, offset);
+          await _psApiService.getTopSellingProductList(limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         // Create Map List
-        final List<FavouriteProduct> favouriteProductMapList =
-            <FavouriteProduct>[];
-        final AppResource<List<FavouriteProduct>> existingMapList =
+        final List<TopSellingProduct> favouriteProductMapList =
+            <TopSellingProduct>[];
+        final AppResource<List<TopSellingProduct>> existingMapList =
             await favouriteProductDao.getAll();
 
         int i = 0;
@@ -355,7 +354,7 @@ class ProductRepository extends AppRepository {
           i = existingMapList.data.length + 1;
         }
         for (Product data in _resource.data) {
-          favouriteProductMapList.add(FavouriteProduct(
+          favouriteProductMapList.add(TopSellingProduct(
             id: data.id,
             sorting: i++,
           ));
@@ -367,42 +366,27 @@ class ProductRepository extends AppRepository {
         // Insert Product
         await _productDao.insertAll(primaryKey, _resource.data);
       }
-      sinkFavouriteProductListStream(
+      sinkTopSellingProductListStream(
           favouriteProductListStream,
           await _productDao.getAllByJoin(
-              primaryKey, favouriteProductDao, FavouriteProduct()));
+              primaryKey, favouriteProductDao, TopSellingProduct()));
     }
   }
 
-  Future<AppResource<Product>> postFavourite(Map<dynamic, dynamic> jsonMap,
+  Future<AppResource<ApiStatus>> postTouchCount(Map<dynamic, dynamic> jsonMap,
       bool isConnectedToInternet, AppStatus status,
       {bool isLoadFromServer = true}) async {
-    final AppResource<Product> _resource =
-        await _psApiService.postFavourite(jsonMap);
+    final AppResource<ApiStatus> _resource =
+        await _psApiService.postTouchCount(jsonMap);
     if (_resource.status == AppStatus.SUCCESS) {
       return _resource;
     } else {
-      final Completer<AppResource<Product>> completer =
-          Completer<AppResource<Product>>();
+      final Completer<AppResource<ApiStatus>> completer =
+          Completer<AppResource<ApiStatus>>();
       completer.complete(_resource);
       return completer.future;
     }
   }
-
-  // Future<AppResource<ApiStatus>> postTouchCount(Map<dynamic, dynamic> jsonMap,
-  //     bool isConnectedToInternet, AppStatus status,
-  //     {bool isLoadFromServer = true}) async {
-  //   final AppResource<ApiStatus> _resource =
-  //       await _psApiService.postTouchCount(jsonMap);
-  //   if (_resource.status == AppStatus.SUCCESS) {
-  //     return _resource;
-  //   } else {
-  //     final Completer<AppResource<ApiStatus>> completer =
-  //         Completer<AppResource<ApiStatus>>();
-  //     completer.complete(_resource);
-  //     return completer.future;
-  //   }
-  // }
 
   // Future<dynamic> getRelatedProductList(
   //     StreamController<AppResource<List<Product>>> relatedProductListStream,

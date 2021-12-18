@@ -144,14 +144,13 @@ class UserProvider extends AppProvider {
   }
 
   Future<dynamic> postChangePassword(
-    Map<dynamic, dynamic> jsonMap,
-  ) async {
+      Map<dynamic, dynamic> jsonMap, String userToken) async {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
     _apiStatus = await _repo.postChangePassword(
-        jsonMap, isConnectedToInternet, AppStatus.PROGRESS_LOADING);
+        jsonMap, userToken, isConnectedToInternet, AppStatus.PROGRESS_LOADING);
 
     return _apiStatus;
   }
@@ -238,14 +237,12 @@ class UserProvider extends AppProvider {
     return _apiStatus;
   }
 
-  Future<dynamic> getUser(
-    String loginUserId,
-  ) async {
+  Future<dynamic> getUser(String loginUserId, String userToken) async {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    await _repo.getUser(userListStream, loginUserId, isConnectedToInternet,
-        AppStatus.PROGRESS_LOADING);
+    await _repo.getUser(userListStream, loginUserId, userToken,
+        isConnectedToInternet, AppStatus.PROGRESS_LOADING);
   }
 
   Future<dynamic> getUserFromDB(String loginUserId) async {

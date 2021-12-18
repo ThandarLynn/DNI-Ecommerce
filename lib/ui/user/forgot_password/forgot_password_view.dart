@@ -273,14 +273,14 @@ class __SendButtonWidgetState extends State<_SendButtonWidget> {
 
                   if (_apiStatus.data != null) {
                     Navigator.pushNamed(
-                      context,
-                      RoutePaths.reset_password,
-                    );
+                        context, RoutePaths.reset_password,
+                        arguments: _apiStatus.data.token);
                     // showDialog<dynamic>(
                     //     context: context,
                     //     builder: (BuildContext context) {
                     //       return SuccessDialog(
                     //         message: _apiStatus.data.message,
+                    //onPressed: () {}
                     //       );
                     //     });
                   } else {

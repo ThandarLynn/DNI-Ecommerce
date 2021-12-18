@@ -153,7 +153,7 @@ class _CityListViewState extends State<CityListView>
                         psValueHolder.shopId, psValueHolder.shopId);
                   },
                 )),
-                PSProgressIndicator(provider.shippingCityList.status)
+                AppProgressIndicator(provider.shippingCityList.status)
               ]);
             }));
   }

@@ -1,9 +1,14 @@
 import 'package:dni_ecommerce/api/app_api_service.dart';
+import 'package:dni_ecommerce/db/blog_dao.dart';
 import 'package:dni_ecommerce/db/category_map_dao.dart';
 import 'package:dni_ecommerce/db/cateogry_dao.dart';
+import 'package:dni_ecommerce/db/gallery_dao.dart';
 import 'package:dni_ecommerce/db/product_dao.dart';
 import 'package:dni_ecommerce/db/product_map_dao.dart';
+import 'package:dni_ecommerce/db/sub_category_dao.dart';
+import 'package:dni_ecommerce/db/top_selling_product_dao.dart';
 import 'package:dni_ecommerce/repository/basket_repository.dart';
+import 'package:dni_ecommerce/repository/blog_repository.dart';
 import 'package:dni_ecommerce/repository/category_repository.dart';
 import 'package:dni_ecommerce/repository/contact_us_repository.dart';
 import 'package:dni_ecommerce/repository/coupon_discount_repository.dart';
@@ -11,6 +16,7 @@ import 'package:dni_ecommerce/repository/history_repsitory.dart';
 import 'package:dni_ecommerce/repository/product_repository.dart';
 import 'package:dni_ecommerce/repository/shipping_city_repository.dart';
 import 'package:dni_ecommerce/repository/shipping_country_repository.dart';
+import 'package:dni_ecommerce/repository/sub_category_repository.dart';
 import 'package:dni_ecommerce/repository/tansaction_detail_repository.dart';
 import 'package:dni_ecommerce/repository/token_repository.dart';
 import 'package:dni_ecommerce/repository/transaction_header_repository.dart';
@@ -19,7 +25,7 @@ import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-
+import 'package:dni_ecommerce/repository/gallery_repository.dart';
 import 'db/basket_dao.dart';
 import 'db/common/app_shared_preferences.dart';
 import 'db/history_dao.dart';
@@ -39,6 +45,7 @@ List<SingleChildWidget> independentProviders = <SingleChildWidget>[
   Provider<AppSharedPreferencess>.value(value: AppSharedPreferencess.instance),
   Provider<AppApiService>.value(value: AppApiService()),
   Provider<CategoryDao>.value(value: CategoryDao()),
+  Provider<SubCategoryDao>.value(value: SubCategoryDao()),
   Provider<CategoryMapDao>.value(value: CategoryMapDao.instance),
   Provider<ProductDao>.value(
       value: ProductDao.instance), //correct type with instance
@@ -47,7 +54,7 @@ List<SingleChildWidget> independentProviders = <SingleChildWidget>[
   // Provider<NotiDao>.value(value: NotiDao.instance),
   // Provider<ProductCollectionDao>.value(value: ProductCollectionDao.instance),
   // Provider<ShopInfoDao>.value(value: ShopInfoDao.instance),
-  // Provider<BlogDao>.value(value: BlogDao.instance),
+  Provider<BlogDao>.value(value: BlogDao.instance),
   Provider<TransactionHeaderDao>.value(value: TransactionHeaderDao.instance),
   Provider<TransactionDetailDao>.value(value: TransactionDetailDao.instance),
   Provider<UserDao>.value(value: UserDao.instance),
@@ -59,10 +66,10 @@ List<SingleChildWidget> independentProviders = <SingleChildWidget>[
   Provider<ShippingCountryDao>.value(value: ShippingCountryDao.instance),
   Provider<ShippingCityDao>.value(value: ShippingCityDao.instance),
   Provider<HistoryDao>.value(value: HistoryDao.instance),
-  // Provider<GalleryDao>.value(value: GalleryDao.instance),
+  Provider<GalleryDao>.value(value: GalleryDao.instance),
   // Provider<ShippingMethodDao>.value(value: ShippingMethodDao.instance),
   Provider<BasketDao>.value(value: BasketDao.instance),
-  // Provider<FavouriteProductDao>.value(value: FavouriteProductDao.instance),
+  Provider<TopSellingProductDao>.value(value: TopSellingProductDao.instance),
 ];
 
 List<SingleChildWidget> _dependentProviders = <SingleChildWidget>[
@@ -87,12 +94,12 @@ List<SingleChildWidget> _dependentProviders = <SingleChildWidget>[
         CategoryRepository(
             psApiService: psApiService, categoryDao: categoryDao),
   ),
-  // ProxyProvider2<AppApiService, SubCategoryDao, SubCategoryRepository>(
-  //   update: (_, AppApiService psApiService, SubCategoryDao subCategoryDao,
-  //           SubCategoryRepository subCategoryRepository) =>
-  //       SubCategoryRepository(
-  //           psApiService: psApiService, subCategoryDao: subCategoryDao),
-  // ),
+  ProxyProvider2<AppApiService, SubCategoryDao, SubCategoryRepository>(
+    update: (_, AppApiService psApiService, SubCategoryDao subCategoryDao,
+            SubCategoryRepository subCategoryRepository) =>
+        SubCategoryRepository(
+            psApiService: psApiService, subCategoryDao: subCategoryDao),
+  ),
   // ProxyProvider2<AppApiService, AboutAppDao, AboutAppRepository>(
   //   update: (_, AppApiService psApiService, AboutAppDao aboutUsDao,
   //           AboutAppRepository aboutUsRepository) =>
@@ -146,11 +153,11 @@ List<SingleChildWidget> _dependentProviders = <SingleChildWidget>[
   //           DeleteTaskRepository deleteTaskRepository) =>
   //       DeleteTaskRepository(),
   // ),
-  // ProxyProvider2<AppApiService, BlogDao, BlogRepository>(
-  //   update: (_, AppApiService psApiService, BlogDao blogDao,
-  //           BlogRepository blogRepository) =>
-  //       BlogRepository(psApiService: psApiService, blogDao: blogDao),
-  // ),
+  ProxyProvider2<AppApiService, BlogDao, BlogRepository>(
+    update: (_, AppApiService psApiService, BlogDao blogDao,
+            BlogRepository blogRepository) =>
+        BlogRepository(psApiService: psApiService, blogDao: blogDao),
+  ),
   ProxyProvider2<AppApiService, TransactionHeaderDao,
       TransactionHeaderRepository>(
     update: (_,
@@ -193,11 +200,11 @@ List<SingleChildWidget> _dependentProviders = <SingleChildWidget>[
             HistoryRepository historyRepository) =>
         HistoryRepository(historyDao: historyDao),
   ),
-  // ProxyProvider2<AppApiService, GalleryDao, GalleryRepository>(
-  //   update: (_, AppApiService psApiService, GalleryDao galleryDao,
-  //           GalleryRepository galleryRepository) =>
-  //       GalleryRepository(galleryDao: galleryDao, psApiService: psApiService),
-  // ),
+  ProxyProvider2<AppApiService, GalleryDao, GalleryRepository>(
+    update: (_, AppApiService psApiService, GalleryDao galleryDao,
+            GalleryRepository galleryRepository) =>
+        GalleryRepository(galleryDao: galleryDao, psApiService: psApiService),
+  ),
   ProxyProvider<AppApiService, ContactUsRepository>(
     update: (_, AppApiService psApiService,
             ContactUsRepository apiStatusRepository) =>

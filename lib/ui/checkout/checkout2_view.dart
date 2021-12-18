@@ -165,9 +165,9 @@ class _Checkout2ViewState extends State<Checkout2View> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return SuccessDialog(
-                                        message: Utils.getString(
-                                            'checkout__couponcode_add_dialog_message'),
-                                      );
+                                          message: Utils.getString(
+                                              'checkout__couponcode_add_dialog_message'),
+                                          onPressed: () {});
                                     });
 
                                 couponController.clear();

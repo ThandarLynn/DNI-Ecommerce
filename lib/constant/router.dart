@@ -10,17 +10,23 @@ import 'package:dni_ecommerce/ui/product/filter/product_list_with_filter_contain
 import 'package:dni_ecommerce/ui/user/edit_profile/city_list_view.dart';
 import 'package:dni_ecommerce/ui/user/edit_profile/country_list_view.dart';
 import 'package:dni_ecommerce/ui/user/login/login_container_view.dart';
+import 'package:dni_ecommerce/viewobject/gallery.dart';
 import 'package:dni_ecommerce/viewobject/holder/checkout_intent_holder.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/checkout_status_intent_holder.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/product_detail_intent_holder.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/product_list_intent_holder.dart';
+import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:dni_ecommerce/viewobject/transaction_header.dart';
 import 'package:dni_ecommerce/ui/transaction/detail/transaction_item_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:dni_ecommerce/ui/gallery/grid/gallery_grid_view.dart';
 import 'package:dni_ecommerce/ui/privacy_policy/privacy_policy_container_view.dart';
 import 'package:dni_ecommerce/ui/user/forgot_password/forgot_password_container_view.dart';
 import 'package:dni_ecommerce/ui/user/password_update/change_password_view.dart';
 import 'package:dni_ecommerce/ui/user/reset_password/reset_password_view.dart';
+import 'package:dni_ecommerce/ui/gallery/detail/gallery_view.dart';
+import 'package:dni_ecommerce/ui/transaction/list/transaction_list_container.dart';
+import 'package:dni_ecommerce/ui/product/filter/category/filter_list_view.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -138,9 +144,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               ChangePasswordView());
 
     case '${RoutePaths.reset_password}':
-      return PageRouteBuilder<dynamic>(
-          pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-              ResetPasswordView());
+      return MaterialPageRoute<dynamic>(builder: (BuildContext context) {
+        final Object args = settings.arguments;
+        final String userToken = args ?? String;
+        return ResetPasswordView(userToken: userToken);
+      });
 
     //             case '${RoutePaths.contactUs}':
     //   return MaterialPageRoute<dynamic>(
@@ -259,10 +267,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //     );
     //   });
 
-    // case '${RoutePaths.transactionList}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           TransactionListContainerView());
+    case '${RoutePaths.transactionList}':
+      return PageRouteBuilder<dynamic>(
+          pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
+              TransactionListContainerView());
 
     // case '${RoutePaths.historyList}':
     //   return PageRouteBuilder<dynamic>(
@@ -297,12 +305,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         );
       });
 
-    // case '${RoutePaths.filterExpantion}':
-    //   final dynamic args = settings.arguments;
+    case '${RoutePaths.filterExpantion}':
+      final dynamic args = settings.arguments;
 
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           FilterListView(selectedData: args));
+      return PageRouteBuilder<dynamic>(
+          pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
+              FilterListView(selectedData: args));
 
     // case '${RoutePaths.commentList}':
     //   final Object args = settings.arguments;
@@ -339,7 +347,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     // case '${RoutePaths.favouriteProductList}':
     //   return PageRouteBuilder<dynamic>(
     //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           FavouriteProductListContainerView());
+    //           TopSellingProductListContainerView());
 
     // case '${RoutePaths.collectionProductList}':
     //   return PageRouteBuilder<dynamic>(
@@ -382,19 +390,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
               CityListView(countryId: countryId));
 
-    // case '${RoutePaths.galleryGrid}':
-    //   final Object args = settings.arguments;
-    //   final Product product = args ?? Product;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           GalleryGridView(product: product));
+    case '${RoutePaths.galleryGrid}':
+      final Object args = settings.arguments;
+      final Product product = args ?? Product;
+      return PageRouteBuilder<dynamic>(
+          pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
+              GalleryGridView(product: product));
 
-    // case '${RoutePaths.galleryDetail}':
-    //   final Object args = settings.arguments;
-    //   final DefaultPhoto selectedDefaultImage = args ?? DefaultPhoto;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           GalleryView(selectedDefaultImage: selectedDefaultImage));
+    case '${RoutePaths.galleryDetail}':
+      final Object args = settings.arguments;
+      final Gallery selectedDefaultImage = args ?? Gallery;
+      return PageRouteBuilder<dynamic>(
+          pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
+              GalleryView(selectedDefaultImage: selectedDefaultImage));
 
     // case '${RoutePaths.searchCategory}':
     //   return PageRouteBuilder<dynamic>(

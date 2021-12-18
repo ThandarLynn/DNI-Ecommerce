@@ -1,7 +1,8 @@
 import 'package:dni_ecommerce/config/app_colors.dart';
 import 'package:dni_ecommerce/constant/app_dimens.dart';
 import 'package:dni_ecommerce/ui/common/app_ui_widget.dart';
-import 'package:dni_ecommerce/utils/utils.dart';
+// import 'package:dni_ecommerce/ui/common/dialog/error_dialog.dart';
+// import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +11,14 @@ class HistoryListItem extends StatelessWidget {
       {Key key,
       @required this.history,
       this.onTap,
+      this.onDeleteTap,
       this.animationController,
       this.animation})
       : super(key: key);
 
   final Product history;
   final Function onTap;
+  final Function onDeleteTap;
   final AnimationController animationController;
   final Animation<double> animation;
 
@@ -33,8 +36,7 @@ class HistoryListItem extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: _ImageAndTextWidget(
-                  history: history,
-                ),
+                    history: history, onDeleteTap: onDeleteTap),
               ),
             ),
           ),
@@ -53,12 +55,12 @@ class HistoryListItem extends StatelessWidget {
 }
 
 class _ImageAndTextWidget extends StatelessWidget {
-  const _ImageAndTextWidget({
-    Key key,
-    @required this.history,
-  }) : super(key: key);
+  const _ImageAndTextWidget(
+      {Key key, @required this.history, @required this.onDeleteTap})
+      : super(key: key);
 
   final Product history;
+  final Function onDeleteTap;
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +70,8 @@ class _ImageAndTextWidget extends StatelessWidget {
           Container(
             width: AppDimens.space60,
             height: AppDimens.space60,
-            child: AppNetworkImage(
-              photoKey: '',
-              defaultPhoto: history.defaultPhoto,
-            ),
+            child:
+                AppNetworkImageWithUrl(photoKey: '', imagePath: history.image),
           ),
           const SizedBox(
             width: AppDimens.space8,
@@ -94,15 +94,28 @@ class _ImageAndTextWidget extends StatelessWidget {
                   height: AppDimens.space8,
                 ),
                 Text(
-                  history.addedDate == ''
-                      ? ''
-                      : Utils.getDateFormat(history.addedDate),
+                  history.description ?? 'null',
                   style: Theme.of(context)
                       .textTheme
                       .caption
                       .copyWith(color: AppColors.textPrimaryLightColor),
                 ),
               ],
+            ),
+          ),
+          GestureDetector(
+            onTap: onDeleteTap,
+            child: Container(
+              width: AppDimens.space40,
+              height: AppDimens.space60,
+              padding: const EdgeInsets.all(8.0),
+              margin: const EdgeInsets.only( right: AppDimens.space10),
+              color: AppColors.baseLightColor,
+              alignment: Alignment.centerRight,
+              child: Icon(
+                Icons.delete,
+                color: AppColors.grey,
+              ),
             ),
           )
         ],

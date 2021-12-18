@@ -66,8 +66,8 @@ class _ImageAndTextWidget extends StatelessWidget {
     double subTotalPrice = 0.0;
     subTotalPrice = double.parse(basket.basketPrice) * double.parse(basket.qty);
 
-    final BasketRepository basketRepository =
-        Provider.of<BasketRepository>(context);
+    final BasketRepository basketRepository = context.watch<BasketRepository>();
+    // Provider.of<BasketRepository>(context);
     if (basket != null && basket != null) {
       return ChangeNotifierProvider<BasketProvider>(
           lazy: false,
@@ -99,9 +99,9 @@ class _ImageAndTextWidget extends StatelessWidget {
                           child: Container(
                             width: AppDimens.space60,
                             height: AppDimens.space60,
-                            child: AppNetworkImage(
+                            child: AppNetworkImageWithUrl(
                               photoKey: '',
-                              defaultPhoto: basket.product.defaultPhoto,
+                              imagePath: basket.product.image,
                               boxfit: BoxFit.cover,
                             ),
                           ),

@@ -4,10 +4,12 @@ class ApiStatus extends AppObject<ApiStatus> {
   ApiStatus({
     this.status,
     this.message,
+    this.token
   });
 
   String status;
   String message;
+  String token;
 
   @override
   String getPrimaryKey() {
@@ -34,6 +36,7 @@ class ApiStatus extends AppObject<ApiStatus> {
       return ApiStatus(
         status: dynamicData['status'],
         message: dynamicData['message'],
+        token: dynamicData['token'],
       );
     } else {
       return null;
@@ -46,6 +49,7 @@ class ApiStatus extends AppObject<ApiStatus> {
       final Map<String, dynamic> data = <String, dynamic>{};
       data['status'] = object.status;
       data['message'] = object.message;
+      data['token'] = object.token;
 
       return data;
     } else {

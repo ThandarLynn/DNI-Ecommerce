@@ -52,6 +52,7 @@ class _HomeViewState extends State<DashboardView>
   String appBarTitle = 'Home';
   int _currentIndex = AppConst.REQUEST_CODE__MENU_HOME_FRAGMENT;
   String _userId = '';
+  String _userToken = '';
   bool isLogout = false;
   bool isFirstTime = true;
   String phoneUserName = '';
@@ -263,13 +264,16 @@ class _HomeViewState extends State<DashboardView>
     }
 
     Future<void> updateSelectedIndexWithAnimationUserId(
-        String title, int index, String userId) async {
+        String title, int index, String userId, String userToken) async {
       await animationController.reverse().then<dynamic>((void data) {
         if (!mounted) {
           return;
         }
         if (userId != null) {
           _userId = userId;
+        }
+        if (userToken != null) {
+          _userToken = userToken;
         }
         setState(() {
           appBarTitle = title;
@@ -409,37 +413,37 @@ class _HomeViewState extends State<DashboardView>
                                 'home__bottom_app_bar_verify_email');
                         updateSelectedIndexWithAnimation(title, index);
                       }),
-                  if (provider != null)
-                    if (provider.psValueHolder.loginUserId != null &&
-                        provider.psValueHolder.loginUserId != '')
-                      Visibility(
-                        visible: true,
-                        child: _DrawerMenuWidget(
-                            icon: Icons.favorite_border,
-                            title:
-                                Utils.getString('home__menu_drawer_favourite'),
-                            index:
-                                AppConst.REQUEST_CODE__MENU_FAVOURITE_FRAGMENT,
-                            onTap: (String title, int index) {
-                              Navigator.pop(context);
-                              updateSelectedIndexWithAnimation(title, index);
-                            }),
-                      ),
                   // if (provider != null)
                   //   if (provider.psValueHolder.loginUserId != null &&
                   //       provider.psValueHolder.loginUserId != '')
                   Visibility(
                     visible: true,
                     child: _DrawerMenuWidget(
-                      icon: Icons.swap_horiz,
-                      title: Utils.getString('home__menu_drawer_transaction'),
-                      index: AppConst.REQUEST_CODE__MENU_TRANSACTION_FRAGMENT,
-                      onTap: (String title, int index) {
-                        Navigator.pop(context);
-                        updateSelectedIndexWithAnimation(title, index);
-                      },
-                    ),
+                        icon: Icons.favorite_border,
+                        title: Utils.getString('home__menu_drawer_favourite'),
+                        index: AppConst.REQUEST_CODE__MENU_FAVOURITE_FRAGMENT,
+                        onTap: (String title, int index) {
+                          Navigator.pop(context);
+                          updateSelectedIndexWithAnimation(title, index);
+                        }),
                   ),
+                  if (provider != null)
+                    if (provider.psValueHolder.loginUserId != null &&
+                        provider.psValueHolder.loginUserId != '')
+                      Visibility(
+                        visible: true,
+                        child: _DrawerMenuWidget(
+                          icon: Icons.swap_horiz,
+                          title:
+                              Utils.getString('home__menu_drawer_transaction'),
+                          index:
+                              AppConst.REQUEST_CODE__MENU_TRANSACTION_FRAGMENT,
+                          onTap: (String title, int index) {
+                            Navigator.pop(context);
+                            updateSelectedIndexWithAnimation(title, index);
+                          },
+                        ),
+                      ),
                   // if (provider != null)
                   //   if (provider.psValueHolder.loginUserId != null &&
                   //       provider.psValueHolder.loginUserId != '')
@@ -488,7 +492,8 @@ class _HomeViewState extends State<DashboardView>
                                           _currentIndex = AppConst
                                               .REQUEST_CODE__MENU_HOME_FRAGMENT;
                                         });
-                                        await provider.replaceLoginUserId('','');
+                                        await provider.replaceLoginUserId(
+                                            '', '');
                                         await fb_auth.FirebaseAuth.instance
                                             .signOut();
                                       });
@@ -973,11 +978,11 @@ class _HomeViewState extends State<DashboardView>
                 _currentIndex ==
                     AppConst.REQUEST_CODE__MENU_USER_PROFILE_FRAGMENT) {
               return ProfileView(
-                scaffoldKey: scaffoldKey,
-                animationController: animationController,
-                flag: _currentIndex,
-                userId: _userId,
-              );
+                  scaffoldKey: scaffoldKey,
+                  animationController: animationController,
+                  flag: _currentIndex,
+                  userId: _userId,
+                  userToken: _userToken);
             } else if (_currentIndex ==
                 AppConst.REQUEST_CODE__MENU_CATEGORY_FRAGMENT) {
               return CategoryListView();
@@ -1078,7 +1083,8 @@ class _HomeViewState extends State<DashboardView>
                                   Utils.getString('home__menu_drawer_profile'),
                                   AppConst
                                       .REQUEST_CODE__DASHBOARD_USER_PROFILE_FRAGMENT,
-                                  user.userId);
+                                  user.userId,
+                                  user.deviceToken);
                             } else {
                               // if (_currentIndex ==
                               //     AppConst.REQUEST_CODE__MENU_REGISTER_FRAGMENT) {
@@ -1098,7 +1104,8 @@ class _HomeViewState extends State<DashboardView>
                                   Utils.getString('home__menu_drawer_profile'),
                                   AppConst
                                       .REQUEST_CODE__DASHBOARD_USER_PROFILE_FRAGMENT,
-                                  user.userId);
+                                  user.userId,
+                                  user.deviceToken);
                               // }
                             }
                           },

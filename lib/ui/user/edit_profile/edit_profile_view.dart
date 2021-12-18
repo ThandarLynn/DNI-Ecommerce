@@ -354,6 +354,7 @@
 //                           return SuccessDialog(
 //                             message: Utils.getString(
 //                                  'edit_profile__success'),
+//    onPressed: () {}
 //                           );
 //                         });
 //                   } else {
