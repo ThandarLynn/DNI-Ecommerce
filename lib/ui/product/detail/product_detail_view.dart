@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:dni_ecommerce/provider/product/touch_count_provider.dart';
 import 'package:dni_ecommerce/ui/common/app_back_button_with_circle_bg_widget.dart';
+import 'package:dni_ecommerce/ui/product/detail/detail_info_tile_view.dart';
+import 'package:dni_ecommerce/ui/product/detail/size_list_item_view.dart';
+import 'package:dni_ecommerce/viewobject/ItemColor.dart';
 import 'package:dni_ecommerce/viewobject/holder/touch_count_parameter_holder.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dni_ecommerce/config/app_colors.dart';
@@ -28,6 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'color_list_item_view.dart';
 import 'description_tile_view.dart';
 
 class ProductDetailView extends StatefulWidget {
@@ -41,6 +45,8 @@ class ProductDetailView extends StatefulWidget {
     this.intentQty,
     this.intentSelectedColorId,
     this.intentSelectedColorValue,
+    this.intentSelectedSizeId,
+    this.intentSelectedSizeValue,
     this.intentBasketPrice,
     this.intentBasketSelectedAttributeList,
   });
@@ -50,6 +56,8 @@ class ProductDetailView extends StatefulWidget {
   final List<BasketSelectedAttribute> intentBasketSelectedAttributeList;
   final String intentSelectedColorId;
   final String intentSelectedColorValue;
+  final String intentSelectedSizeId;
+  final String intentSelectedSizeValue;
   final Product productDetail;
   final String intentQty;
   final String heroTagImage;
@@ -308,9 +316,9 @@ class _ProductDetailState extends State<ProductDetailView>
                                 heroTagOriginalPrice:
                                     widget.heroTagOriginalPrice,
                                 heroTagUnitPrice: widget.heroTagUnitPrice),
-                            // DetailInfoTileView(
-                            //   productDetail: widget.productDetail,
-                            // ),
+                            DetailInfoTileView(
+                              productDetail: widget.productDetail,
+                            ),
                             const SizedBox(
                               height: AppDimens.space40,
                             ),
@@ -325,8 +333,11 @@ class _ProductDetailState extends State<ProductDetailView>
                     productDetail: widget.productDetail,
                     psValueHolder: valueHolder,
                     intentQty: widget.intentQty ?? '',
-                    intentSelectedColorId: widget.intentSelectedColorId ?? '',
+                    intentSelectedColorId: widget.intentSelectedSizeId ?? '',
                     intentSelectedColorValue:
+                        widget.intentSelectedColorValue ?? '',
+                    intentSelectedSizeId: widget.intentSelectedSizeId ?? '',
+                    intentSelectedSizeValue:
                         widget.intentSelectedColorValue ?? '',
                     intentbasketPrice: widget.intentBasketPrice ?? '',
                     intentbasketSelectedAttributeList:
@@ -399,16 +410,6 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
                     ),
                     const SizedBox(
                       height: AppDimens.space12,
-                    ),
-                    Divider(
-                      height: AppDimens.space1,
-                      color: AppColors.mainColor,
-                    ),
-                    Text(
-                      widget.productDetail.catName ??
-                          '' '/' + widget.productDetail.subCatName ??
-                          '',
-                      style: Theme.of(context).textTheme.headline5,
                     ),
                     Divider(
                       height: AppDimens.space1,
@@ -928,6 +929,8 @@ class _AddToBasketAndBuyButtonWidget extends StatefulWidget {
     @required this.intentQty,
     @required this.intentSelectedColorId,
     @required this.intentSelectedColorValue,
+    @required this.intentSelectedSizeId,
+    @required this.intentSelectedSizeValue,
     @required this.intentbasketPrice,
     @required this.intentbasketSelectedAttributeList,
   }) : super(key: key);
@@ -939,6 +942,8 @@ class _AddToBasketAndBuyButtonWidget extends StatefulWidget {
   final String intentQty;
   final String intentSelectedColorId;
   final String intentSelectedColorValue;
+  final String intentSelectedSizeId;
+  final String intentSelectedSizeValue;
   final String intentbasketPrice;
   final List<BasketSelectedAttribute> intentbasketSelectedAttributeList;
 
@@ -952,6 +957,8 @@ class __AddToBasketAndBuyButtonWidgetState
   String qty;
   String colorId;
   String colorValue;
+  String sizeId;
+  String sizeValue;
   bool checkAttribute;
   BasketSelectedAttribute basketSelectedAttribute = BasketSelectedAttribute();
   Basket basket;
@@ -969,6 +976,11 @@ class __AddToBasketAndBuyButtonWidgetState
       colorId = widget.intentSelectedColorId;
       colorValue = widget.intentSelectedColorValue;
     }
+    if (widget.intentSelectedSizeValue != '' &&
+        widget.intentSelectedSizeId != '') {
+      sizeId = widget.intentSelectedSizeId;
+      sizeValue = widget.intentSelectedSizeValue;
+    }
     if (widget.intentbasketPrice != '') {
       bottomSheetPrice = double.parse(widget.intentbasketPrice);
     }
@@ -984,12 +996,6 @@ class __AddToBasketAndBuyButtonWidgetState
             currencySymbol: '\$'));
       }
     }
-    // Future<void> updatePrice(double price, double totalOriginalPrice) async {
-    //   this.totalOriginalPrice = totalOriginalPrice;
-    //   setState(() {
-    //     bottomSheetPrice = price;
-    //   });
-    // }
 
     Future<void> updateQty(String minimumOrder) async {
       setState(() {
@@ -997,10 +1003,15 @@ class __AddToBasketAndBuyButtonWidgetState
       });
     }
 
-    // Future<void> updateColorIdAndValue(String id, String value) async {
-    //   colorId = id;
-    //   colorValue = value;
-    // }
+    Future<void> updateColorIdAndValue(String id, String value) async {
+      colorId = id;
+      colorValue = value;
+    }
+
+    Future<void> updateSizeIdAndValue(String id, String value) async {
+      sizeId = id;
+      sizeValue = value;
+    }
 
     Future<void> addToBasketAndBuyClickEvent(bool isBuyButtonType) async {
       // if (widget.product.itemColorList.isNotEmpty &&
@@ -1025,10 +1036,12 @@ class __AddToBasketAndBuyButtonWidgetState
       basket = Basket(
           id: id,
           productId: widget.productDetail.id,
-          qty: qty ?? widget.productDetail.minimumOrder,
+          qty: qty ?? widget.productDetail.quantity,
           shopId: widget.psValueHolder.shopId,
           selectedColorId: colorId,
           selectedColorValue: colorValue,
+          selectedSizeId: sizeId,
+          selectedSizeValue: sizeValue,
           basketPrice: bottomSheetPrice == null
               ? widget.productDetail.unitPrice
               : bottomSheetPrice.toString(),
@@ -1107,11 +1120,16 @@ class __AddToBasketAndBuyButtonWidgetState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          // _ColorsWidget(
-                          //   product: widget.product,
-                          //   updateColorIdAndValue: updateColorIdAndValue,
-                          //   selectedColorId: colorId,
-                          // ),
+                          _ColorListWidget(
+                            // product: widget.product,
+                            updateColorIdAndValue: updateColorIdAndValue,
+                            selectedColorId: colorId,
+                          ),
+                          _SizeListWidget(
+                            // product: widget.product,
+                            updateSizeIdAndValue: updateSizeIdAndValue,
+                            selectedSizeId: sizeId,
+                          ),
                           Container(
                             margin: const EdgeInsets.only(
                                 top: AppDimens.space8,
@@ -1219,86 +1237,227 @@ class __AddToBasketAndBuyButtonWidgetState
   }
 }
 
-// class _ColorsWidget extends StatefulWidget {
-//   const _ColorsWidget({
-//     Key key,
-//     @required this.product,
-//     @required this.updateColorIdAndValue,
-//     @required this.selectedColorId,
-//   }) : super(key: key);
+class _SizeListWidget extends StatefulWidget {
+  const _SizeListWidget({
+    Key key,
+    // @required this.product,
+    @required this.updateSizeIdAndValue,
+    @required this.selectedSizeId,
+  }) : super(key: key);
 
-//   final Product product;
-//   final Function updateColorIdAndValue;
-//   final String selectedColorId;
-//   @override
-//   __ColorsWidgetState createState() => __ColorsWidgetState();
-// }
+  // final Product product;
+  final Function updateSizeIdAndValue;
+  final String selectedSizeId;
+  @override
+  __SizeListWidgetState createState() => __SizeListWidgetState();
+}
 
-// class __ColorsWidgetState extends State<_ColorsWidget> {
-//   String _selectedColorId = '';
+class __SizeListWidgetState extends State<_SizeListWidget> {
+  String _selectedSizeId = '';
+  List<ItemColor> itemSizeList = <ItemColor>[
+    ItemColor(
+        id: 'prd_clr566d469d895b53a7a289a0f0a534bdc2',
+        colorValue: 'S',
+        addedDate: '2020-11-15 05:37:35',
+        addedUserId: 'c4ca4238a0b923820dcc509a6f75849b',
+        updatedDate: '0000-00-00 00:00:00',
+        updatedUserId: '',
+        updatedFlag: '0'),
+    ItemColor(
+        id: 'prd_clr63c8a235c4668d2582635df44a934231',
+        colorValue: 'M',
+        addedDate: '2020-11-15 05:37:35',
+        addedUserId: 'c4ca4238a0b923820dcc509a6f75849b',
+        updatedDate: '0000-00-00 00:00:00',
+        updatedUserId: '',
+        updatedFlag: '0'),
+    ItemColor(
+        id: 'prd_clr0164621fde80f429a87294ca86aa50ed',
+        colorValue: 'L',
+        addedDate: '2020-11-15 05:37:35',
+        addedUserId: 'c4ca4238a0b923820dcc509a6f75849b',
+        updatedDate: '0000-00-00 00:00:00',
+        updatedUserId: '',
+        updatedFlag: '0'),
+    ItemColor(
+        id: 'prd_clra28d186bc371b3132d122547f3a5fbbb',
+        colorValue: 'XL',
+        addedDate: '2020-11-15 05:37:35',
+        addedUserId: 'c4ca4238a0b923820dcc509a6f75849b',
+        updatedDate: '0000-00-00 00:00:00',
+        updatedUserId: '',
+        updatedFlag: '0'),
+  ];
 
-//   @override
-//   Widget build(BuildContext context) {
-//     if (_selectedColorId == '') {
-//       _selectedColorId = widget.selectedColorId;
-//     }
-//     if (widget.product.itemColorList.isNotEmpty &&
-//         widget.product.itemColorList[0].id != '') {
-//       return Container(
-//         margin: const EdgeInsets.only(
-//             left: PsDimens.space12, right: PsDimens.space12),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: <Widget>[
-//             const SizedBox(
-//               height: PsDimens.space4,
-//             ),
-//             Text(
-//               Utils.getString(context, 'product_detail__available_color'),
-//               overflow: TextOverflow.ellipsis,
-//               maxLines: 1,
-//               softWrap: false,
-//             ),
-//             const SizedBox(
-//               height: PsDimens.space4,
-//             ),
-//             Container(
-//               height: 50,
-//               child: MediaQuery.removePadding(
-//                   context: context,
-//                   removeTop: true,
-//                   child: ListView.builder(
-//                       scrollDirection: Axis.horizontal,
-//                       itemCount: widget.product.itemColorList.length,
-//                       itemBuilder: (BuildContext context, int index) {
-//                         return ColorListItemView(
-//                           color: widget.product.itemColorList[index],
-//                           selectedColorId: _selectedColorId,
-//                           onColorTap: () {
-//                             setState(() {
-//                               _selectedColorId =
-//                                   widget.product.itemColorList[index].id;
+  @override
+  Widget build(BuildContext context) {
+    if (_selectedSizeId == '') {
+      _selectedSizeId = widget.selectedSizeId;
+    }
+    if (itemSizeList.isNotEmpty && itemSizeList[0].id != '') {
+      return Container(
+        margin: const EdgeInsets.only(
+            left: AppDimens.space12, right: AppDimens.space12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(
+              height: AppDimens.space4,
+            ),
+            Text(
+              Utils.getString('product_detail__available_size'),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              softWrap: false,
+            ),
+            const SizedBox(
+              height: AppDimens.space4,
+            ),
+            Container(
+              height: 50,
+              child: MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: itemSizeList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return SizeListItemView(
+                          color: itemSizeList[index],
+                          selectedColorId: _selectedSizeId,
+                          onColorTap: () {
+                            setState(() {
+                              _selectedSizeId = itemSizeList[index].id;
 
-//                               widget.updateColorIdAndValue(
-//                                   _selectedColorId,
-//                                   widget
-//                                       .product.itemColorList[index].colorValue);
-//                             });
-//                           },
-//                         );
-//                       })),
-//             ),
-//             const SizedBox(
-//               height: PsDimens.space4,
-//             ),
-//           ],
-//         ),
-//       );
-//     } else {
-//       return Container();
-//     }
-//   }
-// }
+                              widget.updateSizeIdAndValue(_selectedSizeId,
+                                  itemSizeList[index].colorValue);
+                            });
+                          },
+                        );
+                      })),
+            ),
+            const SizedBox(
+              height: AppDimens.space4,
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+}
+
+class _ColorListWidget extends StatefulWidget {
+  const _ColorListWidget({
+    Key key,
+    // @required this.product,
+    @required this.updateColorIdAndValue,
+    @required this.selectedColorId,
+  }) : super(key: key);
+
+  // final Product product;
+  final Function updateColorIdAndValue;
+  final String selectedColorId;
+  @override
+  __ColorListWidgetState createState() => __ColorListWidgetState();
+}
+
+class __ColorListWidgetState extends State<_ColorListWidget> {
+  String _selectedColorId = '';
+  List<ItemColor> itemColorList = <ItemColor>[
+    ItemColor(
+        id: 'prd_clr566d469d895b53a7a289a0f0a534bdc2',
+        colorValue: '#d12ddc',
+        addedDate: '2020-11-15 05:37:35',
+        addedUserId: 'c4ca4238a0b923820dcc509a6f75849b',
+        updatedDate: '0000-00-00 00:00:00',
+        updatedUserId: '',
+        updatedFlag: '0'),
+    ItemColor(
+        id: 'prd_clr63c8a235c4668d2582635df44a934231',
+        colorValue: '#1616e9',
+        addedDate: '2020-11-15 05:37:35',
+        addedUserId: 'c4ca4238a0b923820dcc509a6f75849b',
+        updatedDate: '0000-00-00 00:00:00',
+        updatedUserId: '',
+        updatedFlag: '0'),
+    ItemColor(
+        id: 'prd_clr0164621fde80f429a87294ca86aa50ed',
+        colorValue: '#28e22e',
+        addedDate: '2020-11-15 05:37:35',
+        addedUserId: 'c4ca4238a0b923820dcc509a6f75849b',
+        updatedDate: '0000-00-00 00:00:00',
+        updatedUserId: '',
+        updatedFlag: '0'),
+    ItemColor(
+        id: 'prd_clra28d186bc371b3132d122547f3a5fbbb',
+        colorValue: '#ed2653',
+        addedDate: '2020-11-15 05:37:35',
+        addedUserId: 'c4ca4238a0b923820dcc509a6f75849b',
+        updatedDate: '0000-00-00 00:00:00',
+        updatedUserId: '',
+        updatedFlag: '0'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    if (_selectedColorId == '') {
+      _selectedColorId = widget.selectedColorId;
+    }
+    if (itemColorList.isNotEmpty && itemColorList[0].id != '') {
+      return Container(
+        margin: const EdgeInsets.only(
+            left: AppDimens.space12, right: AppDimens.space12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(
+              height: AppDimens.space4,
+            ),
+            Text(
+              Utils.getString('product_detail__available_color'),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              softWrap: false,
+            ),
+            const SizedBox(
+              height: AppDimens.space4,
+            ),
+            Container(
+              height: 50,
+              child: MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: itemColorList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ColorListItemView(
+                          color: itemColorList[index],
+                          selectedColorId: _selectedColorId,
+                          onColorTap: () {
+                            setState(() {
+                              _selectedColorId = itemColorList[index].id;
+
+                              widget.updateColorIdAndValue(_selectedColorId,
+                                  itemColorList[index].colorValue);
+                            });
+                          },
+                        );
+                      })),
+            ),
+            const SizedBox(
+              height: AppDimens.space4,
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+}
 
 class _ImageAndTextForBottomSheetWidget extends StatefulWidget {
   const _ImageAndTextForBottomSheetWidget({
@@ -1426,27 +1585,11 @@ class _IconAndTextWidgetState extends State<_IconAndTextWidget> {
   int maximumOrder = 0;
   int minimumOrder = 1; // 1 is default
 
-  void initMinimumOrder() {
-    if (widget.product.minimumOrder != '0' &&
-        widget.product.minimumOrder != '' &&
-        widget.product.minimumOrder != null) {
-      minimumOrder = int.parse(widget.product.minimumOrder);
-    }
-  }
-
-  void initMaximumOrder() {
-    if (widget.product.maximumOrder != '0' &&
-        widget.product.maximumOrder != '' &&
-        widget.product.maximumOrder != null) {
-      maximumOrder = int.parse(widget.product.maximumOrder);
-    }
-  }
-
   void initQty() {
     if (orderQty == 0 && widget.qty != null && widget.qty != '') {
       orderQty = int.parse(widget.qty);
     } else if (orderQty == 0) {
-      orderQty = int.parse(widget.product.minimumOrder);
+      orderQty = int.parse(widget.product.quantity);
     }
   }
 
@@ -1456,15 +1599,6 @@ class _IconAndTextWidgetState extends State<_IconAndTextWidget> {
         orderQty++;
         widget.updateQty('$orderQty');
       });
-    } else {
-      Fluttertoast.showToast(
-          msg:
-              ' ${Utils.getString('product_detail__maximum_order')}  ${widget.product.maximumOrder}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: AppColors.mainColor,
-          textColor: AppColors.white);
     }
   }
 
@@ -1477,7 +1611,7 @@ class _IconAndTextWidgetState extends State<_IconAndTextWidget> {
     } else {
       Fluttertoast.showToast(
           msg:
-              ' ${Utils.getString('product_detail__minimum_order')}  ${widget.product.minimumOrder}',
+              ' ${Utils.getString('product_detail__minimum_order')}  ${widget.product.quantity}',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -1496,10 +1630,6 @@ class _IconAndTextWidgetState extends State<_IconAndTextWidget> {
 
   @override
   Widget build(BuildContext context) {
-    initMinimumOrder();
-
-    initMaximumOrder();
-
     initQty();
 
     final Widget _addIconWidget = IconButton(

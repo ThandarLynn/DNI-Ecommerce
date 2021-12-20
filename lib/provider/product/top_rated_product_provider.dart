@@ -9,15 +9,15 @@ import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
 import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:flutter/cupertino.dart';
 
-class TopSellingProductProvider extends AppProvider {
-  TopSellingProductProvider(
+class TopRatedProductProvider extends AppProvider {
+  TopRatedProductProvider(
       {@required ProductRepository repo,
       @required this.psValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
 
-    print('Top Selling Product Provider: $hashCode');
+    print('Top Rated Product Provider: $hashCode');
 
     Utils.checkInternetConnectivity().then((bool onValue) {
       isConnectedToInternet = onValue;
@@ -29,7 +29,7 @@ class TopSellingProductProvider extends AppProvider {
         .listen((AppResource<List<Product>> resource) {
       updateOffset(resource.data.length);
 
-      _topSellingProductList = Utils.removeDuplicateObj<Product>(resource);
+      _topRatedProductList = Utils.removeDuplicateObj<Product>(resource);
 
       if (resource.status != AppStatus.BLOCK_LOADING &&
           resource.status != AppStatus.PROGRESS_LOADING) {
@@ -47,11 +47,10 @@ class TopSellingProductProvider extends AppProvider {
   ProductRepository _repo;
   AppValueHolder psValueHolder;
 
-  AppResource<List<Product>> _topSellingProductList =
+  AppResource<List<Product>> _topRatedProductList =
       AppResource<List<Product>>(AppStatus.NOACTION, '', <Product>[]);
 
-  AppResource<List<Product>> get topSellingProductList =>
-      _topSellingProductList;
+  AppResource<List<Product>> get topSellingProductList => _topRatedProductList;
   StreamSubscription<AppResource<List<Product>>> subscription;
 
   @override
@@ -64,31 +63,31 @@ class TopSellingProductProvider extends AppProvider {
     super.dispose();
   }
 
-  Future<dynamic> loadTopSellingProductList() async {
+  Future<dynamic> loadTopRatedProductList() async {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getTopSellingProductList(topSellingListStream,
+    await _repo.getTopRatedProductList(topSellingListStream,
         isConnectedToInternet, limit, offset, AppStatus.PROGRESS_LOADING);
   }
 
-  Future<dynamic> nextTopSellingProductList() async {
+  Future<dynamic> nextTopRatedProductList() async {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
-      await _repo.getNextPageTopSellingProductList(topSellingListStream,
+      await _repo.getNextPageTopRatedProductList(topSellingListStream,
           isConnectedToInternet, limit, offset, AppStatus.PROGRESS_LOADING);
     }
   }
 
-  Future<void> resetTopSellingProductList() async {
+  Future<void> resetTopRatedProductList() async {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     isLoading = true;
 
     updateOffset(0);
 
-    await _repo.getTopSellingProductList(topSellingListStream,
+    await _repo.getTopRatedProductList(topSellingListStream,
         isConnectedToInternet, limit, offset, AppStatus.PROGRESS_LOADING);
 
     isLoading = false;

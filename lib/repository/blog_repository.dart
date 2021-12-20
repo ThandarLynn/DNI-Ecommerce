@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:dni_ecommerce/constant/app_constant.dart';
 import 'package:dni_ecommerce/db/blog_dao.dart';
-import 'package:dni_ecommerce/viewobject/blog.dart';
+import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:flutter/material.dart';
 import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/api/common/app_status.dart';
@@ -20,20 +20,20 @@ class BlogRepository extends AppRepository {
   AppApiService _psApiService;
   BlogDao _blogDao;
 
-  Future<dynamic> insert(Blog blog) async {
+  Future<dynamic> insert(Product blog) async {
     return _blogDao.insert(primaryKey, blog);
   }
 
-  Future<dynamic> update(Blog blog) async {
+  Future<dynamic> update(Product blog) async {
     return _blogDao.update(blog);
   }
 
-  Future<dynamic> delete(Blog blog) async {
+  Future<dynamic> delete(Product blog) async {
     return _blogDao.delete(blog);
   }
 
   Future<dynamic> getAllBlogList(
-      StreamController<AppResource<List<Blog>>> blogListStream,
+      StreamController<AppResource<List<Product>>> blogListStream,
       bool isConnectedToInternet,
       int limit,
       int offset,
@@ -42,7 +42,7 @@ class BlogRepository extends AppRepository {
     blogListStream.sink.add(await _blogDao.getAll(status: status));
 
     if (isConnectedToInternet) {
-      final AppResource<List<Blog>> _resource =
+      final AppResource<List<Product>> _resource =
           await _psApiService.getBlogList(limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
@@ -58,7 +58,7 @@ class BlogRepository extends AppRepository {
   }
 
   Future<dynamic> getNextPageBlogList(
-      StreamController<AppResource<List<Blog>>> blogListStream,
+      StreamController<AppResource<List<Product>>> blogListStream,
       bool isConnectedToInternet,
       int limit,
       int offset,
@@ -67,7 +67,7 @@ class BlogRepository extends AppRepository {
     blogListStream.sink.add(await _blogDao.getAll(status: status));
 
     if (isConnectedToInternet) {
-      final AppResource<List<Blog>> _resource =
+      final AppResource<List<Product>> _resource =
           await _psApiService.getBlogList(limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {

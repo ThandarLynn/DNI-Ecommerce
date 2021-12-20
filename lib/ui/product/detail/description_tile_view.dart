@@ -17,32 +17,32 @@ class DescriptionTileView extends StatelessWidget {
     final Widget _expansionTileTitleWidget = Text(
         Utils.getString('description_tile__product_description'),
         style: Theme.of(context).textTheme.subtitle1);
-    if (productDetail != null && productDetail.description != null) {
-      return Container(
-        child: AppExpansionTile(
-          initiallyExpanded: true,
-          title: _expansionTileTitleWidget,
-          children: <Widget>[
-            Padding(
-                padding: const EdgeInsets.only(
-                    bottom: AppDimens.space16,
-                    left: AppDimens.space16,
-                    right: AppDimens.space16),
-                child: HtmlWidget(
-                    'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you')
-                // Text(
-                //   ,
-                //   style: Theme.of(context).textTheme.bodyText2.copyWith(
-                //         height: 1.3,
-                //         letterSpacing: 0.5,
-                //       ),
-                // ),
-                )
-          ],
-        ),
-      );
-    } else {
-      return const Card();
-    }
+    // if (productDetail != null && productDetail.description != null) {
+    return Container(
+      child: AppExpansionTile(
+        initiallyExpanded: true,
+        title: _expansionTileTitleWidget,
+        children: <Widget>[
+          Padding(
+              padding: const EdgeInsets.only(
+                  bottom: AppDimens.space16,
+                  left: AppDimens.space16,
+                  right: AppDimens.space16),
+              child: HtmlWidget(
+                  'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you')
+              // Text(
+              //   ,
+              //   style: Theme.of(context).textTheme.bodyText2.copyWith(
+              //         height: 1.3,
+              //         letterSpacing: 0.5,
+              //       ),
+              // ),
+              )
+        ],
+      ),
+    );
+    // } else {
+    //   return const Card();
+    // }
   }
 }

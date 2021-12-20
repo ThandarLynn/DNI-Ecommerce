@@ -1,19 +1,22 @@
-import 'package:dni_ecommerce/config/app_colors.dart';
-import 'package:dni_ecommerce/constant/app_dimens.dart';
-import 'package:dni_ecommerce/viewobject/category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:dni_ecommerce/config/app_colors.dart';
+import 'package:dni_ecommerce/viewobject/sub_category.dart';
+import 'package:dni_ecommerce/constant/app_dimens.dart';
 
-class CategoryHorizontalListItem extends StatelessWidget {
-  const CategoryHorizontalListItem({
-    Key key,
-    @required this.category,
-    this.onTap,
-  }) : super(key: key);
+class SubCategoryGridItem extends StatelessWidget {
+  const SubCategoryGridItem(
+      {Key key,
+      @required this.subCategory,
+      this.onTap,
+      this.animationController,
+      this.animation})
+      : super(key: key);
 
-  final Category category;
+  final SubCategory subCategory;
   final Function onTap;
-
+  final AnimationController animationController;
+  final Animation<double> animation;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -34,7 +37,7 @@ class CategoryHorizontalListItem extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         left: AppDimens.space2, right: AppDimens.space2),
                     child: Text(
-                      category.name,
+                      subCategory.name,
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme

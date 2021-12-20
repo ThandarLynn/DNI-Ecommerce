@@ -10,6 +10,7 @@ import 'package:dni_ecommerce/ui/product/filter/product_list_with_filter_contain
 import 'package:dni_ecommerce/ui/user/edit_profile/city_list_view.dart';
 import 'package:dni_ecommerce/ui/user/edit_profile/country_list_view.dart';
 import 'package:dni_ecommerce/ui/user/login/login_container_view.dart';
+import 'package:dni_ecommerce/viewobject/category.dart';
 import 'package:dni_ecommerce/viewobject/gallery.dart';
 import 'package:dni_ecommerce/viewobject/holder/checkout_intent_holder.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/checkout_status_intent_holder.dart';
@@ -27,6 +28,7 @@ import 'package:dni_ecommerce/ui/user/reset_password/reset_password_view.dart';
 import 'package:dni_ecommerce/ui/gallery/detail/gallery_view.dart';
 import 'package:dni_ecommerce/ui/transaction/list/transaction_list_container.dart';
 import 'package:dni_ecommerce/ui/product/filter/category/filter_list_view.dart';
+import 'package:dni_ecommerce/ui/subcategory/sub_category_grid_view.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -61,12 +63,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     // case '${RoutePaths.appinfo}':
     //   return MaterialPageRoute<dynamic>(
     //       builder: (BuildContext context) => AppInfoView());
-    // case '${RoutePaths.subCategoryGrid}':
-    //   return MaterialPageRoute<Category>(builder: (BuildContext context) {
-    //     final Object args = settings.arguments;
-    //     final Category category = args ?? Category;
-    //     return SubCategoryGridView(category: category);
-    //   });
+    case '${RoutePaths.subCategoryGrid}':
+      return MaterialPageRoute<Category>(builder: (BuildContext context) {
+        final Object args = settings.arguments;
+        final Category category = args ?? Category;
+        return SubCategoryGridView(category: category);
+      });
 
     // case '${RoutePaths.user_verify_email_container}':
     //   final Object args = settings.arguments;
@@ -300,6 +302,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           intentQty: holder.qty,
           intentSelectedColorId: holder.selectedColorId,
           intentSelectedColorValue: holder.selectedColorValue,
+          intentSelectedSizeId: holder.selectedSizeId,
+          intentSelectedSizeValue: holder.selectedSizeValue,
           intentBasketPrice: holder.basketPrice,
           intentBasketSelectedAttributeList: holder.basketSelectedAttributeList,
         );

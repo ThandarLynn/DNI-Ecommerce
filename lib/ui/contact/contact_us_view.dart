@@ -143,38 +143,52 @@ class ButtonWidget extends StatelessWidget {
               messageText.text != '' &&
               phoneText.text != '') {
             if (await Utils.checkInternetConnectivity()) {
-              final ContactUsParameterHolder contactUsParameterHolder =
-                  ContactUsParameterHolder(
-                name: nameText.text,
-                email: emailText.text,
-                message: messageText.text,
-                phone: phoneText.text,
-              );
-
-              final AppResource<ApiStatus> _apiStatus = await provider
-                  .postContactUs(contactUsParameterHolder.toMap());
-
-              if (_apiStatus.data != null) {
-                print('Success');
-                nameText.clear();
-                emailText.clear();
-                messageText.clear();
-                phoneText.clear();
-                showDialog<dynamic>(
+              nameText.text = '';
+              emailText.text = '';
+              messageText.text = '';
+              phoneText.text = '';
+              showDialog<dynamic>(
                     context: context,
                     builder: (BuildContext context) {
-                      if (_apiStatus.data.status == 'success') {
+                      
                         return SuccessDialog(
-                          message: _apiStatus.data.status,
+                          message:Utils.getString('success_dialog__success'),
                           onPressed: () {}
                         );
-                      } else {
-                        return ErrorDialog(
-                          message: _apiStatus.data.status,
-                        );
-                      }
+                      
                     });
-              }
+              // final ContactUsParameterHolder contactUsParameterHolder =
+              //     ContactUsParameterHolder(
+              //   name: nameText.text,
+              //   email: emailText.text,
+              //   message: messageText.text,
+              //   phone: phoneText.text,
+              // );
+
+              // final AppResource<ApiStatus> _apiStatus = await provider
+              //     .postContactUs(contactUsParameterHolder.toMap());
+
+              // if (_apiStatus.data != null) {
+              //   print('Success');
+              //   nameText.clear();
+              //   emailText.clear();
+              //   messageText.clear();
+              //   phoneText.clear();
+              //   showDialog<dynamic>(
+              //       context: context,
+              //       builder: (BuildContext context) {
+              //         if (_apiStatus.data.status == 'success') {
+              //           return SuccessDialog(
+              //             message: _apiStatus.data.status,
+              //             onPressed: () {}
+              //           );
+              //         } else {
+              //           return ErrorDialog(
+              //             message: _apiStatus.data.status,
+              //           );
+              //         }
+              //       });
+              // }
             } else {
               showDialog<dynamic>(
                   context: context,

@@ -6,6 +6,7 @@ import 'package:dni_ecommerce/db/gallery_dao.dart';
 import 'package:dni_ecommerce/db/product_dao.dart';
 import 'package:dni_ecommerce/db/product_map_dao.dart';
 import 'package:dni_ecommerce/db/sub_category_dao.dart';
+import 'package:dni_ecommerce/db/top_rated_product_dao.dart';
 import 'package:dni_ecommerce/db/top_selling_product_dao.dart';
 import 'package:dni_ecommerce/repository/basket_repository.dart';
 import 'package:dni_ecommerce/repository/blog_repository.dart';
@@ -70,6 +71,7 @@ List<SingleChildWidget> independentProviders = <SingleChildWidget>[
   // Provider<ShippingMethodDao>.value(value: ShippingMethodDao.instance),
   Provider<BasketDao>.value(value: BasketDao.instance),
   Provider<TopSellingProductDao>.value(value: TopSellingProductDao.instance),
+  Provider<TopRatedProductDao>.value(value: TopRatedProductDao.instance),
 ];
 
 List<SingleChildWidget> _dependentProviders = <SingleChildWidget>[

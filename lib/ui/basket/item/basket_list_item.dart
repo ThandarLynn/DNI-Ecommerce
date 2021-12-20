@@ -8,7 +8,6 @@ import 'package:dni_ecommerce/viewobject/basket.dart';
 import 'package:dni_ecommerce/viewobject/basket_selected_attribute.dart';
 import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class BasketListItemView extends StatelessWidget {
@@ -208,37 +207,17 @@ class _IconAndTextWidgetState extends State<_IconAndTextWidget> {
   int minimumOrder = 1; // 1 is default
   int maximumOrder = 0;
 
-  void initMinimumOrder() {
-    if (widget.basket.product.minimumOrder != '0' &&
-        widget.basket.product.minimumOrder != '' &&
-        widget.basket.product.minimumOrder != null) {
-      minimumOrder = int.parse(widget.basket.product.minimumOrder);
-    }
-  }
-
-  void initMaximumOrder() {
-    if (widget.basket.product.maximumOrder != '0' &&
-        widget.basket.product.maximumOrder != '' &&
-        widget.basket.product.maximumOrder != null) {
-      maximumOrder = int.parse(widget.basket.product.maximumOrder);
-    }
-  }
-
   void initQty() {
     if (orderQty == 0 && widget.basket.qty != null && widget.basket.qty != '') {
       orderQty = int.parse(widget.basket.qty);
     } else if (orderQty == 0) {
-      orderQty = int.parse(widget.basket.product.minimumOrder);
+      orderQty = int.parse(widget.basket.product.quantity);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final AppValueHolder psValueHolder = Provider.of<AppValueHolder>(context);
-
-    initMinimumOrder();
-
-    initMaximumOrder();
 
     initQty();
 
@@ -268,15 +247,6 @@ class _IconAndTextWidgetState extends State<_IconAndTextWidget> {
           widget.basket.qty = '$orderQty';
           changeBasketQtyAndPrice();
         });
-      } else {
-        Fluttertoast.showToast(
-            msg:
-                '${Utils.getString('product_detail__maximum_order')} ${widget.basket.product.maximumOrder}',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: AppColors.mainColor,
-            textColor: AppColors.white);
       }
     }
 
@@ -287,15 +257,6 @@ class _IconAndTextWidgetState extends State<_IconAndTextWidget> {
           widget.basket.qty = '$orderQty';
           changeBasketQtyAndPrice();
         });
-      } else {
-        Fluttertoast.showToast(
-            msg:
-                '${Utils.getString('product_detail__minimum_order')} ${widget.basket.product.minimumOrder}',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: AppColors.mainColor,
-            textColor: AppColors.white);
       }
     }
 
@@ -392,6 +353,13 @@ class _AttributeAndColorWidget extends StatelessWidget {
               color: hexToColor(basket.selectedColorValue),
               border: Border.all(width: 1, color: AppColors.grey),
             ),
+          )
+        else
+          Container(),
+        if (basket.selectedSizeValue != null)
+          Text(
+            basket.selectedSizeValue,
+            style: Theme.of(context).textTheme.bodyText2,
           )
         else
           Container(),

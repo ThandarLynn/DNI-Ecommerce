@@ -122,17 +122,15 @@ class AppNetworkImageWithUrl extends StatelessWidget {
           onTap: onTap,
           child: OptimizedCacheImage(
             placeholder: (BuildContext context, String url) {
-              if (true) {
-                return OptimizedCacheImage(
-                  width: width,
-                  height: height,
-                  fit: boxfit,
-                  placeholder: (BuildContext context, String url) {
-                    return AppSquareProgressWidget();
-                  },
-                  imageUrl: thumbnailImagePath,
-                );
-              }
+              return OptimizedCacheImage(
+                width: width,
+                height: height,
+                fit: boxfit,
+                placeholder: (BuildContext context, String url) {
+                  return AppSquareProgressWidget();
+                },
+                imageUrl: thumbnailImagePath,
+              );
               //  else {
               //   return AppSquareProgressWidget();
               // }
@@ -155,17 +153,16 @@ class AppNetworkImageWithUrl extends StatelessWidget {
           onTap: onTap,
           child: OptimizedCacheImage(
             placeholder: (BuildContext context, String url) {
-              if (true) {
-                return OptimizedCacheImage(
-                  width: width,
-                  height: height,
-                  fit: boxfit,
-                  placeholder: (BuildContext context, String url) {
-                    return AppSquareProgressWidget();
-                  },
-                  imageUrl: thumbnailImagePath,
-                );
-              }
+              return OptimizedCacheImage(
+                width: width,
+                height: height,
+                fit: boxfit,
+                placeholder: (BuildContext context, String url) {
+                  return AppSquareProgressWidget();
+                },
+                imageUrl: thumbnailImagePath,
+              );
+
               // else {
               //   return AppSquareProgressWidget();
               // }

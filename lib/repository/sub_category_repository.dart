@@ -42,7 +42,8 @@ class SubCategoryRepository extends AppRepository {
       AppStatus status,
       String categoryId,
       {bool isLoadFromServer = true}) async {
-    final Finder finder = Finder(filter: Filter.equals('cat_id', categoryId));
+    final Finder finder =
+        Finder(filter: Filter.equals('category_id', categoryId));
 
     subCategoryListStream.sink
         .add(await _subCategoryDao.getAll(finder: finder, status: status));
@@ -68,7 +69,8 @@ class SubCategoryRepository extends AppRepository {
       AppStatus status,
       String categoryId,
       {bool isLoadFromServer = true}) async {
-    final Finder finder = Finder(filter: Filter.equals('cat_id', categoryId));
+    final Finder finder =
+        Finder(filter: Filter.equals('category_id', categoryId));
 
     subCategoryListStream.sink
         .add(await _subCategoryDao.getAll(finder: finder, status: status));
@@ -96,7 +98,8 @@ class SubCategoryRepository extends AppRepository {
       AppStatus status,
       String categoryId,
       {bool isLoadFromServer = true}) async {
-    final Finder finder = Finder(filter: Filter.equals('cat_id', categoryId));
+    final Finder finder =
+        Finder(filter: Filter.equals('category_id', categoryId));
     subCategoryListStream.sink
         .add(await _subCategoryDao.getAll(finder: finder, status: status));
 

@@ -8,6 +8,7 @@ import 'package:dni_ecommerce/provider/blog/blog_provider.dart';
 import 'package:dni_ecommerce/provider/category/category_provider.dart';
 import 'package:dni_ecommerce/provider/product/discount_product_provider.dart';
 import 'package:dni_ecommerce/provider/product/search_product_provider.dart';
+import 'package:dni_ecommerce/provider/product/top_rated_product_provider.dart';
 import 'package:dni_ecommerce/provider/product/top_selling_product_provider.dart';
 import 'package:dni_ecommerce/repository/blog_repository.dart';
 import 'package:dni_ecommerce/repository/category_repository.dart';
@@ -17,7 +18,6 @@ import 'package:dni_ecommerce/ui/common/app_frame_loading_widget.dart';
 import 'package:dni_ecommerce/ui/dashboard/home/blog_slider.dart';
 import 'package:dni_ecommerce/ui/product/product_horizontal_list_item.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
-import 'package:dni_ecommerce/viewobject/blog.dart';
 import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/product_detail_intent_holder.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/product_list_intent_holder.dart';
@@ -48,6 +48,7 @@ class _HomeDashboardViewState extends State<HomeDashboardView> {
   SearchProductProvider _searchProductProvider;
   DiscountProductProvider _discountProductProvider;
   TopSellingProductProvider _topSellingProductProvider;
+  TopRatedProductProvider _topRatedProductProvider;
   BlogProvider _blogProvider;
   final int count = 8;
 
@@ -60,7 +61,7 @@ class _HomeDashboardViewState extends State<HomeDashboardView> {
 
     return MultiProvider(
         providers: <SingleChildWidget>[
-           ChangeNotifierProvider<TopSellingProductProvider>(
+          ChangeNotifierProvider<TopSellingProductProvider>(
               lazy: false,
               create: (BuildContext context) {
                 _topSellingProductProvider = TopSellingProductProvider(
@@ -69,6 +70,16 @@ class _HomeDashboardViewState extends State<HomeDashboardView> {
                     limit: AppConfig.LATEST_PRODUCT_LOADING_LIMIT);
                 _topSellingProductProvider.loadTopSellingProductList();
                 return _topSellingProductProvider;
+              }),
+          ChangeNotifierProvider<TopRatedProductProvider>(
+              lazy: false,
+              create: (BuildContext context) {
+                _topRatedProductProvider = TopRatedProductProvider(
+                    repo: repo2,
+                    psValueHolder: valueHolder,
+                    limit: AppConfig.LATEST_PRODUCT_LOADING_LIMIT);
+                _topRatedProductProvider.loadTopRatedProductList();
+                return _topRatedProductProvider;
               }),
           ChangeNotifierProvider<CategoryProvider>(
               lazy: false,
@@ -110,7 +121,6 @@ class _HomeDashboardViewState extends State<HomeDashboardView> {
                 _discountProductProvider.loadProductList();
                 return _discountProductProvider;
               }),
-         
           ChangeNotifierProvider<BlogProvider>(
               lazy: false,
               create: (BuildContext context) {
@@ -146,6 +156,24 @@ class _HomeDashboardViewState extends State<HomeDashboardView> {
                         curve: Interval((1 / count) * 2, 1.0,
                             curve: Curves.fastOutSlowIn))), //animation
               ),
+              _TopSellingProductHorizontalListWidget(
+                animationController: widget.animationController,
+                //animationController,
+                animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+                    CurvedAnimation(
+                        parent: widget.animationController,
+                        curve: Interval((1 / count) * 5, 1.0,
+                            curve: Curves.fastOutSlowIn))), //animation
+              ),
+              _TopRatedProductHorizontalListWidget(
+                animationController: widget.animationController,
+                //animationController,
+                animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+                    CurvedAnimation(
+                        parent: widget.animationController,
+                        curve: Interval((1 / count) * 5, 1.0,
+                            curve: Curves.fastOutSlowIn))), //animation
+              ),
               _HomeLatestProductHorizontalListWidget(
                 animationController: widget.animationController,
                 //animationController,
@@ -162,15 +190,6 @@ class _HomeDashboardViewState extends State<HomeDashboardView> {
                     CurvedAnimation(
                         parent: widget.animationController,
                         curve: Interval((1 / count) * 4, 1.0,
-                            curve: Curves.fastOutSlowIn))), //animation
-              ),
-              _TopSellingProductHorizontalListWidget(
-                animationController: widget.animationController,
-                //animationController,
-                animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-                    CurvedAnimation(
-                        parent: widget.animationController,
-                        curve: Interval((1 / count) * 5, 1.0,
                             curve: Curves.fastOutSlowIn))), //animation
               ),
             ],
@@ -214,13 +233,13 @@ class __TopSellingProductHorizontalListWidgetState
     //   print('loading ads....');
     //   checkConnection();
     // }
-    return SliverToBoxAdapter(child: Consumer<DiscountProductProvider>(builder:
-        (BuildContext context, DiscountProductProvider productProvider,
-            Widget child) {
+    return SliverToBoxAdapter(child: Consumer<TopSellingProductProvider>(
+        builder: (BuildContext context,
+            TopSellingProductProvider productProvider, Widget child) {
       return AnimatedBuilder(
           animation: widget.animationController,
-          child: (productProvider.productList.data != null &&
-                  productProvider.productList.data.isNotEmpty)
+          child: (productProvider.topSellingProductList.data != null &&
+                  productProvider.topSellingProductList.data.isNotEmpty)
               ? Column(children: <Widget>[
                   _MyHeaderWidget(
                     headerName:
@@ -241,9 +260,11 @@ class __TopSellingProductHorizontalListWidgetState
                           scrollDirection: Axis.horizontal,
                           padding:
                               const EdgeInsets.only(left: AppDimens.space16),
-                          itemCount: productProvider.productList.data.length,
+                          itemCount: productProvider
+                                  .topSellingProductList.data.length ??
+                              0,
                           itemBuilder: (BuildContext context, int index) {
-                            if (productProvider.productList.status ==
+                            if (productProvider.topSellingProductList.status ==
                                 AppStatus.BLOCK_LOADING) {
                               return Shimmer.fromColors(
                                   baseColor: AppColors.grey,
@@ -252,21 +273,21 @@ class __TopSellingProductHorizontalListWidgetState
                                     AppFrameUIForLoading(),
                                   ]));
                             } else {
-                              final Product product =
-                                  productProvider.productList.data[index];
+                              final Product product = productProvider
+                                  .topSellingProductList.data[index];
                               return ProductHorizontalListItem(
                                 coreTagKey:
                                     productProvider.hashCode.toString() +
                                         product.id,
-                                product:
-                                    productProvider.productList.data[index],
+                                product: productProvider
+                                    .topSellingProductList.data[index],
                                 onTap: () async {
                                   // print(productProvider
-                                  //     .productList.data[index].image.url);
+                                  //     .topSellingProductList.data[index].image.url);
                                   final ProductDetailIntentHolder holder =
                                       ProductDetailIntentHolder(
-                                    product:
-                                        productProvider.productList.data[index],
+                                    product: productProvider
+                                        .topSellingProductList.data[index],
                                     heroTagImage:
                                         productProvider.hashCode.toString() +
                                             product.id +
@@ -290,7 +311,165 @@ class __TopSellingProductHorizontalListWidgetState
                                           arguments: holder);
                                   if (result == null) {
                                     setState(() {
-                                      productProvider.resetProductList();
+                                      productProvider
+                                          .resetTopSellingProductList();
+                                    });
+                                  }
+                                },
+                              );
+                            }
+                          })),
+                  // const PsAdMobBannerWidget(
+                  //   admobSize: NativeAdmobType.full,
+                  //   // admobBannerSize: AdmobBannerSize.MEDIUM_RECTANGLE,
+                  // ),
+                  // Visibility(
+                  //   visible: AppConfig.showAdMob &&
+                  //       isSuccessfullyLoaded &&
+                  //       isConnectedToInternet,
+                  //   child: AdmobBanner(
+                  //     adUnitId: Utils.getBannerAdUnitId(),
+                  //     adSize: AdmobBannerSize.MEDIUM_RECTANGLE,
+                  //     listener: (AdmobAdEvent event,
+                  //         Map<String, dynamic> map) {
+                  //       print('BannerAd event is $event');
+                  //       if (event == AdmobAdEvent.loaded) {
+                  //         isSuccessfullyLoaded = true;
+                  //       } else {
+                  //         isSuccessfullyLoaded = false;
+                  //         setState(() {});
+                  //       }
+                  //     },
+                  //   ),
+                  // ),
+                ])
+              : Container(),
+          builder: (BuildContext context, Widget child) {
+            return FadeTransition(
+                opacity: widget.animation,
+                child: Transform(
+                    transform: Matrix4.translationValues(
+                        0.0, 100 * (1.0 - widget.animation.value), 0.0),
+                    child: child));
+          });
+    }));
+  }
+}
+
+class _TopRatedProductHorizontalListWidget extends StatefulWidget {
+  const _TopRatedProductHorizontalListWidget({
+    Key key,
+    @required this.animationController,
+    @required this.animation,
+  }) : super(key: key);
+
+  final AnimationController animationController;
+  final Animation<double> animation;
+
+  @override
+  __TopRatedProductHorizontalListWidgetState createState() =>
+      __TopRatedProductHorizontalListWidgetState();
+}
+
+class __TopRatedProductHorizontalListWidgetState
+    extends State<_TopRatedProductHorizontalListWidget> {
+  bool isConnectedToInternet = false;
+  bool isSuccessfullyLoaded = true;
+
+  // void checkConnection() {
+  //   Utils.checkInternetConnectivity().then((bool onValue) {
+  //     isConnectedToInternet = onValue;
+  //     if (isConnectedToInternet && AppConfig.showAdMob) {
+  //       setState(() {});
+  //     }
+  //   });
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    // if (!isConnectedToInternet && AppConfig.showAdMob) {
+    //   print('loading ads....');
+    //   checkConnection();
+    // }
+    return SliverToBoxAdapter(child: Consumer<TopRatedProductProvider>(builder:
+        (BuildContext context, TopRatedProductProvider productProvider,
+            Widget child) {
+      return AnimatedBuilder(
+          animation: widget.animationController,
+          child: (productProvider.topSellingProductList.data != null &&
+                  productProvider.topSellingProductList.data.isNotEmpty)
+              ? Column(children: <Widget>[
+                  _MyHeaderWidget(
+                    headerName: Utils.getString('dashboard__top_rated_product'),
+                    viewAllClicked: () {
+                      Navigator.pushNamed(context, RoutePaths.filterProductList,
+                          arguments: ProductListIntentHolder(
+                              appBarTitle: Utils.getString(
+                                  'dashboard__discount_product'),
+                              productParameterHolder: ProductParameterHolder()
+                                  .getDiscountParameterHolder()));
+                    },
+                  ),
+                  Container(
+                      height: AppDimens.space320,
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding:
+                              const EdgeInsets.only(left: AppDimens.space16),
+                          itemCount: productProvider
+                                  .topSellingProductList.data.length ??
+                              0,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (productProvider.topSellingProductList.status ==
+                                AppStatus.BLOCK_LOADING) {
+                              return Shimmer.fromColors(
+                                  baseColor: AppColors.grey,
+                                  highlightColor: AppColors.white,
+                                  child: Row(children: const <Widget>[
+                                    AppFrameUIForLoading(),
+                                  ]));
+                            } else {
+                              final Product product = productProvider
+                                  .topSellingProductList.data[index];
+                              return ProductHorizontalListItem(
+                                coreTagKey:
+                                    productProvider.hashCode.toString() +
+                                        product.id,
+                                product: productProvider
+                                    .topSellingProductList.data[index],
+                                onTap: () async {
+                                  // print(productProvider
+                                  //     .productList.data[index].image.url);
+                                  final ProductDetailIntentHolder holder =
+                                      ProductDetailIntentHolder(
+                                    product: productProvider
+                                        .topSellingProductList.data[index],
+                                    heroTagImage:
+                                        productProvider.hashCode.toString() +
+                                            product.id +
+                                            AppConst.HERO_TAG__IMAGE,
+                                    heroTagTitle:
+                                        productProvider.hashCode.toString() +
+                                            product.id +
+                                            AppConst.HERO_TAG__TITLE,
+                                    heroTagOriginalPrice:
+                                        productProvider.hashCode.toString() +
+                                            product.id +
+                                            AppConst.HERO_TAG__ORIGINAL_PRICE,
+                                    heroTagUnitPrice:
+                                        productProvider.hashCode.toString() +
+                                            product.id +
+                                            AppConst.HERO_TAG__UNIT_PRICE,
+                                  );
+                                  final dynamic result =
+                                      await Navigator.pushNamed(
+                                          context, RoutePaths.productDetail,
+                                          arguments: holder);
+                                  if (result == null) {
+                                    setState(() {
+                                      productProvider
+                                          .resetTopRatedProductList();
                                     });
                                   }
                                 },
@@ -395,7 +574,8 @@ class __DiscountProductHorizontalListWidgetState
                           scrollDirection: Axis.horizontal,
                           padding:
                               const EdgeInsets.only(left: AppDimens.space16),
-                          itemCount: productProvider.productList.data.length,
+                          itemCount:
+                              productProvider.productList.data.length ?? 0,
                           itemBuilder: (BuildContext context, int index) {
                             if (productProvider.productList.status ==
                                 AppStatus.BLOCK_LOADING) {
@@ -538,7 +718,7 @@ class __HomeLatestProductHorizontalListWidgetState
                               padding: const EdgeInsets.only(
                                   left: AppDimens.space16),
                               itemCount:
-                                  productProvider.productList.data.length,
+                                  productProvider.productList.data.length ?? 0,
                               itemBuilder: (BuildContext context, int index) {
                                 if (productProvider.productList.status ==
                                     AppStatus.BLOCK_LOADING) {
@@ -631,36 +811,61 @@ class _MyHeaderWidget extends StatefulWidget {
 class __MyHeaderWidgetState extends State<_MyHeaderWidget> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: widget.viewAllClicked,
-      child: Padding(
-        padding: const EdgeInsets.only(
-            top: AppDimens.space20,
-            left: AppDimens.space16,
-            right: AppDimens.space16,
-            bottom: AppDimens.space10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            Expanded(
-              child: Text(widget.headerName,
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimaryDarkColor)),
-            ),
-            Text(
-              Utils.getString('dashboard__view_all'),
-              textAlign: TextAlign.start,
-              style: Theme.of(context)
-                  .textTheme
-                  .caption
-                  .copyWith(color: AppColors.mainColor),
-            ),
-          ],
+    if (widget.headerName == Utils.getString('home__menu_drawer_blog')) {
+      return InkWell(
+        onTap: widget.viewAllClicked,
+        child: Padding(
+          padding: const EdgeInsets.only(
+              top: AppDimens.space20,
+              left: AppDimens.space16,
+              right: AppDimens.space16,
+              bottom: AppDimens.space10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Expanded(
+                child: Text(widget.headerName,
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimaryDarkColor)),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return InkWell(
+        onTap: widget.viewAllClicked,
+        child: Padding(
+          padding: const EdgeInsets.only(
+              top: AppDimens.space20,
+              left: AppDimens.space16,
+              right: AppDimens.space16,
+              bottom: AppDimens.space10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Expanded(
+                child: Text(widget.headerName,
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimaryDarkColor)),
+              ),
+              Text(
+                Utils.getString('dashboard__view_all'),
+                textAlign: TextAlign.start,
+                style: Theme.of(context)
+                    .textTheme
+                    .caption
+                    .copyWith(color: AppColors.mainColor),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   }
 }
 
@@ -716,9 +921,31 @@ class _HomeBlogProductSliderListWidget extends StatelessWidget {
                         width: double.infinity,
                         child: BlogSliderView(
                           blogList: blogProvider.blogList.data,
-                          onTap: (Blog blog) {
-                            Navigator.pushNamed(context, RoutePaths.blogDetail,
-                                arguments: blog);
+                          onTap: (Product product) async {
+                            // Navigator.pushNamed(context, RoutePaths.blogDetail,
+                            //     arguments: blog);
+                            // final ProductDetailIntentHolder holder =
+                            //     ProductDetailIntentHolder(
+                            //   product: product,
+                            //   heroTagImage: blogProvider.hashCode.toString() +
+                            //       product.id +
+                            //       AppConst.HERO_TAG__IMAGE,
+                            //   heroTagTitle: blogProvider.hashCode.toString() +
+                            //       product.id +
+                            //       AppConst.HERO_TAG__TITLE,
+                            //   heroTagOriginalPrice:
+                            //       blogProvider.hashCode.toString() +
+                            //           product.id +
+                            //           AppConst.HERO_TAG__ORIGINAL_PRICE,
+                            //   heroTagUnitPrice:
+                            //       blogProvider.hashCode.toString() +
+                            //           product.id +
+                            //           AppConst.HERO_TAG__UNIT_PRICE,
+                            // );
+
+                            // await Navigator.pushNamed(
+                            //     context, RoutePaths.productDetail,
+                            //     arguments: holder);
                           },
                         ),
                       )
@@ -783,7 +1010,8 @@ class __HomeCategoryHorizontalListWidgetState
                           padding:
                               const EdgeInsets.only(left: AppDimens.space16),
                           scrollDirection: Axis.horizontal,
-                          itemCount: categoryProvider.categoryList.data.length,
+                          itemCount:
+                              categoryProvider.categoryList.data.length ?? 0,
                           itemBuilder: (BuildContext context, int index) {
                             if (categoryProvider.categoryList.status ==
                                 AppStatus.BLOCK_LOADING) {
@@ -798,22 +1026,26 @@ class __HomeCategoryHorizontalListWidgetState
                                 category:
                                     categoryProvider.categoryList.data[index],
                                 onTap: () {
-                                  final ProductParameterHolder
-                                      productParameterHolder =
-                                      ProductParameterHolder()
-                                          .getLatestParameterHolder();
-                                  productParameterHolder.searchTerm = '0';
-                                  productParameterHolder.catId =
-                                      categoryProvider
-                                          .categoryList.data[index].id;
                                   Navigator.pushNamed(
-                                      context, RoutePaths.filterProductList,
-                                      arguments: ProductListIntentHolder(
-                                        appBarTitle: categoryProvider
-                                            .categoryList.data[index].name,
-                                        productParameterHolder:
-                                            productParameterHolder,
-                                      ));
+                                      context, RoutePaths.subCategoryGrid,
+                                      arguments: categoryProvider
+                                          .categoryList.data[index]);
+                                  // final ProductParameterHolder
+                                  //     productParameterHolder =
+                                  //     ProductParameterHolder()
+                                  //         .getLatestParameterHolder();
+                                  // productParameterHolder.searchTerm = '0';
+                                  // productParameterHolder.catId =
+                                  //     categoryProvider
+                                  //         .categoryList.data[index].id;
+                                  // Navigator.pushNamed(
+                                  //     context, RoutePaths.filterProductList,
+                                  //     arguments: ProductListIntentHolder(
+                                  //       appBarTitle: categoryProvider
+                                  //           .categoryList.data[index].name,
+                                  //       productParameterHolder:
+                                  //           productParameterHolder,
+                                  //     ));
                                 },
                               );
                             }

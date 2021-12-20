@@ -6,7 +6,10 @@ import 'package:dni_ecommerce/viewobject/common/app_object.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:path/path.dart';
-
+// import 'dart:async' show Future;
+// import 'package:flutter/services.dart' show rootBundle;
+// import 'dart:convert';
+// import 'package:flutter/services.dart';
 import 'common/app_resource.dart';
 import 'common/app_status.dart';
 
@@ -36,9 +39,38 @@ abstract class AppApi {
     }
   }
 
+  // Future<AppResource<R>> getJsonServerCall<T extends AppObject<dynamic>, R>(
+  //     T obj, String url,
+  //     {String token}) async {
+  //   final Client client = http.Client();
+  //   try {
+  //     final dynamic jsonText =
+  //         await rootBundle.loadString('assets/json/product_detail.json');
+
+  //     // if (psApiResponse.isSuccessful()) {
+  //     final dynamic hashMap = json.decode(jsonText);
+
+  //     if (!(hashMap is Map)) {
+  //       final List<T> tList = <T>[];
+  //       hashMap.forEach((dynamic data) {
+  //         tList.add(obj.fromMap(data as dynamic));
+  //       });
+  //       return AppResource<R>(AppStatus.SUCCESS, '', tList ?? R);
+  //     } else {
+  //       return AppResource<R>(AppStatus.SUCCESS, '', obj.fromMap(hashMap));
+  //     }
+  //     // } else {
+  //     //   return AppResource<R>(
+  //     //       AppStatus.ERROR, psApiResponse.errorMessage, null);
+  //     // }
+  //   } finally {
+  //     client.close();
+  //   }
+  // }
+
   Future<AppResource<R>> getServerCall<T extends AppObject<dynamic>, R>(
       T obj, String url,
-      {String token}) async {
+      {String token = ''}) async {
     final Client client = http.Client();
     try {
       final Response response = await client.get(
@@ -52,6 +84,7 @@ abstract class AppApi {
       );
       print('${AppConfig.app_url}$url');
       final AppApiResponse psApiResponse = AppApiResponse(response);
+      print(psApiResponse.toString());
 
       if (psApiResponse.isSuccessful()) {
         final dynamic hashMap = json.decode(response.body);

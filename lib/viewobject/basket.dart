@@ -11,6 +11,8 @@ class Basket extends AppObject<Basket> {
       this.shopId,
       this.selectedColorId,
       this.selectedColorValue,
+      this.selectedSizeId,
+      this.selectedSizeValue,
       this.basketPrice,
       this.basketOriginalPrice,
       this.isConnected,
@@ -24,6 +26,8 @@ class Basket extends AppObject<Basket> {
   String shopId;
   String selectedColorId;
   String selectedColorValue;
+  String selectedSizeId;
+  String selectedSizeValue;
   String basketPrice;
   String basketOriginalPrice;
   String isConnected;
@@ -47,6 +51,8 @@ class Basket extends AppObject<Basket> {
         shopId: dynamicData['shop_id'],
         selectedColorId: dynamicData['selected_color_id'],
         selectedColorValue: dynamicData['selected_color_value'],
+        selectedSizeId: dynamicData['selected_size_id'],
+        selectedSizeValue: dynamicData['selected_size_value'],
         basketPrice: dynamicData['basket_price'],
         basketOriginalPrice: dynamicData['basket_original_price'],
         isConnected: dynamicData['is_connected'],
@@ -71,6 +77,8 @@ class Basket extends AppObject<Basket> {
       data['shop_id'] = object.shopId;
       data['selected_color_id'] = object.selectedColorId;
       data['selected_color_value'] = object.selectedColorValue;
+      data['selected_size_id'] = object.selectedSizeId;
+      data['selected_size_value'] = object.selectedSizeValue;
       data['basket_price'] = object.basketPrice;
       data['basket_original_price'] = object.basketOriginalPrice;
       data['is_connected'] = object.isConnected;

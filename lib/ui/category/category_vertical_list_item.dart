@@ -1,6 +1,4 @@
 import 'package:dni_ecommerce/config/app_colors.dart';
-// import 'package:dni_ecommerce/constant/app_dimens.dart';
-// import 'package:dni_ecommerce/ui/common/app_ui_widget.dart';
 import 'package:dni_ecommerce/viewobject/category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +47,7 @@ class CategoryVerticalListItem extends StatelessWidget {
                             Container(
                               width: 200,
                               height: double.infinity,
-                              color: AppColors.black.withAlpha(110),
+                              color: AppColors.mainColor,
                             )
                           ],
                         )),

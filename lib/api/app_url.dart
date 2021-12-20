@@ -66,7 +66,7 @@ class AppUrl {
 
   // static const String app_products_search_url = 'rest/products/search';
 
-  static const String app_subCategory_url = 'rest/subcategories/get';
+  static const String app_subCategory_url = 'subcategories';
 
   static const String app_user_url = 'user/profile';
 
@@ -121,7 +121,7 @@ class AppUrl {
 
   static const String app_topselling_productList_url = 'products/tsproducts';
 
-  static const String app_topnew_productList_url = 'products/lproducts';
+  static const String app_top_rated_productList_url = 'products/lproducts';
 
   static const String app_gallery_url = 'imageGallery';
 

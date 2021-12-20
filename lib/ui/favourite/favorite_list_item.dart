@@ -6,8 +6,8 @@ import 'package:dni_ecommerce/ui/common/app_ui_widget.dart';
 import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:flutter/material.dart';
 
-class HistoryListItem extends StatelessWidget {
-  const HistoryListItem(
+class FavoriteListItem extends StatelessWidget {
+  const FavoriteListItem(
       {Key key,
       @required this.history,
       this.onTap,
@@ -91,10 +91,10 @@ class _ImageAndTextWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: AppDimens.space8,
+                  height: AppDimens.space2,
                 ),
                 Text(
-                  history.description ?? 'null',
+                  '\$' + history.originalPrice ?? 'null',
                   style: Theme.of(context)
                       .textTheme
                       .caption
@@ -109,7 +109,7 @@ class _ImageAndTextWidget extends StatelessWidget {
               width: AppDimens.space40,
               height: AppDimens.space60,
               padding: const EdgeInsets.all(8.0),
-              margin: const EdgeInsets.only( right: AppDimens.space10),
+              margin: const EdgeInsets.only(right: AppDimens.space10),
               color: AppColors.baseLightColor,
               alignment: Alignment.centerRight,
               child: Icon(

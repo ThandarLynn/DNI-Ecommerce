@@ -3,8 +3,8 @@ import 'package:dni_ecommerce/constant/app_dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:dni_ecommerce/viewobject/ItemColor.dart';
 
-class ColorListItemView extends StatelessWidget {
-  const ColorListItemView({
+class SizeListItemView extends StatelessWidget {
+  const SizeListItemView({
     Key key,
     @required this.color,
     @required this.selectedColorId,
@@ -27,9 +27,7 @@ class ColorListItemView extends StatelessWidget {
           margin: const EdgeInsets.symmetric(
               horizontal: AppDimens.space2, vertical: AppDimens.space2),
           child: _CheckIsSelectedWidget(
-            color: color.colorValue != ''
-                ? hexToColor(color.colorValue)
-                : AppColors.grey,
+            name: color.colorValue,
             isSelected: color.id == selectedColorId,
           ),
         ));
@@ -39,12 +37,12 @@ class ColorListItemView extends StatelessWidget {
 class _CheckIsSelectedWidget extends StatefulWidget {
   const _CheckIsSelectedWidget({
     Key key,
-    @required this.color,
+    @required this.name,
     this.onColorTap,
     @required this.isSelected,
   }) : super(key: key);
 
-  final Color color;
+  final String name;
   final Function onColorTap;
   final bool isSelected;
 
@@ -64,8 +62,21 @@ class __CheckIsSelectedWidgetState extends State<_CheckIsSelectedWidget> {
             height: AppDimens.space40,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: widget.color,
-              border: Border.all(width: 1, color: AppColors.grey),
+              color: AppColors.grey,
+              border: Border.all(width: 1),
+            ),
+          ),
+          Container(
+            width: AppDimens.space24,
+            height: AppDimens.space24,
+            margin: const EdgeInsets.only(top: 6),
+            child: Text(
+              widget.name,
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(color: AppColors.black),
             ),
           ),
           Container(
@@ -95,10 +106,23 @@ class __CheckIsSelectedWidgetState extends State<_CheckIsSelectedWidget> {
             height: AppDimens.space40,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: widget.color,
+              color: AppColors.grey,
               border: Border.all(width: 1, color: AppColors.grey),
             ),
           ),
+          Container(
+            width: AppDimens.space24,
+            height: AppDimens.space24,
+            margin: const EdgeInsets.only(top: 6),
+            child: Text(
+              widget.name,
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(color: AppColors.black),
+            ),
+          )
         ],
       );
     }

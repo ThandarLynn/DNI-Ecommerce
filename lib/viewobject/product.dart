@@ -19,8 +19,7 @@ class Product extends AppObject<Product> {
       this.originalPrice,
       this.unitPrice,
       this.shippingCost,
-      this.minimumOrder,
-      this.maximumOrder,
+      this.quantity,
       this.searchTag,
       this.highlightInformation,
       // this.isDiscount,
@@ -67,8 +66,7 @@ class Product extends AppObject<Product> {
   String originalPrice;
   String unitPrice;
   String shippingCost;
-  String minimumOrder;
-  String maximumOrder;
+  String quantity;
   String searchTag;
   String highlightInformation;
   // String isDiscount;
@@ -124,14 +122,13 @@ class Product extends AppObject<Product> {
           originalPrice: dynamicData['regular_price'],
           unitPrice: dynamicData['sale_price'],
           shippingCost: dynamicData['shipping_cost'],
-          minimumOrder: dynamicData['minimum_order'],
-          maximumOrder: dynamicData['maximum_order'],
+          quantity: dynamicData['quantity'],
           searchTag: dynamicData['search_tag'],
           highlightInformation: dynamicData['highlight_information'],
           // isDiscount: dynamicData['is_discount'],
           isFeatured: dynamicData['is_featured'],
           isAvailable: dynamicData['stock_status'],
-          code: dynamicData['code'],
+          code: dynamicData['SKU'],
           status: dynamicData['status'],
           addedDate: dynamicData['added_date'],
           addedUserId: dynamicData['added_user_id'],
@@ -180,14 +177,13 @@ class Product extends AppObject<Product> {
       data['regular_price'] = object.originalPrice;
       data['sale_price'] = object.unitPrice;
       data['shipping_cost'] = object.shippingCost;
-      data['minimum_order'] = object.minimumOrder;
-      data['maximum_order'] = object.maximumOrder;
+      data['quantity'] = object.quantity;
       data['search_tag'] = object.searchTag;
       data['highlight_information'] = object.highlightInformation;
       // data['is_discount'] = object.isDiscount;
       data['is_featured'] = object.isFeatured;
       data['stock_status'] = object.isAvailable;
-      data['code'] = object.code;
+      data['SKU'] = object.code;
       data['status'] = object.status;
       data['added_date'] = object.addedDate;
       data['added_user_id'] = object.addedUserId;

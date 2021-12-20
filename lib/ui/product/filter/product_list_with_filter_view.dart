@@ -335,131 +335,158 @@ class _BottomNavigationImageAndTextState
       isClickBaseLineList = true;
     }
 
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: AppColors.mainLightShadowColor),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: AppColors.mainShadowColor,
-                offset: const Offset(1.1, 1.1),
-                blurRadius: 10.0),
-          ],
-          color: AppColors.backgroundColor,
-          borderRadius:
-              const BorderRadius.all(Radius.circular(AppDimens.space8))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          GestureDetector(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                AppIconWithCheck(
-                  icon: MaterialCommunityIcons.format_list_bulleted_type,
-                  color: isClickBaseLineList
-                      ? AppColors.mainColor
-                      : AppColors.iconColor,
-                ),
-                Text(Utils.getString('search__category'),
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        color: isClickBaseLineList
-                            ? AppColors.mainColor
-                            : AppColors.textPrimaryColor)),
+    return GestureDetector(
+        onTap: () async {
+          final Map<String, String> dataHolder = <String, String>{};
+          dataHolder[AppConst.CATEGORY_ID] =
+              widget.searchProductProvider.productParameterHolder.catId;
+          dataHolder[AppConst.SUB_CATEGORY_ID] =
+              widget.searchProductProvider.productParameterHolder.subCatId;
+          final dynamic result = await Navigator.pushNamed(
+              context, RoutePaths.filterExpantion,
+              arguments: dataHolder);
+
+          if (result != null) {
+            widget.searchProductProvider.productParameterHolder.catId =
+                result[AppConst.CATEGORY_ID];
+            widget.searchProductProvider.productParameterHolder.subCatId =
+                result[AppConst.SUB_CATEGORY_ID];
+            widget.searchProductProvider.resetLatestProductList(
+                widget.searchProductProvider.productParameterHolder);
+
+            if (result[AppConst.CATEGORY_ID] == '' &&
+                result[AppConst.SUB_CATEGORY_ID] == '') {
+              isClickBaseLineList = false;
+            } else {
+              isClickBaseLineList = true;
+            }
+          }
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: AppColors.mainLightShadowColor),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: AppColors.mainShadowColor,
+                    offset: const Offset(1.1, 1.1),
+                    blurRadius: 10.0),
               ],
-            ),
-            onTap: () async {
-              final Map<String, String> dataHolder = <String, String>{};
-              dataHolder[AppConst.CATEGORY_ID] =
-                  widget.searchProductProvider.productParameterHolder.catId;
-              dataHolder[AppConst.SUB_CATEGORY_ID] =
-                  widget.searchProductProvider.productParameterHolder.subCatId;
-              final dynamic result = await Navigator.pushNamed(
-                  context, RoutePaths.filterExpantion,
-                  arguments: dataHolder);
+              color: AppColors.backgroundColor,
+              borderRadius:
+                  const BorderRadius.all(Radius.circular(AppDimens.space8))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              GestureDetector(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    AppIconWithCheck(
+                      icon: MaterialCommunityIcons.format_list_bulleted_type,
+                      color: isClickBaseLineList
+                          ? AppColors.mainColor
+                          : AppColors.iconColor,
+                    ),
+                    Text(Utils.getString('search__category'),
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            color: isClickBaseLineList
+                                ? AppColors.mainColor
+                                : AppColors.textPrimaryColor)),
+                  ],
+                ),
+                // onTap: () async {
+                //   final Map<String, String> dataHolder = <String, String>{};
+                //   dataHolder[AppConst.CATEGORY_ID] =
+                //       widget.searchProductProvider.productParameterHolder.catId;
+                //   dataHolder[AppConst.SUB_CATEGORY_ID] =
+                //       widget.searchProductProvider.productParameterHolder.subCatId;
+                //   final dynamic result = await Navigator.pushNamed(
+                //       context, RoutePaths.filterExpantion,
+                //       arguments: dataHolder);
 
-              if (result != null) {
-                widget.searchProductProvider.productParameterHolder.catId =
-                    result[AppConst.CATEGORY_ID];
-                widget.searchProductProvider.productParameterHolder.subCatId =
-                    result[AppConst.SUB_CATEGORY_ID];
-                widget.searchProductProvider.resetLatestProductList(
-                    widget.searchProductProvider.productParameterHolder);
+                //   if (result != null) {
+                //     widget.searchProductProvider.productParameterHolder.catId =
+                //         result[AppConst.CATEGORY_ID];
+                //     widget.searchProductProvider.productParameterHolder.subCatId =
+                //         result[AppConst.SUB_CATEGORY_ID];
+                //     widget.searchProductProvider.resetLatestProductList(
+                //         widget.searchProductProvider.productParameterHolder);
 
-                if (result[AppConst.CATEGORY_ID] == '' &&
-                    result[AppConst.SUB_CATEGORY_ID] == '') {
-                  isClickBaseLineList = false;
-                } else {
-                  isClickBaseLineList = true;
-                }
-              }
-            },
+                //     if (result[AppConst.CATEGORY_ID] == '' &&
+                //         result[AppConst.SUB_CATEGORY_ID] == '') {
+                //       isClickBaseLineList = false;
+                //     } else {
+                //       isClickBaseLineList = true;
+                //     }
+                //   }
+                // },
+              ),
+              // GestureDetector(
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: <Widget>[
+              //       AppIconWithCheck(
+              //         icon: Icons.filter_list,
+              //         color: isClickBaseLineTune
+              //             ? AppColors.mainColor
+              //             : AppColors.iconColor,
+              //       ),
+              //       Text(Utils.getString('search__filter'),
+              //           style: Theme.of(context).textTheme.bodyText1.copyWith(
+              //               color: isClickBaseLineTune
+              //                   ? AppColors.mainColor
+              //                   : AppColors.textPrimaryColor))
+              //     ],
+              //   ),
+              //   onTap: () async {
+              // final dynamic result = await Navigator.pushNamed(
+              //     context, RoutePaths.itemSearch,
+              //     arguments:
+              //         widget.searchProductProvider.productParameterHolder);
+              // if (result != null) {
+              //   widget.searchProductProvider.productParameterHolder = result;
+              //   widget.searchProductProvider.resetLatestProductList(
+              //       widget.searchProductProvider.productParameterHolder);
+
+              //   if (widget.searchProductProvider.productParameterHolder
+              //       .isFiltered()) {
+              //     isClickBaseLineTune = true;
+              //   } else {
+              //     isClickBaseLineTune = false;
+              //   }
+              // }
+              //   },
+              // ),
+              // GestureDetector(
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: <Widget>[
+              //       AppIconWithCheck(
+              //         icon: Icons.sort,
+              //         color: AppColors.mainColor,
+              //       ),
+              //       Text(Utils.getString('search__sort'),
+              //           style: Theme.of(context).textTheme.bodyText1.copyWith(
+              //               color: isClickBaseLineTune
+              //                   ? AppColors.mainColor
+              //                   : AppColors.textPrimaryColor))
+              //     ],
+              //   ),
+              //   onTap: () async {
+              //     // final dynamic result = await Navigator.pushNamed(
+              //     //     context, RoutePaths.itemSort,
+              //     //     arguments:
+              //     //         widget.searchProductProvider.productParameterHolder);
+              //     // if (result != null) {
+              //     //   widget.searchProductProvider.productParameterHolder = result;
+              //     //   widget.searchProductProvider.resetLatestProductList(
+              //     //       widget.searchProductProvider.productParameterHolder);
+              //     // }
+              //   },
+              // ),
+            ],
           ),
-          // GestureDetector(
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: <Widget>[
-          //       AppIconWithCheck(
-          //         icon: Icons.filter_list,
-          //         color: isClickBaseLineTune
-          //             ? AppColors.mainColor
-          //             : AppColors.iconColor,
-          //       ),
-          //       Text(Utils.getString('search__filter'),
-          //           style: Theme.of(context).textTheme.bodyText1.copyWith(
-          //               color: isClickBaseLineTune
-          //                   ? AppColors.mainColor
-          //                   : AppColors.textPrimaryColor))
-          //     ],
-          //   ),
-          //   onTap: () async {
-          // final dynamic result = await Navigator.pushNamed(
-          //     context, RoutePaths.itemSearch,
-          //     arguments:
-          //         widget.searchProductProvider.productParameterHolder);
-          // if (result != null) {
-          //   widget.searchProductProvider.productParameterHolder = result;
-          //   widget.searchProductProvider.resetLatestProductList(
-          //       widget.searchProductProvider.productParameterHolder);
-
-          //   if (widget.searchProductProvider.productParameterHolder
-          //       .isFiltered()) {
-          //     isClickBaseLineTune = true;
-          //   } else {
-          //     isClickBaseLineTune = false;
-          //   }
-          // }
-          //   },
-          // ),
-          // GestureDetector(
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: <Widget>[
-          //       AppIconWithCheck(
-          //         icon: Icons.sort,
-          //         color: AppColors.mainColor,
-          //       ),
-          //       Text(Utils.getString('search__sort'),
-          //           style: Theme.of(context).textTheme.bodyText1.copyWith(
-          //               color: isClickBaseLineTune
-          //                   ? AppColors.mainColor
-          //                   : AppColors.textPrimaryColor))
-          //     ],
-          //   ),
-          //   onTap: () async {
-          //     // final dynamic result = await Navigator.pushNamed(
-          //     //     context, RoutePaths.itemSort,
-          //     //     arguments:
-          //     //         widget.searchProductProvider.productParameterHolder);
-          //     // if (result != null) {
-          //     //   widget.searchProductProvider.productParameterHolder = result;
-          //     //   widget.searchProductProvider.resetLatestProductList(
-          //     //       widget.searchProductProvider.productParameterHolder);
-          //     // }
-          //   },
-          // ),
-        ],
-      ),
-    );
+        ));
   }
 }
 

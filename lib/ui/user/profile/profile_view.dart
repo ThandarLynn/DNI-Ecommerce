@@ -515,14 +515,14 @@ class _ImageAndTextWidget extends StatelessWidget {
     final Widget _imageWidget = PsNetworkCircleImageForUser(
       photoKey: '',
       imagePath: userProvider.user.data.userProfilePhoto,
-      boxfit: BoxFit.cover,
+      boxfit: BoxFit.contain,
       onTap: () {},
     );
     const Widget _spacingWidget = SizedBox(
       height: AppDimens.space4,
     );
     final Widget _imageInCenterWidget = Positioned(
-        top: 110,
+        top: 150,
         child: Stack(
           children: <Widget>[
             Container(
@@ -546,26 +546,26 @@ class _ImageAndTextWidget extends StatelessWidget {
         ));
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(
-          top: AppDimens.space16, bottom: AppDimens.space16),
+      margin: const EdgeInsets.only(bottom: AppDimens.space16),
       child: Column(
         children: <Widget>[
           Stack(
             alignment: Alignment.topCenter,
             children: <Widget>[
               Container(
+                color: AppColors.baseLightColor,
                 width: double.infinity,
-                height: AppDimens.space160,
+                height: AppDimens.space200,
                 child: _imageWidget,
               ),
               Container(
                 color: AppColors.white.withAlpha(100),
                 width: double.infinity,
-                height: AppDimens.space160,
+                height: AppDimens.space200,
               ),
               Container(
                 width: double.infinity,
-                height: AppDimens.space220,
+                height: AppDimens.space260,
               ),
               _imageInCenterWidget,
             ],

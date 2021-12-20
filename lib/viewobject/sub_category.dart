@@ -43,13 +43,13 @@ class SubCategory extends AppObject<SubCategory> {
   SubCategory fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
       return SubCategory(
-          id: dynamicData['id'],
-          name: dynamicData['name'],
+          id: dynamicData['subcategory_id'],
+          name: dynamicData['subcategory_name'],
           status: dynamicData['status'],
           addedDate: dynamicData['added_date'],
           addedUserId: dynamicData['added_user_id'],
           updatedDate: dynamicData['updated_date'],
-          catId: dynamicData['cat_id'],
+          catId: dynamicData['category_id'],
           updatedUserId: dynamicData['updated_user_id'],
           updatedFlag: dynamicData['updated_flag'],
           addedDateStreet: dynamicData['added_date_str'],
@@ -63,13 +63,13 @@ class SubCategory extends AppObject<SubCategory> {
   Map<String, dynamic> toMap(SubCategory object) {
     if (object != null) {
       final Map<String, dynamic> data = <String, dynamic>{};
-      data['id'] = object.id;
-      data['name'] = object.name;
+      data['subcategory_id'] = object.id;
+      data['subcategory_name'] = object.name;
       data['status'] = object.status;
       data['added_date'] = object.addedDate;
       data['added_user_id'] = object.addedUserId;
       data['updated_date'] = object.updatedDate;
-      data['cat_id'] = object.catId;
+      data['category_id'] = object.catId;
       data['updated_user_id'] = object.updatedUserId;
       data['updated_flag'] = object.updatedFlag;
       data['added_date_str'] = object.addedDateStreet;

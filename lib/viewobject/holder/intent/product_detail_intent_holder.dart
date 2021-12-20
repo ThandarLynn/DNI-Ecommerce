@@ -10,6 +10,8 @@ class ProductDetailIntentHolder {
       this.qty,
       this.selectedColorId,
       this.selectedColorValue,
+      this.selectedSizeId,
+      this.selectedSizeValue,
       this.basketPrice,
       this.basketSelectedAttributeList,
       this.heroTagImage,
@@ -22,6 +24,8 @@ class ProductDetailIntentHolder {
   final List<BasketSelectedAttribute> basketSelectedAttributeList;
   final String selectedColorId;
   final String selectedColorValue;
+  final String selectedSizeId;
+  final String selectedSizeValue;
   final Product product;
   final String qty;
   final String heroTagImage;

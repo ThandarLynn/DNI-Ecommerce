@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:dni_ecommerce/repository/blog_repository.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
-import 'package:dni_ecommerce/viewobject/blog.dart';
+import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:flutter/material.dart';
 import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/api/common/app_status.dart';
@@ -20,9 +20,9 @@ class BlogProvider extends AppProvider {
     Utils.checkInternetConnectivity().then((bool onValue) {
       isConnectedToInternet = onValue;
     });
-    blogListStream = StreamController<AppResource<List<Blog>>>.broadcast();
+    blogListStream = StreamController<AppResource<List<Product>>>.broadcast();
     subscription =
-        blogListStream.stream.listen((AppResource<List<Blog>> resource) {
+        blogListStream.stream.listen((AppResource<List<Product>> resource) {
       updateOffset(resource.data.length);
 
       _blogList = resource;
@@ -40,12 +40,12 @@ class BlogProvider extends AppProvider {
 
   BlogRepository _repo;
 
-  AppResource<List<Blog>> _blogList =
-      AppResource<List<Blog>>(AppStatus.NOACTION, '', <Blog>[]);
+  AppResource<List<Product>> _blogList =
+      AppResource<List<Product>>(AppStatus.NOACTION, '', <Product>[]);
 
-  AppResource<List<Blog>> get blogList => _blogList;
-  StreamSubscription<AppResource<List<Blog>>> subscription;
-  StreamController<AppResource<List<Blog>>> blogListStream;
+  AppResource<List<Product>> get blogList => _blogList;
+  StreamSubscription<AppResource<List<Product>>> subscription;
+  StreamController<AppResource<List<Product>>> blogListStream;
   @override
   void dispose() {
     subscription.cancel();

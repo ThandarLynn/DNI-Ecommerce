@@ -6,11 +6,11 @@ import 'package:dni_ecommerce/constant/route_paths.dart';
 import 'package:dni_ecommerce/provider/product/search_product_provider.dart';
 import 'package:dni_ecommerce/repository/product_repository.dart';
 import 'package:dni_ecommerce/ui/common/app_button_widget.dart';
-import 'package:dni_ecommerce/ui/common/app_dropdown_base_widget.dart';
+// import 'package:dni_ecommerce/ui/common/app_dropdown_base_widget.dart';
 import 'package:dni_ecommerce/ui/common/app_special_check_text_widget.dart';
 import 'package:dni_ecommerce/ui/common/app_textfield_widget.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
-import 'package:dni_ecommerce/viewobject/category.dart';
+// import 'package:dni_ecommerce/viewobject/category.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/product_list_intent_holder.dart';
 import 'package:dni_ecommerce/viewobject/holder/product_parameter_holder.dart';
 import 'package:flutter/cupertino.dart';
@@ -199,14 +199,14 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
                                 userInputItemNameTextEditingController:
                                     userInputItemNameTextEditingController,
                               ),
-                              _PriceWidget(
-                                userInputMinimumPriceEditingController:
-                                    userInputMinimumPriceEditingController,
-                                userInputMaximunPriceEditingController:
-                                    userInputMaximunPriceEditingController,
-                              ),
+                              // _PriceWidget(
+                              //   userInputMinimumPriceEditingController:
+                              //       userInputMinimumPriceEditingController,
+                              //   userInputMaximunPriceEditingController:
+                              //       userInputMaximunPriceEditingController,
+                              // ),
                               // _RatingRangeWidget(),
-                              _SpecialCheckWidget(),
+                              //_SpecialCheckWidget(),
                               Container(
                                   margin: const EdgeInsets.only(
                                       left: AppDimens.space16,
@@ -257,28 +257,29 @@ class __ProductNameWidgetState extends State<_ProductNameWidget> {
             hintText: Utils.getString('home_search__product_name_hint'),
             textEditingController:
                 widget.userInputItemNameTextEditingController),
-        AppDropdownBaseWidget(
-            title: Utils.getString('search__category'),
-            selectedText:
-                Provider.of<SearchProductProvider>(context, listen: false)
-                    .selectedCategoryName,
-            onTap: () async {
-              final SearchProductProvider provider =
-                  Provider.of<SearchProductProvider>(context, listen: false);
+        // AppDropdownBaseWidget(
+        //     title: Utils.getString('search__category'),
+        //     selectedText:
+        //         Provider.of<SearchProductProvider>(context, listen: false)
+        //             .selectedCategoryName,
+        //     onTap: () async {
+        //       final SearchProductProvider provider =
+        //           Provider.of<SearchProductProvider>(context, listen: false);
 
-              final dynamic categoryResult =
-                  await Navigator.pushNamed(context, RoutePaths.searchCategory);
+        //       final dynamic categoryResult =
+        //           await Navigator.pushNamed(context, RoutePaths.searchCategory);
 
-              if (categoryResult != null && categoryResult is Category) {
-                provider.categoryId = categoryResult.id;
-                provider.subCategoryId = '';
+        //       if (categoryResult != null && categoryResult is Category) {
+        //         provider.categoryId = categoryResult.id;
+        //         provider.subCategoryId = '';
 
-                setState(() {
-                  provider.selectedCategoryName = categoryResult.name;
-                  provider.selectedSubCategoryName = '';
-                });
-              }
-            }),
+        //         setState(() {
+        //           provider.selectedCategoryName = categoryResult.name;
+        //           provider.selectedSubCategoryName = '';
+        //         });
+        //       }
+        //     }),
+
         // AppDropdownBaseWidget(
         //     title: Utils.getString(context, 'search__sub_category'),
         //     selectedText:
@@ -570,105 +571,105 @@ dynamic setAllRatingFalse(SearchProductProvider provider) {
   provider.isFifthRatingClicked = false;
 }
 
-class _PriceWidget extends StatelessWidget {
-  const _PriceWidget(
-      {this.userInputMinimumPriceEditingController,
-      this.userInputMaximunPriceEditingController});
-  final TextEditingController userInputMinimumPriceEditingController;
-  final TextEditingController userInputMaximunPriceEditingController;
+// class _PriceWidget extends StatelessWidget {
+//   const _PriceWidget(
+//       {this.userInputMinimumPriceEditingController,
+//       this.userInputMaximunPriceEditingController});
+//   final TextEditingController userInputMinimumPriceEditingController;
+//   final TextEditingController userInputMaximunPriceEditingController;
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          margin: const EdgeInsets.all(AppDimens.space12),
-          child: Row(
-            children: <Widget>[
-              Text(Utils.getString('home_search__price'),
-                  style: Theme.of(context).textTheme.bodyText1),
-            ],
-          ),
-        ),
-        _PriceTextWidget(
-            title: Utils.getString('home_search__lowest_price'),
-            textField: TextField(
-                maxLines: null,
-                style: Theme.of(context).textTheme.bodyText2,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.only(
-                      left: AppDimens.space8, bottom: AppDimens.space12),
-                  border: InputBorder.none,
-                  hintText: Utils.getString('home_search__not_set'),
-                  hintStyle: Theme.of(context)
-                      .textTheme
-                      .bodyText2
-                      .copyWith(color: AppColors.textPrimaryLightColor),
-                ),
-                keyboardType: TextInputType.number,
-                controller: userInputMinimumPriceEditingController)),
-        const Divider(
-          height: AppDimens.space1,
-        ),
-        _PriceTextWidget(
-            title: Utils.getString('home_search__highest_price'),
-            textField: TextField(
-                maxLines: null,
-                style: Theme.of(context).textTheme.bodyText2,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.only(
-                      left: AppDimens.space8, bottom: AppDimens.space12),
-                  border: InputBorder.none,
-                  hintText: Utils.getString('home_search__not_set'),
-                  hintStyle: Theme.of(context)
-                      .textTheme
-                      .bodyText2
-                      .copyWith(color: AppColors.textPrimaryLightColor),
-                ),
-                keyboardType: TextInputType.number,
-                controller: userInputMaximunPriceEditingController)),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: <Widget>[
+//         Container(
+//           margin: const EdgeInsets.all(AppDimens.space12),
+//           child: Row(
+//             children: <Widget>[
+//               Text(Utils.getString('home_search__price'),
+//                   style: Theme.of(context).textTheme.bodyText1),
+//             ],
+//           ),
+//         ),
+//         _PriceTextWidget(
+//             title: Utils.getString('home_search__lowest_price'),
+//             textField: TextField(
+//                 maxLines: null,
+//                 style: Theme.of(context).textTheme.bodyText2,
+//                 decoration: InputDecoration(
+//                   contentPadding: const EdgeInsets.only(
+//                       left: AppDimens.space8, bottom: AppDimens.space12),
+//                   border: InputBorder.none,
+//                   hintText: Utils.getString('home_search__not_set'),
+//                   hintStyle: Theme.of(context)
+//                       .textTheme
+//                       .bodyText2
+//                       .copyWith(color: AppColors.textPrimaryLightColor),
+//                 ),
+//                 keyboardType: TextInputType.number,
+//                 controller: userInputMinimumPriceEditingController)),
+//         const Divider(
+//           height: AppDimens.space1,
+//         ),
+//         _PriceTextWidget(
+//             title: Utils.getString('home_search__highest_price'),
+//             textField: TextField(
+//                 maxLines: null,
+//                 style: Theme.of(context).textTheme.bodyText2,
+//                 decoration: InputDecoration(
+//                   contentPadding: const EdgeInsets.only(
+//                       left: AppDimens.space8, bottom: AppDimens.space12),
+//                   border: InputBorder.none,
+//                   hintText: Utils.getString('home_search__not_set'),
+//                   hintStyle: Theme.of(context)
+//                       .textTheme
+//                       .bodyText2
+//                       .copyWith(color: AppColors.textPrimaryLightColor),
+//                 ),
+//                 keyboardType: TextInputType.number,
+//                 controller: userInputMaximunPriceEditingController)),
+//       ],
+//     );
+//   }
+// }
 
-class _PriceTextWidget extends StatelessWidget {
-  const _PriceTextWidget({
-    Key key,
-    @required this.title,
-    @required this.textField,
-  }) : super(key: key);
+// class _PriceTextWidget extends StatelessWidget {
+//   const _PriceTextWidget({
+//     Key key,
+//     @required this.title,
+//     @required this.textField,
+//   }) : super(key: key);
 
-  final String title;
-  final TextField textField;
+//   final String title;
+//   final TextField textField;
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: AppColors.backgroundColor,
-      child: Container(
-        margin: const EdgeInsets.all(AppDimens.space12),
-        alignment: Alignment.centerLeft,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(title, style: Theme.of(context).textTheme.bodyText2),
-            Container(
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundColor,
-                  borderRadius: BorderRadius.circular(AppDimens.space4),
-                  border: Border.all(color: AppColors.mainDividerColor),
-                ),
-                width: AppDimens.space120,
-                height: AppDimens.space36,
-                child: textField),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: double.infinity,
+//       color: AppColors.backgroundColor,
+//       child: Container(
+//         margin: const EdgeInsets.all(AppDimens.space12),
+//         alignment: Alignment.centerLeft,
+//         child: Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: <Widget>[
+//             Text(title, style: Theme.of(context).textTheme.bodyText2),
+//             Container(
+//                 decoration: BoxDecoration(
+//                   color: AppColors.backgroundColor,
+//                   borderRadius: BorderRadius.circular(AppDimens.space4),
+//                   border: Border.all(color: AppColors.mainDividerColor),
+//                 ),
+//                 width: AppDimens.space120,
+//                 height: AppDimens.space36,
+//                 child: textField),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class _SpecialCheckWidget extends StatefulWidget {
   @override

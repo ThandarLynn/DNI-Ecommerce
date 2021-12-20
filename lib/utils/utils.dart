@@ -32,11 +32,15 @@ class Utils {
     LaunchReview.launch(writeReview: writeReview, iOSAppId: iOSAppId);
   }
 
-  static int calculateDiscountPercent(String originalPrice, String unitPrice) {
+  static String calculateDiscountPercent(String originalPrice, String unitPrice) {
+    final NumberFormat dataformat = NumberFormat('###.0');
     final double discountPrice =
         (double.parse(originalPrice) - double.parse(unitPrice)) / 100;
-    return discountPrice.toInt();
+    return dataformat.format(discountPrice);
   }
+
+  // final NumberFormat AppConst.psFormat = NumberFormat('###.00');
+  // return AppConst.psFormat.format(double.parse(price));
 
   static dynamic launchURL() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();

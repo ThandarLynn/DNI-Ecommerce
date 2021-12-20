@@ -10,15 +10,17 @@ import 'package:dni_ecommerce/provider/user/user_provider.dart';
 import 'package:dni_ecommerce/repository/basket_repository.dart';
 import 'package:dni_ecommerce/repository/product_repository.dart';
 import 'package:dni_ecommerce/repository/user_repository.dart';
+import 'package:dni_ecommerce/ui/basket/list/basket_list_view.dart';
 import 'package:dni_ecommerce/ui/category/category_list_view.dart';
 import 'package:dni_ecommerce/ui/common/dialog/confirm_dialog_view.dart';
 import 'package:dni_ecommerce/ui/contact/contact_us_view.dart';
 import 'package:dni_ecommerce/ui/dashboard/home/home_dashboard_view.dart';
-import 'package:dni_ecommerce/ui/favourite/history_list_view.dart';
+import 'package:dni_ecommerce/ui/favourite/favorite_list_view.dart';
 import 'package:dni_ecommerce/ui/language/language_view.dart';
 import 'package:dni_ecommerce/ui/product/filter/product_list_with_filter_view.dart';
 import 'package:dni_ecommerce/ui/search/home_item_search_view.dart';
 import 'package:dni_ecommerce/ui/setting/setting_view.dart';
+import 'package:dni_ecommerce/ui/top_rated/top_rated_product_list_view.dart';
 import 'package:dni_ecommerce/ui/transaction/list/transaction_list_view.dart';
 import 'package:dni_ecommerce/ui/user/forgot_password/forgot_password_view.dart';
 import 'package:dni_ecommerce/ui/user/login/login_view.dart';
@@ -36,6 +38,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:provider/single_child_widget.dart';
+import 'package:dni_ecommerce/ui/top_selling/top_selling_product_list_view.dart';
 
 class DashboardView extends StatefulWidget {
   @override
@@ -344,6 +347,25 @@ class _HomeViewState extends State<DashboardView>
                         Navigator.pop(context);
                         updateSelectedIndexWithAnimation(title, index);
                       }),
+
+                  _DrawerMenuWidget(
+                      icon: FontAwesome5Brands.sellcast,
+                      title: Utils.getString('dashboard__top_selling_product'),
+                      index: AppConst
+                          .REQUEST_CODE__MENU_TOP_SELLING_PRODUCT_FRAGMENT,
+                      onTap: (String title, int index) {
+                        Navigator.pop(context);
+                        updateSelectedIndexWithAnimation(title, index);
+                      }),
+                  _DrawerMenuWidget(
+                      icon: MaterialIcons.stars,
+                      title: Utils.getString('dashboard__top_rated_product'),
+                      index: AppConst
+                          .REQUEST_CODE__MENU_TOP_RATED_PRODUCT_FRAGMENT,
+                      onTap: (String title, int index) {
+                        Navigator.pop(context);
+                        updateSelectedIndexWithAnimation(title, index);
+                      }),
                   _DrawerMenuWidget(
                       icon: Icons.schedule,
                       title:
@@ -413,20 +435,22 @@ class _HomeViewState extends State<DashboardView>
                                 'home__bottom_app_bar_verify_email');
                         updateSelectedIndexWithAnimation(title, index);
                       }),
-                  // if (provider != null)
-                  //   if (provider.psValueHolder.loginUserId != null &&
-                  //       provider.psValueHolder.loginUserId != '')
-                  Visibility(
-                    visible: true,
-                    child: _DrawerMenuWidget(
-                        icon: Icons.favorite_border,
-                        title: Utils.getString('home__menu_drawer_favourite'),
-                        index: AppConst.REQUEST_CODE__MENU_FAVOURITE_FRAGMENT,
-                        onTap: (String title, int index) {
-                          Navigator.pop(context);
-                          updateSelectedIndexWithAnimation(title, index);
-                        }),
-                  ),
+                  if (provider != null)
+                    if (provider.psValueHolder.loginUserId != null &&
+                        provider.psValueHolder.loginUserId != '')
+                      Visibility(
+                        visible: true,
+                        child: _DrawerMenuWidget(
+                            icon: Icons.favorite_border,
+                            title:
+                                Utils.getString('home__menu_drawer_favourite'),
+                            index:
+                                AppConst.REQUEST_CODE__MENU_FAVOURITE_FRAGMENT,
+                            onTap: (String title, int index) {
+                              Navigator.pop(context);
+                              updateSelectedIndexWithAnimation(title, index);
+                            }),
+                      ),
                   if (provider != null)
                     if (provider.psValueHolder.loginUserId != null &&
                         provider.psValueHolder.loginUserId != '')
@@ -1003,9 +1027,21 @@ class _HomeViewState extends State<DashboardView>
                     ProductParameterHolder().getDiscountParameterHolder(),
               );
             } else if (_currentIndex ==
+                AppConst.REQUEST_CODE__MENU_TOP_SELLING_PRODUCT_FRAGMENT) {
+              return TopSellingProductListView(
+                key: const Key('3'),
+                animationController: animationController,
+              );
+            } else if (_currentIndex ==
+                AppConst.REQUEST_CODE__MENU_TOP_RATED_PRODUCT_FRAGMENT) {
+              return TopRatedProductListView(
+                key: const Key('4'),
+                animationController: animationController,
+              );
+            } else if (_currentIndex ==
                 AppConst.REQUEST_CODE__MENU_TRENDING_PRODUCT_FRAGMENT) {
               return ProductListWithFilterView(
-                key: const Key('3'),
+                key: const Key('5'),
                 animationController: animationController,
                 productParameterHolder:
                     ProductParameterHolder().getTrendingParameterHolder(),
@@ -1013,7 +1049,7 @@ class _HomeViewState extends State<DashboardView>
             } else if (_currentIndex ==
                 AppConst.REQUEST_CODE__MENU_FEATURED_PRODUCT_FRAGMENT) {
               return ProductListWithFilterView(
-                key: const Key('4'),
+                key: const Key('6'),
                 animationController: animationController,
                 productParameterHolder:
                     ProductParameterHolder().getFeaturedParameterHolder(),
@@ -1338,7 +1374,7 @@ class _HomeViewState extends State<DashboardView>
                   animationController: animationController);
             } else if (_currentIndex ==
                 AppConst.REQUEST_CODE__MENU_FAVOURITE_FRAGMENT) {
-              return HistoryListView(animationController: animationController);
+              return FavoriteListView(animationController: animationController);
               // } else if (_currentIndex ==
               //     AppConst.REQUEST_CODE__MENU_FAVOURITE_FRAGMENT) {
               //   return CollectionHeaderListView(
@@ -1363,11 +1399,11 @@ class _HomeViewState extends State<DashboardView>
               //   return PrivacyPolicyView(
               //     animationController: animationController,
               //   );
-              // } else if (_currentIndex ==
-              //     AppConst.REQUEST_CODE__DASHBOARD_BASKET_FRAGMENT) {
-              //   return BasketListView(
-              //     animationController: animationController,
-              //   );
+            } else if (_currentIndex ==
+                AppConst.REQUEST_CODE__DASHBOARD_BASKET_FRAGMENT) {
+              return BasketListView(
+                animationController: animationController,
+              );
             } else {
               animationController.forward();
               return HomeDashboardView(

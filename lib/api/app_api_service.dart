@@ -11,7 +11,6 @@ import 'package:dni_ecommerce/viewobject/sub_category.dart';
 import 'package:dni_ecommerce/viewobject/transaction_detail.dart';
 import 'package:dni_ecommerce/viewobject/transaction_header.dart';
 import 'package:dni_ecommerce/viewobject/user.dart';
-import 'package:dni_ecommerce/viewobject/blog.dart';
 
 import 'app_api.dart';
 import 'app_url.dart';
@@ -233,10 +232,11 @@ class AppApiService extends AppApi {
   ///
   Future<AppResource<List<Product>>> getProductList(
       Map<dynamic, dynamic> paramMap, int limit, int offset) async {
-    final String url = '${AppUrl.app_product_url}/name/' +
-        paramMap['searchterm'] +
-        '/cat_id/' +
-        paramMap['cat_id'] ??'';
+    final String url = '${AppUrl.app_product_url}?name=' +
+            paramMap['searchterm'] +
+            '&cat_id=' +
+            paramMap['cat_id'] ??
+        '';
 
     ///limit/$limit/offset/$offset
 
@@ -282,11 +282,11 @@ class AppApiService extends AppApi {
   ///Blog
   ///
 
-  Future<AppResource<List<Blog>>> getBlogList(int limit, int offset) async {
+  Future<AppResource<List<Product>>> getBlogList(int limit, int offset) async {
     final String url =
         '${AppUrl.app_bloglist_url}'; //limit/$limit/offset/$offset
 
-    return await getServerCall<Blog, List<Blog>>(Blog(), url);
+    return await getServerCall<Product, List<Product>>(Product(), url);
   }
 
   ///Transaction
@@ -360,11 +360,11 @@ class AppApiService extends AppApi {
   }
 
   ///
-  /// Top New
+  /// Top Rated Product
   ///
-  Future<AppResource<List<Product>>> getTopNewProductList(
-      String loginUserId, int limit, int offset) async {
-    final String url = '${AppUrl.app_topnew_productList_url}';
+  Future<AppResource<List<Product>>> getTopRatedProductList(
+      int limit, int offset) async {
+    final String url = '${AppUrl.app_top_rated_productList_url}';
 
     return await getServerCall<Product, List<Product>>(Product(), url);
   }

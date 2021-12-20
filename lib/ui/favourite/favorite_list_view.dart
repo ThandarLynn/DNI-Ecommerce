@@ -9,19 +9,17 @@ import 'package:dni_ecommerce/viewobject/holder/intent/product_detail_intent_hol
 import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'favorite_list_item.dart';
 
-// import '../../../provider/history/history_provider.dart';
-import 'history_list_item.dart';
-
-class HistoryListView extends StatefulWidget {
-  const HistoryListView({Key key, @required this.animationController})
+class FavoriteListView extends StatefulWidget {
+  const FavoriteListView({Key key, @required this.animationController})
       : super(key: key);
   final AnimationController animationController;
   @override
-  _HistoryListViewState createState() => _HistoryListViewState();
+  _FavoriteListViewState createState() => _FavoriteListViewState();
 }
 
-class _HistoryListViewState extends State<HistoryListView>
+class _FavoriteListViewState extends State<FavoriteListView>
     with SingleTickerProviderStateMixin {
   HistoryRepository historyRepo;
   dynamic data;
@@ -104,7 +102,7 @@ class _HistoryListViewState extends State<HistoryListView>
                                   (BuildContext context, int index) {
                                     final int count =
                                         provider.historyList.data.length;
-                                    return HistoryListItem(
+                                    return FavoriteListItem(
                                       animationController:
                                           widget.animationController,
                                       animation:

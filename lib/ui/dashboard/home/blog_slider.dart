@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dni_ecommerce/config/app_colors.dart';
 import 'package:dni_ecommerce/ui/common/app_ui_widget.dart';
-import 'package:dni_ecommerce/viewobject/blog.dart';
+import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:flutter/material.dart';
 import 'package:dni_ecommerce/constant/app_dimens.dart';
 
@@ -13,7 +13,7 @@ class BlogSliderView extends StatefulWidget {
   }) : super(key: key);
 
   final Function onTap;
-  final List<Blog> blogList;
+  final List<Product> blogList;
 
   @override
   _CollectionProductSliderState createState() =>
@@ -30,7 +30,7 @@ class _CollectionProductSliderState extends State<BlogSliderView> {
           CarouselSlider(
             options: CarouselOptions(
                 enlargeCenterPage: true,
-                autoPlay: false,
+                autoPlay: true,
                 viewportFraction: 0.9,
                 autoPlayInterval: const Duration(seconds: 5),
                 onPageChanged: (int i, CarouselPageChangedReason reason) {
@@ -39,7 +39,7 @@ class _CollectionProductSliderState extends State<BlogSliderView> {
                   });
                 }),
 
-            items: widget.blogList.map((Blog blog) {
+            items: widget.blogList.map((Product blog) {
               return Container(
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -62,7 +62,7 @@ class _CollectionProductSliderState extends State<BlogSliderView> {
                           photoKey: '',
                           imagePath: blog.image,
                           width: MediaQuery.of(context).size.width,
-                          // height: double.infinity,
+                          height: double.infinity,
                           boxfit: BoxFit.cover,
                           onTap: () {
                             widget.onTap(blog);
@@ -88,7 +88,7 @@ class _CollectionProductSliderState extends State<BlogSliderView> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: widget.blogList != null && widget.blogList.isNotEmpty
-                  ? widget.blogList.map((Blog blog) {
+                  ? widget.blogList.map((Product blog) {
                       return Builder(builder: (BuildContext context) {
                         return Container(
                             width: 8.0,

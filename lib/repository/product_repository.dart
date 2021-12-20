@@ -4,11 +4,13 @@ import 'package:dni_ecommerce/api/app_api_service.dart';
 import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/api/common/app_status.dart';
 import 'package:dni_ecommerce/constant/app_constant.dart';
+import 'package:dni_ecommerce/db/top_rated_product_dao.dart';
 import 'package:dni_ecommerce/db/top_selling_product_dao.dart';
 import 'package:dni_ecommerce/db/product_dao.dart';
 import 'package:dni_ecommerce/db/product_map_dao.dart';
 import 'package:dni_ecommerce/repository/Common/app_repository.dart';
 import 'package:dni_ecommerce/viewobject/common/api_status.dart';
+import 'package:dni_ecommerce/viewobject/top_rated_product.dart';
 import 'package:dni_ecommerce/viewobject/top_selling_product.dart';
 import 'package:dni_ecommerce/viewobject/holder/product_parameter_holder.dart';
 import 'package:dni_ecommerce/viewobject/product.dart';
@@ -370,6 +372,113 @@ class ProductRepository extends AppRepository {
           favouriteProductListStream,
           await _productDao.getAllByJoin(
               primaryKey, favouriteProductDao, TopSellingProduct()));
+    }
+  }
+
+  //top rated product
+  Future<dynamic> getTopRatedProductList(
+      StreamController<AppResource<List<Product>>> favouriteProductListStream,
+      bool isConnectedToInternet,
+      int limit,
+      int offset,
+      AppStatus status,
+      {bool isLoadFromServer = true}) async {
+    // Prepare Holder and Map Dao
+    // final String paramKey = holder.getParamKey();
+    final TopRatedProductDao topRatedProductDao = TopRatedProductDao.instance;
+
+    // Load from Db and Send to UI
+    sinkTopSellingProductListStream(
+        favouriteProductListStream,
+        await _productDao.getAllByJoin(
+            primaryKey, topRatedProductDao, TopRatedProduct(),
+            status: status));
+
+    // Server Call
+    if (isConnectedToInternet) {
+      final AppResource<List<Product>> _resource =
+          await _psApiService.getTopRatedProductList(limit, offset);
+
+      if (_resource.status == AppStatus.SUCCESS) {
+        // Create Map List
+        final List<TopRatedProduct> favouriteProductMapList =
+            <TopRatedProduct>[];
+        int i = 0;
+        for (Product data in _resource.data) {
+          favouriteProductMapList.add(TopRatedProduct(
+            id: data.id,
+            sorting: i++,
+          ));
+        }
+
+        // Delete and Insert Map Dao
+        await topRatedProductDao.deleteAll();
+        await topRatedProductDao.insertAll(
+            primaryKey, favouriteProductMapList);
+        // Insert Product
+        await _productDao.insertAll(primaryKey, _resource.data);
+      } else {
+        if (_resource.errorCode == AppConst.ERROR_CODE_10001) {
+          await topRatedProductDao.deleteAll();
+        }
+      }
+
+      // Load updated Data from Db and Send to UI
+      sinkTopSellingProductListStream(
+          favouriteProductListStream,
+          await _productDao.getAllByJoin(
+              primaryKey, topRatedProductDao, TopRatedProduct()));
+    }
+  }
+
+  Future<dynamic> getNextPageTopRatedProductList(
+      StreamController<AppResource<List<Product>>> favouriteProductListStream,
+      bool isConnectedToInternet,
+      int limit,
+      int offset,
+      AppStatus status,
+      {bool isLoadFromServer = true}) async {
+    final TopRatedProductDao topRatedProductDao =
+        TopRatedProductDao.instance;
+    // Load from Db and Send to UI
+    sinkTopSellingProductListStream(
+        favouriteProductListStream,
+        await _productDao.getAllByJoin(
+            primaryKey, topRatedProductDao, TopRatedProduct(),
+            status: status));
+
+    if (isConnectedToInternet) {
+      final AppResource<List<Product>> _resource =
+          await _psApiService.getTopRatedProductList(limit, offset);
+
+      if (_resource.status == AppStatus.SUCCESS) {
+        // Create Map List
+        final List<TopRatedProduct> favouriteProductMapList =
+            <TopRatedProduct>[];
+        final AppResource<List<TopRatedProduct>> existingMapList =
+            await topRatedProductDao.getAll();
+
+        int i = 0;
+        if (existingMapList != null) {
+          i = existingMapList.data.length + 1;
+        }
+        for (Product data in _resource.data) {
+          favouriteProductMapList.add(TopRatedProduct(
+            id: data.id,
+            sorting: i++,
+          ));
+        }
+
+        await topRatedProductDao.insertAll(
+            primaryKey, favouriteProductMapList);
+
+        // Insert Product
+        await _productDao.insertAll(primaryKey, _resource.data);
+      }
+      sinkTopSellingProductListStream(
+          favouriteProductListStream,
+          await _productDao.getAllByJoin(
+              primaryKey, topRatedProductDao, TopRatedProduct()));
     }
   }
 

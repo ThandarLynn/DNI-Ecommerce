@@ -8,12 +8,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProductHorizontalListItem extends StatelessWidget {
-  const ProductHorizontalListItem({
-    Key key,
-    @required this.product,
-    @required this.coreTagKey,
-    this.onTap,
-  }) : super(key: key);
+  const ProductHorizontalListItem(
+      {Key key,
+      @required this.product,
+      @required this.coreTagKey,
+      this.onTap})
+      : super(key: key);
 
   final Product product;
   final Function onTap;
@@ -79,7 +79,7 @@ class ProductHorizontalListItem extends StatelessWidget {
                       child: Hero(
                         tag: '$coreTagKey$AppConst.HERO_TAG__TITLE',
                         child: Text(
-                          product.name,
+                          product.name ?? '',
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.bodyText1,
                           maxLines: 1,
@@ -147,43 +147,43 @@ class ProductHorizontalListItem extends StatelessWidget {
                     )
                   ],
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                        child: (product.originalPrice != AppConst.ZERO)
-                            ? Container(
-                                width: AppDimens.space52,
-                                height: AppDimens.space24,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Image.asset(
-                                        'assets/images/baseline_percent_tag_orange_24.png',
-                                        matchTextDirection: true,
-                                        color: AppColors.mainColor),
-                                    Center(
-                                      child: Text(
-                                        '-' +
-                                            Utils.calculateDiscountPercent(
-                                                    product.originalPrice,
-                                                    product.unitPrice)
-                                                .toString() +
-                                            '%',
-                                        textAlign: TextAlign.start,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText2
-                                            .copyWith(color: AppColors.white),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container()),
-                  ],
-                )
+                
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                          child: (product.originalPrice != AppConst.ZERO)
+                              ? Container(
+                                  width: AppDimens.space52,
+                                  height: AppDimens.space24,
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Image.asset(
+                                          'assets/images/baseline_percent_tag_orange_24.png',
+                                          matchTextDirection: true,
+                                          color: AppColors.mainColor),
+                                      Center(
+                                        child: Text(
+                                              Utils.calculateDiscountPercent(
+                                                      product.originalPrice,
+                                                      product.unitPrice)
+                                                  .toString() +
+                                              '%',
+                                          textAlign: TextAlign.start,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2
+                                              .copyWith(color: AppColors.white),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : Container()),
+                    ],
+                  )
               ],
             ),
           ),

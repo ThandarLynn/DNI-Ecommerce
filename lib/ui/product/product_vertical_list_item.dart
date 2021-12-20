@@ -37,36 +37,36 @@ class ProductVeticalListItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                        child: (product.originalPrice != AppConst.ZERO)
-                            ? Container(
-                                width: AppDimens.space52,
-                                height: AppDimens.space24,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Image.asset(
-                                        'assets/images/baseline_percent_tag_orange_24.png',
-                                        matchTextDirection: true,
-                                        color: AppColors.mainColor),
-                                    Center(
-                                      child: Text(
-                                        '-' +
-                                            Utils.calculateDiscountPercent(
-                                                    product.originalPrice,
-                                                    product.unitPrice)
-                                                .toString() +
-                                            '%',
-                                        textAlign: TextAlign.start,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText2
-                                            .copyWith(color: AppColors.white),
+                    
+                      Container(
+                          child: (product.originalPrice != AppConst.ZERO)
+                              ? Container(
+                                  width: AppDimens.space52,
+                                  height: AppDimens.space24,
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Image.asset(
+                                          'assets/images/baseline_percent_tag_orange_24.png',
+                                          matchTextDirection: true,
+                                          color: AppColors.mainColor),
+                                      Center(
+                                        child: Text(
+                                              Utils.calculateDiscountPercent(
+                                                      product.originalPrice,
+                                                      product.unitPrice)
+                                                  .toString() +
+                                              '%',
+                                          textAlign: TextAlign.start,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2
+                                              .copyWith(color: AppColors.white),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container()),
+                                    ],
+                                  ),
+                                )
+                              : Container()),
                   ],
                 ),
               ),
@@ -120,7 +120,7 @@ class ProductVeticalListItem extends StatelessWidget {
                       child: Hero(
                         tag: '$coreTagKey$AppConst.HERO_TAG__TITLE',
                         child: Text(
-                          product.name,
+                          product.name ?? '',
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.bodyText1,
                           maxLines: 1,

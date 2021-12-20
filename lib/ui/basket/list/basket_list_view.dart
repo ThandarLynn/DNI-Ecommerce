@@ -122,6 +122,10 @@ class _BasketListViewState extends State<BasketListView>
                                       .basketList.data[index].selectedColorId,
                                   selectedColorValue: provider.basketList
                                       .data[index].selectedColorValue,
+                                  selectedSizeId: provider
+                                      .basketList.data[index].selectedSizeId,
+                                  selectedSizeValue: provider
+                                      .basketList.data[index].selectedSizeValue,
                                   basketPrice: provider
                                       .basketList.data[index].basketPrice,
                                   basketSelectedAttributeList: provider
