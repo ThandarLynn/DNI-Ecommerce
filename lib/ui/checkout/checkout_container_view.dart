@@ -1,8 +1,8 @@
 import 'package:dni_ecommerce/api/app_api_service.dart';
-import 'package:dni_ecommerce/api/common/app_resource.dart';
+// import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/config/app_colors.dart';
 import 'package:dni_ecommerce/constant/app_dimens.dart';
-import 'package:dni_ecommerce/constant/route_paths.dart';
+// import 'package:dni_ecommerce/constant/route_paths.dart';
 import 'package:dni_ecommerce/provider/basket/basket_provider.dart';
 import 'package:dni_ecommerce/provider/coupon_discount/coupon_discount_provider.dart';
 import 'package:dni_ecommerce/provider/token/token_provider.dart';
@@ -13,13 +13,14 @@ import 'package:dni_ecommerce/repository/coupon_discount_repository.dart';
 import 'package:dni_ecommerce/repository/token_repository.dart';
 import 'package:dni_ecommerce/repository/transaction_header_repository.dart';
 import 'package:dni_ecommerce/repository/user_repository.dart';
-import 'package:dni_ecommerce/ui/common/dialog/confirm_dialog_view.dart';
+// import 'package:dni_ecommerce/ui/common/dialog/confirm_dialog_view.dart';
 import 'package:dni_ecommerce/ui/common/dialog/error_dialog.dart';
+import 'package:dni_ecommerce/ui/common/dialog/warning_dialog_view.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:dni_ecommerce/viewobject/basket.dart';
-import 'package:dni_ecommerce/viewobject/common/api_status.dart';
+// import 'package:dni_ecommerce/viewobject/common/api_status.dart';
 import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
-import 'package:dni_ecommerce/viewobject/holder/intent/credit_card_intent_holder.dart';
+// import 'package:dni_ecommerce/viewobject/holder/intent/credit_card_intent_holder.dart';
 import 'package:dni_ecommerce/viewobject/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -252,188 +253,196 @@ class _CheckoutContainerViewState extends State<CheckoutContainerView> {
       TokenProvider tokenProvider) async {
     if (viewNo < maxViewNo) {
       if (viewNo == 3) {
-        checkout3ViewState.checkStatus();
-        // if (checkout3ViewState.isCheckBoxSelect) {
-        if (checkout3ViewState.isPaypalClicked) {
-          showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ConfirmDialogView(
-                    description:
-                        Utils.getString('checkout_container__confirm_order'),
-                    leftButtonText:
-                        Utils.getString('home__logout_dialog_cancel_button'),
-                    rightButtonText:
-                        Utils.getString('home__logout_dialog_ok_button'),
-                    onAgreeTap: () async {
-                      Navigator.pop(context);
-                      final AppResource<ApiStatus> tokenResource =
-                          await tokenProvider.loadToken();
-                      final dynamic returnData =
-                          await checkout3ViewState.payNow(
-                              tokenResource.data.message,
-                              userProvider,
-                              transactionSubmitProvider,
-                              couponDiscountProvider,
-                              valueHolder,
-                              basketProvider);
-                      if (returnData != null && returnData) {
-                        _closeCheckoutContainer();
-                      }
-                    });
-              });
-        } else if (checkout3ViewState.isStripeClicked) {
-          showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ConfirmDialogView(
-                    description:
-                        Utils.getString('checkout_container__confirm_order'),
-                    leftButtonText:
-                        Utils.getString('home__logout_dialog_cancel_button'),
-                    rightButtonText:
-                        Utils.getString('home__logout_dialog_ok_button'),
-                    onAgreeTap: () async {
-                      Navigator.pop(context);
-                      final dynamic returnData = await Navigator.pushNamed(
-                          context, RoutePaths.creditCard,
-                          arguments: CreditCardIntentHolder(
-                              basketList: widget.basketList,
-                              couponDiscount:
-                                  couponDiscountProvider.couponDiscount ??
-                                      '0.0',
-                              transactionSubmitProvider:
-                                  transactionSubmitProvider,
-                              userProvider: userProvider,
-                              basketProvider: basketProvider,
-                              appValueHolder: valueHolder,
-                              memoText: checkout3ViewState.memoController.text,
-                              publishKey: valueHolder.publishKey,
-                              payStackKey: valueHolder.payStackKey));
+        showDialog<dynamic>(
+            context: context,
+            builder: (BuildContext context) {
+              return WarningDialog(
+                message: 'This app is not ready for payment yet..',
+                onPressed: () {},
+              );
+            });
+        // checkout3ViewState.checkStatus();
+        // // if (checkout3ViewState.isCheckBoxSelect) {
+        // if (checkout3ViewState.isPaypalClicked) {
+        //   showDialog<dynamic>(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return ConfirmDialogView(
+        //             description:
+        //                 Utils.getString('checkout_container__confirm_order'),
+        //             leftButtonText:
+        //                 Utils.getString('home__logout_dialog_cancel_button'),
+        //             rightButtonText:
+        //                 Utils.getString('home__logout_dialog_ok_button'),
+        //             onAgreeTap: () async {
+        //               Navigator.pop(context);
+        //               final AppResource<ApiStatus> tokenResource =
+        //                   await tokenProvider.loadToken();
+        //               final dynamic returnData =
+        //                   await checkout3ViewState.payNow(
+        //                       tokenResource.data.message,
+        //                       userProvider,
+        //                       transactionSubmitProvider,
+        //                       couponDiscountProvider,
+        //                       valueHolder,
+        //                       basketProvider);
+        //               if (returnData != null && returnData) {
+        //                 _closeCheckoutContainer();
+        //               }
+        //             });
+        //       });
+        // } else if (checkout3ViewState.isStripeClicked) {
+        //   showDialog<dynamic>(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return ConfirmDialogView(
+        //             description:
+        //                 Utils.getString('checkout_container__confirm_order'),
+        //             leftButtonText:
+        //                 Utils.getString('home__logout_dialog_cancel_button'),
+        //             rightButtonText:
+        //                 Utils.getString('home__logout_dialog_ok_button'),
+        //             onAgreeTap: () async {
+        //               Navigator.pop(context);
+        //               final dynamic returnData = await Navigator.pushNamed(
+        //                   context, RoutePaths.creditCard,
+        //                   arguments: CreditCardIntentHolder(
+        //                       basketList: widget.basketList,
+        //                       couponDiscount:
+        //                           couponDiscountProvider.couponDiscount ??
+        //                               '0.0',
+        //                       transactionSubmitProvider:
+        //                           transactionSubmitProvider,
+        //                       userProvider: userProvider,
+        //                       basketProvider: basketProvider,
+        //                       appValueHolder: valueHolder,
+        //                       memoText: checkout3ViewState.memoController.text,
+        //                       publishKey: valueHolder.publishKey,
+        //                       payStackKey: valueHolder.payStackKey));
 
-                      if (returnData != null && returnData) {
-                        _closeCheckoutContainer();
-                      }
-                    });
-              });
-        } else if (checkout3ViewState.isPayStackClicked) {
-          showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ConfirmDialogView(
-                    description:
-                        Utils.getString('checkout_container__confirm_order'),
-                    leftButtonText:
-                        Utils.getString('home__logout_dialog_cancel_button'),
-                    rightButtonText:
-                        Utils.getString('home__logout_dialog_ok_button'),
-                    onAgreeTap: () async {
-                      Navigator.pop(context);
-                      final dynamic returnData = await Navigator.pushNamed(
-                          context, RoutePaths.payStack,
-                          arguments: CreditCardIntentHolder(
-                              basketList: widget.basketList,
-                              couponDiscount:
-                                  couponDiscountProvider.couponDiscount ??
-                                      '0.0',
-                              transactionSubmitProvider:
-                                  transactionSubmitProvider,
-                              userProvider: userProvider,
-                              basketProvider: basketProvider,
-                              appValueHolder: valueHolder,
-                              memoText: checkout3ViewState.memoController.text,
-                              publishKey: valueHolder.publishKey,
-                              payStackKey: valueHolder.payStackKey));
+        //               if (returnData != null && returnData) {
+        //                 _closeCheckoutContainer();
+        //               }
+        //             });
+        //       });
+        // } else if (checkout3ViewState.isPayStackClicked) {
+        //   showDialog<dynamic>(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return ConfirmDialogView(
+        //             description:
+        //                 Utils.getString('checkout_container__confirm_order'),
+        //             leftButtonText:
+        //                 Utils.getString('home__logout_dialog_cancel_button'),
+        //             rightButtonText:
+        //                 Utils.getString('home__logout_dialog_ok_button'),
+        //             onAgreeTap: () async {
+        //               Navigator.pop(context);
+        //               final dynamic returnData = await Navigator.pushNamed(
+        //                   context, RoutePaths.payStack,
+        //                   arguments: CreditCardIntentHolder(
+        //                       basketList: widget.basketList,
+        //                       couponDiscount:
+        //                           couponDiscountProvider.couponDiscount ??
+        //                               '0.0',
+        //                       transactionSubmitProvider:
+        //                           transactionSubmitProvider,
+        //                       userProvider: userProvider,
+        //                       basketProvider: basketProvider,
+        //                       appValueHolder: valueHolder,
+        //                       memoText: checkout3ViewState.memoController.text,
+        //                       publishKey: valueHolder.publishKey,
+        //                       payStackKey: valueHolder.payStackKey));
 
-                      if (returnData != null && returnData) {
-                        _closeCheckoutContainer();
-                      }
-                    });
-              });
-        } else if (checkout3ViewState.isCashClicked) {
-          showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ConfirmDialogView(
-                    description:
-                        Utils.getString('checkout_container__confirm_order'),
-                    leftButtonText:
-                        Utils.getString('home__logout_dialog_cancel_button'),
-                    rightButtonText:
-                        Utils.getString('home__logout_dialog_ok_button'),
-                    onAgreeTap: () async {
-                      Navigator.pop(context);
-                      final dynamic returnData =
-                          await checkout3ViewState.callCardNow(
-                        basketProvider,
-                        userProvider,
-                        transactionSubmitProvider,
-                      );
-                      if (returnData != null && returnData) {
-                        _closeCheckoutContainer();
-                      }
-                    });
-              });
-        } else if (checkout3ViewState.isBankClicked) {
-          showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ConfirmDialogView(
-                    description:
-                        Utils.getString('checkout_container__confirm_order'),
-                    leftButtonText:
-                        Utils.getString('home__logout_dialog_cancel_button'),
-                    rightButtonText:
-                        Utils.getString('home__logout_dialog_ok_button'),
-                    onAgreeTap: () async {
-                      Navigator.pop(context);
-                      final dynamic returnData =
-                          await checkout3ViewState.callBankNow(
-                        basketProvider,
-                        userProvider,
-                        transactionSubmitProvider,
-                      );
-                      if (returnData != null && returnData) {
-                        _closeCheckoutContainer();
-                      }
-                    });
-              });
-        } else if (checkout3ViewState.isRazorClicked) {
-          showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ConfirmDialogView(
-                    description:
-                        Utils.getString('checkout_container__confirm_order'),
-                    leftButtonText:
-                        Utils.getString('home__logout_dialog_cancel_button'),
-                    rightButtonText:
-                        Utils.getString('home__logout_dialog_ok_button'),
-                    onAgreeTap: () async {
-                      Navigator.pop(context);
+        //               if (returnData != null && returnData) {
+        //                 _closeCheckoutContainer();
+        //               }
+        //             });
+        //       });
+        // } else if (checkout3ViewState.isCashClicked) {
+        //   showDialog<dynamic>(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return ConfirmDialogView(
+        //             description:
+        //                 Utils.getString('checkout_container__confirm_order'),
+        //             leftButtonText:
+        //                 Utils.getString('home__logout_dialog_cancel_button'),
+        //             rightButtonText:
+        //                 Utils.getString('home__logout_dialog_ok_button'),
+        //             onAgreeTap: () async {
+        //               Navigator.pop(context);
+        //               final dynamic returnData =
+        //                   await checkout3ViewState.callCardNow(
+        //                 basketProvider,
+        //                 userProvider,
+        //                 transactionSubmitProvider,
+        //               );
+        //               if (returnData != null && returnData) {
+        //                 _closeCheckoutContainer();
+        //               }
+        //             });
+        //       });
+        // } else if (checkout3ViewState.isBankClicked) {
+        //   showDialog<dynamic>(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return ConfirmDialogView(
+        //             description:
+        //                 Utils.getString('checkout_container__confirm_order'),
+        //             leftButtonText:
+        //                 Utils.getString('home__logout_dialog_cancel_button'),
+        //             rightButtonText:
+        //                 Utils.getString('home__logout_dialog_ok_button'),
+        //             onAgreeTap: () async {
+        //               Navigator.pop(context);
+        //               final dynamic returnData =
+        //                   await checkout3ViewState.callBankNow(
+        //                 basketProvider,
+        //                 userProvider,
+        //                 transactionSubmitProvider,
+        //               );
+        //               if (returnData != null && returnData) {
+        //                 _closeCheckoutContainer();
+        //               }
+        //             });
+        //       });
+        // } else if (checkout3ViewState.isRazorClicked) {
+        //   showDialog<dynamic>(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return ConfirmDialogView(
+        //             description:
+        //                 Utils.getString('checkout_container__confirm_order'),
+        //             leftButtonText:
+        //                 Utils.getString('home__logout_dialog_cancel_button'),
+        //             rightButtonText:
+        //                 Utils.getString('home__logout_dialog_ok_button'),
+        //             onAgreeTap: () async {
+        //               Navigator.pop(context);
 
-                      final dynamic returnData =
-                          await checkout3ViewState.payRazorNow(
-                              userProvider,
-                              transactionSubmitProvider,
-                              couponDiscountProvider,
-                              valueHolder,
-                              basketProvider);
-                      if (returnData != null && returnData) {
-                        _closeCheckoutContainer();
-                      }
-                    });
-              });
-        } else {
-          showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(
-                  message:
-                      Utils.getString('checkout_container__choose_payment'),
-                );
-              });
-        }
+        //               final dynamic returnData =
+        //                   await checkout3ViewState.payRazorNow(
+        //                       userProvider,
+        //                       transactionSubmitProvider,
+        //                       couponDiscountProvider,
+        //                       valueHolder,
+        //                       basketProvider);
+        //               if (returnData != null && returnData) {
+        //                 _closeCheckoutContainer();
+        //               }
+        //             });
+        //       });
+        // } else {
+        //   showDialog<dynamic>(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return ErrorDialog(
+        //           message:
+        //               Utils.getString('checkout_container__choose_payment'),
+        //         );
+        //       });
+        // }
         // } else {
         //   showDialog<dynamic>(
         //       context: context,
@@ -478,22 +487,22 @@ class _CheckoutContainerViewState extends State<CheckoutContainerView> {
                   message: Utils.getString('warning_dialog__shipping_email'),
                 );
               });
-        } else if (checkout1ViewState.shippingCityController.text.isEmpty) {
-          showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(
-                  message: Utils.getString('error_dialog__select_city'),
-                );
-              });
+          // } else if (checkout1ViewState.shippingCityController.text.isEmpty) {
+          //   showDialog<dynamic>(
+          //       context: context,
+          //       builder: (BuildContext context) {
+          //         return ErrorDialog(
+          //           message: Utils.getString('error_dialog__select_city'),
+          //         );
+          //       });
         } else {
           if (!await checkout1ViewState.checkIsDataChange(userProvider)) {
-            isApiSuccess =
-                await checkout1ViewState.callUpdateUserProfile(userProvider);
+            // isApiSuccess =
+            //     await checkout1ViewState.callUpdateUserProfile(userProvider);
             //chang checkout1 data
-            if (isApiSuccess) {
-              viewNo++;
-            }
+            // if (isApiSuccess) {
+            viewNo++;
+            // }
           } else {
             //not chang checkout1 data
             viewNo++;

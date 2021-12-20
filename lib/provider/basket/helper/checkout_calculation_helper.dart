@@ -58,8 +58,10 @@ class CheckoutCalculationHelper {
             double.parse(basket.basketOriginalPrice) * double.parse(basket.qty);
 
         // Items Total Discount Calculation
-        totalDiscount += double.parse(basket.product.discountAmount) *
-            double.parse(basket.qty);
+        totalDiscount = totalDiscount +
+            double.parse(basket.product.unitPrice) -
+            double.parse(basket.product.originalPrice);
+        double.parse(basket.qty);
 
         totalItemCount += int.parse(basket.qty);
       }

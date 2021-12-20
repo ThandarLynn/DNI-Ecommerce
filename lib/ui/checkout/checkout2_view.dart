@@ -1,4 +1,4 @@
-import 'package:dni_ecommerce/api/common/app_resource.dart';
+// import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/config/app_colors.dart';
 import 'package:dni_ecommerce/constant/app_dimens.dart';
 import 'package:dni_ecommerce/provider/basket/basket_provider.dart';
@@ -7,17 +7,17 @@ import 'package:dni_ecommerce/provider/user/user_provider.dart';
 import 'package:dni_ecommerce/repository/basket_repository.dart';
 import 'package:dni_ecommerce/repository/coupon_discount_repository.dart';
 import 'package:dni_ecommerce/repository/user_repository.dart';
-import 'package:dni_ecommerce/ui/common/dialog/error_dialog.dart';
-import 'package:dni_ecommerce/ui/common/dialog/success_dialog.dart';
-import 'package:dni_ecommerce/ui/common/dialog/warning_dialog_view.dart';
-import 'package:dni_ecommerce/ui/common/app_textfield_widget.dart';
+// import 'package:dni_ecommerce/ui/common/dialog/error_dialog.dart';
+// import 'package:dni_ecommerce/ui/common/dialog/success_dialog.dart';
+// import 'package:dni_ecommerce/ui/common/dialog/warning_dialog_view.dart';
+// import 'package:dni_ecommerce/ui/common/app_textfield_widget.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:dni_ecommerce/viewobject/basket.dart';
 import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
-import 'package:dni_ecommerce/viewobject/coupon_discount.dart';
-import 'package:dni_ecommerce/viewobject/holder/intent/coupon_discount_holder.dart';
+// import 'package:dni_ecommerce/viewobject/coupon_discount.dart';
+// import 'package:dni_ecommerce/viewobject/holder/intent/coupon_discount_holder.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+// import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 
 class Checkout2View extends StatefulWidget {
@@ -67,155 +67,155 @@ class _Checkout2ViewState extends State<Checkout2View> {
       return SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              color: AppColors.backgroundColor,
-              margin: const EdgeInsets.only(top: AppDimens.space8),
-              padding: const EdgeInsets.only(
-                left: AppDimens.space12,
-                right: AppDimens.space12,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const SizedBox(
-                    height: AppDimens.space16,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                        left: AppDimens.space16, right: AppDimens.space16),
-                    child: Text(
-                      Utils.getString('transaction_detail__coupon_discount'),
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: AppDimens.space16,
-                  ),
-                  const Divider(
-                    height: 2,
-                  ),
-                  const SizedBox(
-                    height: AppDimens.space16,
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                          child: AppTextFieldWidget(
-                        hintText: Utils.getString('checkout__coupon_code'),
-                        textEditingController: couponController,
-                        showTitle: false,
-                      )),
-                      Container(
-                        margin: const EdgeInsets.only(right: AppDimens.space8),
-                        child: MaterialButton(
-                          color: AppColors.mainColor,
-                          shape: const BeveledRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(7.0)),
-                          ),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(MaterialCommunityIcons.ticket_percent,
-                                  color: AppColors.white),
-                              const SizedBox(
-                                width: AppDimens.space4,
-                              ),
-                              Text(
-                                Utils.getString('checkout__claim_button_name'),
-                                textAlign: TextAlign.start,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .button
-                                    .copyWith(color: AppColors.white),
-                              ),
-                            ],
-                          ),
-                          onPressed: () async {
-                            if (couponController.text.isNotEmpty) {
-                              final CouponDiscountParameterHolder
-                                  couponDiscountParameterHolder =
-                                  CouponDiscountParameterHolder(
-                                couponCode: couponController.text,
-                              );
+            // Container(
+            //   color: AppColors.backgroundColor,
+            //   margin: const EdgeInsets.only(top: AppDimens.space8),
+            //   padding: const EdgeInsets.only(
+            //     left: AppDimens.space12,
+            //     right: AppDimens.space12,
+            //   ),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: <Widget>[
+            //       const SizedBox(
+            //         height: AppDimens.space16,
+            //       ),
+            //       // Container(
+            //       //   margin: const EdgeInsets.only(
+            //       //       left: AppDimens.space16, right: AppDimens.space16),
+            //       //   child: Text(
+            //       //     Utils.getString('transaction_detail__coupon_discount'),
+            //       //     style: Theme.of(context).textTheme.subtitle1,
+            //       //   ),
+            //       // ),
+            //       // const SizedBox(
+            //       //   height: AppDimens.space16,
+            //       // ),
+            //       // const Divider(
+            //       //   height: 2,
+            //       // ),
+            //       // const SizedBox(
+            //       //   height: AppDimens.space16,
+            //       // ),
+            //       // Row(
+            //       //   mainAxisSize: MainAxisSize.min,
+            //       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       //   children: <Widget>[
+            //       //     Expanded(
+            //       //         child: AppTextFieldWidget(
+            //       //       hintText: Utils.getString('checkout__coupon_code'),
+            //       //       textEditingController: couponController,
+            //       //       showTitle: false,
+            //       //     )),
+            //       //     Container(
+            //       //       margin: const EdgeInsets.only(right: AppDimens.space8),
+            //       //       child: MaterialButton(
+            //       //         color: AppColors.mainColor,
+            //       //         shape: const BeveledRectangleBorder(
+            //       //           borderRadius:
+            //       //               BorderRadius.all(Radius.circular(7.0)),
+            //       //         ),
+            //       //         child: Row(
+            //       //           children: <Widget>[
+            //       //             Icon(MaterialCommunityIcons.ticket_percent,
+            //       //                 color: AppColors.white),
+            //       //             const SizedBox(
+            //       //               width: AppDimens.space4,
+            //       //             ),
+            //       //             Text(
+            //       //               Utils.getString('checkout__claim_button_name'),
+            //       //               textAlign: TextAlign.start,
+            //       //               style: Theme.of(context)
+            //       //                   .textTheme
+            //       //                   .button
+            //       //                   .copyWith(color: AppColors.white),
+            //       //             ),
+            //       //           ],
+            //       //         ),
+            //       //         onPressed: () async {
+            //       //           if (couponController.text.isNotEmpty) {
+            //       //             final CouponDiscountParameterHolder
+            //       //                 couponDiscountParameterHolder =
+            //       //                 CouponDiscountParameterHolder(
+            //       //               couponCode: couponController.text,
+            //       //             );
 
-                              final AppResource<CouponDiscount> _apiStatus =
-                                  await couponDiscountProvider
-                                      .postCouponDiscount(
-                                          couponDiscountParameterHolder
-                                              .toMap());
+            //       //             final AppResource<CouponDiscount> _apiStatus =
+            //       //                 await couponDiscountProvider
+            //       //                     .postCouponDiscount(
+            //       //                         couponDiscountParameterHolder
+            //       //                             .toMap());
 
-                              if (_apiStatus.data != null &&
-                                  couponController.text ==
-                                      _apiStatus.data.couponCode) {
-                                final BasketProvider basketProvider =
-                                    Provider.of<BasketProvider>(context,
-                                        listen: false);
+            //       //             if (_apiStatus.data != null &&
+            //       //                 couponController.text ==
+            //       //                     _apiStatus.data.couponCode) {
+            //       //               final BasketProvider basketProvider =
+            //       //                   Provider.of<BasketProvider>(context,
+            //       //                       listen: false);
 
-                                basketProvider.checkoutCalculationHelper
-                                    .calculate(
-                                        basketList: widget.basketList,
-                                        couponDiscountString:
-                                            _apiStatus.data.couponAmount,
-                                        appValueHolder: valueHolder,
-                                        shippingPriceStringFormatting: '0.0');
+            //       //               basketProvider.checkoutCalculationHelper
+            //       //                   .calculate(
+            //       //                       basketList: widget.basketList,
+            //       //                       couponDiscountString:
+            //       //                           _apiStatus.data.couponAmount,
+            //       //                       appValueHolder: valueHolder,
+            //       //                       shippingPriceStringFormatting: '0.0');
 
-                                showDialog<dynamic>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return SuccessDialog(
-                                          message: Utils.getString(
-                                              'checkout__couponcode_add_dialog_message'),
-                                          onPressed: () {});
-                                    });
+            //       //               showDialog<dynamic>(
+            //       //                   context: context,
+            //       //                   builder: (BuildContext context) {
+            //       //                     return SuccessDialog(
+            //       //                         message: Utils.getString(
+            //       //                             'checkout__couponcode_add_dialog_message'),
+            //       //                         onPressed: () {});
+            //       //                   });
 
-                                couponController.clear();
-                                print(_apiStatus.data.couponAmount);
-                                setState(() {
-                                  couponDiscountProvider.couponDiscount =
-                                      _apiStatus.data.couponAmount;
-                                });
-                              } else {
-                                showDialog<dynamic>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return ErrorDialog(
-                                        message: _apiStatus.message,
-                                      );
-                                    });
-                              }
-                            } else {
-                              showDialog<dynamic>(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return WarningDialog(
-                                      message: Utils.getString(
-                                          'checkout__warning_dialog_message'),
-                                      onPressed: () {},
-                                    );
-                                  });
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: AppDimens.space16,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                        left: AppDimens.space16, right: AppDimens.space16),
-                    child: Text(Utils.getString('checkout__description'),
-                        style: Theme.of(context).textTheme.bodyText2),
-                  ),
-                  const SizedBox(
-                    height: AppDimens.space16,
-                  ),
-                ],
-              ),
-            ),
+            //       //               couponController.clear();
+            //       //               print(_apiStatus.data.couponAmount);
+            //       //               setState(() {
+            //       //                 couponDiscountProvider.couponDiscount =
+            //       //                     _apiStatus.data.couponAmount;
+            //       //               });
+            //       //             } else {
+            //       //               showDialog<dynamic>(
+            //       //                   context: context,
+            //       //                   builder: (BuildContext context) {
+            //       //                     return ErrorDialog(
+            //       //                       message: _apiStatus.message,
+            //       //                     );
+            //       //                   });
+            //       //             }
+            //       //           } else {
+            //       //             showDialog<dynamic>(
+            //       //                 context: context,
+            //       //                 builder: (BuildContext context) {
+            //       //                   return WarningDialog(
+            //       //                     message: Utils.getString(
+            //       //                         'checkout__warning_dialog_message'),
+            //       //                     onPressed: () {},
+            //       //                   );
+            //       //                 });
+            //       //           }
+            //       //         },
+            //       //       ),
+            //       //     ),
+            //       //   ],
+            //       // ),
+            //       // const SizedBox(
+            //       //   height: AppDimens.space16,
+            //       // ),
+            //       // Container(
+            //       //   margin: const EdgeInsets.only(
+            //       //       left: AppDimens.space16, right: AppDimens.space16),
+            //       //   child: Text(Utils.getString('checkout__description'),
+            //       //       style: Theme.of(context).textTheme.bodyText2),
+            //       // ),
+            //       // const SizedBox(
+            //       //   height: AppDimens.space16,
+            //       // ),
+            //     ],
+            //   ),
+            // ),
             _OrderSummaryWidget(
               appValueHolder: valueHolder,
               basketList: widget.basketList,
