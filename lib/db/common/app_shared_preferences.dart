@@ -51,13 +51,13 @@ class AppSharedPreferencess {
     final bool _isToShowIntroSlider =
         shared.getBool(AppConst.VALUE_HOLDER__SHOW_INTRO_SLIDER) ?? true;
     final String _overAllTaxLabel =
-        shared.getString(AppConst.VALUE_HOLDER__OVERALL_TAX_LABEL);
+        shared.getString(AppConst.VALUE_HOLDER__OVERALL_TAX_LABEL) ?? '3';
     final String _overAllTaxValue =
-        shared.getString(AppConst.VALUE_HOLDER__OVERALL_TAX_VALUE);
+        shared.getString(AppConst.VALUE_HOLDER__OVERALL_TAX_VALUE) ??'0.03';
     final String _shippingTaxLabel =
-        shared.getString(AppConst.VALUE_HOLDER__SHIPPING_TAX_LABEL);
+        shared.getString(AppConst.VALUE_HOLDER__SHIPPING_TAX_LABEL) ??'7';
     final String _shippingTaxValue =
-        shared.getString(AppConst.VALUE_HOLDER__SHIPPING_TAX_VALUE);
+        shared.getString(AppConst.VALUE_HOLDER__SHIPPING_TAX_VALUE)?? '0.07';
     final String _shippingId =
         shared.getString(AppConst.VALUE_HOLDER__SHIPPING_ID);
     final String _shopId = shared.getString(AppConst.VALUE_HOLDER__SHOP_ID);

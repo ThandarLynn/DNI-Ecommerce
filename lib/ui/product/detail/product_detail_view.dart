@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dni_ecommerce/provider/product/touch_count_provider.dart';
 import 'package:dni_ecommerce/ui/common/app_back_button_with_circle_bg_widget.dart';
+import 'package:dni_ecommerce/ui/common/dialog/error_dialog.dart';
 import 'package:dni_ecommerce/ui/common/dialog/rating_input_dialog.dart';
 // import 'package:dni_ecommerce/ui/common/smooth_star_rating_widget.dart';
 import 'package:dni_ecommerce/ui/product/detail/detail_info_tile_view.dart';
@@ -516,14 +517,27 @@ class __FavouriteWidgetState extends State<_FavouriteWidget> {
             //               .addHistoryList(widget.productDetail);
             //         })),
             GestureDetector(
-                onTap: () {
-                  if (historyProvider != null &&
-                      historyProvider.history != null &&
-                      historyProvider.history.data != null &&
-                      historyProvider.history.data.id != null) {
-                    historyProvider.removeHistoryList(widget.productDetail);
+                onTap: () async {
+                  if (await Utils.checkInternetConnectivity()) {
+                    Utils.navigateOnUserVerificationView(context, () async {
+                      if (historyProvider != null &&
+                          historyProvider.history != null &&
+                          historyProvider.history.data != null &&
+                          historyProvider.history.data.id != null) {
+                        historyProvider.removeHistoryList(widget.productDetail);
+                      } else {
+                        historyProvider.addHistoryList(widget.productDetail);
+                      }
+                    });
                   } else {
-                    historyProvider.addHistoryList(widget.productDetail);
+                    showDialog<dynamic>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ErrorDialog(
+                            message:
+                                Utils.getString('error_dialog__no_internet'),
+                          );
+                        });
                   }
                 },
                 child: (historyProvider != null &&
@@ -766,103 +780,117 @@ class __HeaderPriceWidgetState extends State<_HeaderPriceWidget> {
   Widget build(BuildContext context) {
     print('******* ${widget.unitPriceFormatString}');
     if (widget.product != null && widget.product.unitPrice != null) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children:<Widget>[
+      return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <
+          Widget>[
         Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Container(
-            color: AppColors.transparent,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                if (widget.product.originalPrice != AppConst.ZERO)
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Container(
+              color: AppColors.transparent,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  if (widget.product.originalPrice != AppConst.ZERO)
+                    Hero(
+                        tag: widget.heroTagOriginalPrice,
+                        flightShuttleBuilder: Utils.flightShuttleBuilder,
+                        child: Material(
+                            color: AppColors.transparent,
+                            child: Text(
+                              '\$${widget.originalPriceFormatString}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  .copyWith(
+                                      decoration: TextDecoration.lineThrough),
+                            )))
+                  else
+                    Container(),
+                  const SizedBox(
+                    height: AppDimens.space4,
+                  ),
                   Hero(
-                      tag: widget.heroTagOriginalPrice,
-                      flightShuttleBuilder: Utils.flightShuttleBuilder,
-                      child: Material(
-                          color: AppColors.transparent,
-                          child: Text(
-                            '\$${widget.originalPriceFormatString}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                .copyWith(
-                                    decoration: TextDecoration.lineThrough),
-                          )))
-                else
-                  Container(),
-                const SizedBox(
-                  height: AppDimens.space4,
-                ),
-                Hero(
-                  tag: widget.heroTagUnitPrice,
-                  flightShuttleBuilder: Utils.flightShuttleBuilder,
-                  child: Material(
-                      color: AppColors.transparent,
-                      child: Text(
-                        '\$${widget.unitPriceFormatString}',
-                        //overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            .copyWith(color: AppColors.mainColor),
-                      )),
-                ),
-              ],
+                    tag: widget.heroTagUnitPrice,
+                    flightShuttleBuilder: Utils.flightShuttleBuilder,
+                    child: Material(
+                        color: AppColors.transparent,
+                        child: Text(
+                          '\$${widget.unitPriceFormatString}',
+                          //overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              .copyWith(color: AppColors.mainColor),
+                        )),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            width: AppDimens.space16,
-          ),
-          if (widget.product.originalPrice != AppConst.ZERO)
-            Card(
-              elevation: 0,
-              color: AppColors.mainColor,
-              shape: const BeveledRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(AppDimens.space8),
-                      bottomLeft: Radius.circular(AppDimens.space8))),
-              child: Container(
-                width: 60,
-                height: 30,
-                padding: const EdgeInsets.only(
-                    left: AppDimens.space4, right: AppDimens.space4),
-                child: Align(
-                  child: Text(
-                    Utils.calculateDiscountPercent(widget.product.originalPrice,
-                                widget.product.unitPrice)
-                            .toString() +
-                        '%',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        .copyWith(color: AppColors.white),
+            const SizedBox(
+              width: AppDimens.space16,
+            ),
+            if (widget.product.originalPrice != AppConst.ZERO)
+              Card(
+                elevation: 0,
+                color: AppColors.mainColor,
+                shape: const BeveledRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(AppDimens.space8),
+                        bottomLeft: Radius.circular(AppDimens.space8))),
+                child: Container(
+                  width: 60,
+                  height: 30,
+                  padding: const EdgeInsets.only(
+                      left: AppDimens.space4, right: AppDimens.space4),
+                  child: Align(
+                    child: Text(
+                      Utils.calculateDiscountPercent(
+                                  widget.product.originalPrice,
+                                  widget.product.unitPrice)
+                              .toString() +
+                          '%',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          .copyWith(color: AppColors.white),
+                    ),
                   ),
                 ),
-              ),
-            )
-          else
-            Container()
-        ],
-      ),
+              )
+            else
+              Container()
+          ],
+        ),
         Row(children: <Widget>[
-            Container(
-                width: 100,
-                child: PSButtonWithIconWidget(
-                    hasShadow: true,
-                    colorData: AppColors.mainColor,
-                    titleText: 'Give Rating',
-                    onPressed: () async {
-                      await showDialog<dynamic>(
+          Container(
+              width: 100,
+              child: PSButtonWithIconWidget(
+                  hasShadow: true,
+                  colorData: AppColors.mainColor,
+                  titleText: 'Give Rating',
+                  onPressed: () async {
+                    if (await Utils.checkInternetConnectivity()) {
+                      Utils.navigateOnUserVerificationView(context, () async {
+                        await showDialog<dynamic>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const RatingInputDialog();
+                            });
+                      });
+                    } else {
+                      showDialog<dynamic>(
                           context: context,
                           builder: (BuildContext context) {
-                            return const RatingInputDialog();
+                            return ErrorDialog(
+                              message:
+                                  Utils.getString('error_dialog__no_internet'),
+                            );
                           });
-                    })),
-          ])]);
+                    }
+                  })),
+        ])
+      ]);
     } else {
       return Container();
     }
