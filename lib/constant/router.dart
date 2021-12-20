@@ -29,6 +29,7 @@ import 'package:dni_ecommerce/ui/gallery/detail/gallery_view.dart';
 import 'package:dni_ecommerce/ui/transaction/list/transaction_list_container.dart';
 import 'package:dni_ecommerce/ui/product/filter/category/filter_list_view.dart';
 import 'package:dni_ecommerce/ui/subcategory/sub_category_grid_view.dart';
+import 'package:dni_ecommerce/ui/user/register/register_container_view.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -66,6 +67,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return PageRouteBuilder<dynamic>(
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
               ChangePasswordView());
+
+    case '${RoutePaths.user_register_container}':
+      return PageRouteBuilder<dynamic>(
+          pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
+              RegisterContainerView());
 
     case '${RoutePaths.reset_password}':
       return MaterialPageRoute<dynamic>(builder: (BuildContext context) {

@@ -30,7 +30,7 @@ class _CollectionProductSliderState extends State<BlogSliderView> {
           CarouselSlider(
             options: CarouselOptions(
                 enlargeCenterPage: true,
-                autoPlay: false,
+                autoPlay: true,
                 viewportFraction: 0.9,
                 autoPlayInterval: const Duration(seconds: 5),
                 onPageChanged: (int i, CarouselPageChangedReason reason) {
@@ -58,7 +58,7 @@ class _CollectionProductSliderState extends State<BlogSliderView> {
                   children: <Widget>[
                     ClipRRect(
                       borderRadius: BorderRadius.circular(AppDimens.space8),
-                      child: AppNetworkImageWithUrl(
+                      child: AppNetworkImageWithUrlForBlog(
                           photoKey: '',
                           imagePath: blog.image,
                           width: MediaQuery.of(context).size.width,

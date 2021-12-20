@@ -339,12 +339,12 @@ class _OrderSummaryWidget extends StatelessWidget {
             //     title:
             //         '${Utils.getString( 'checkout__shipping_cost')} :',
             //   ),
-            _OrderSummeryTextWidget(
-              transationInfoText:
-                  '\$ ${basketProvider.checkoutCalculationHelper.shippingTaxFormattedString}',
-              title:
-                  '${Utils.getString('checkout__shipping_tax')} (${appValueHolder.shippingTaxLabel} %) :',
-            ),
+            // _OrderSummeryTextWidget(
+            //   transationInfoText:
+            //       '\$ ${basketProvider.checkoutCalculationHelper.shippingTaxFormattedString}',
+            //   title:
+            //       '${Utils.getString('checkout__shipping_tax')} (${appValueHolder.shippingTaxLabel} %) :',
+            // ),
             _spacingWidget,
             _dividerWidget,
             _OrderSummeryTextWidget(

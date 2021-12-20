@@ -83,6 +83,68 @@ class AppNetworkImage extends StatelessWidget {
   }
 }
 
+class AppNetworkImageWithUrlForBlog extends StatelessWidget {
+  const AppNetworkImageWithUrlForBlog(
+      {Key key,
+      @required this.photoKey,
+      @required this.imagePath,
+      this.width,
+      this.height,
+      this.onTap,
+      this.boxfit = BoxFit.cover})
+      : super(key: key);
+
+  final double width;
+  final double height;
+  final Function onTap;
+  final String photoKey;
+  final BoxFit boxfit;
+  final String imagePath;
+
+  @override
+  Widget build(BuildContext context) {
+    if (imagePath == '') {
+      return GestureDetector(
+          onTap: onTap,
+          child: Image.asset(
+            'assets/images/placeholder_image.png',
+            width: width,
+            height: height,
+            fit: boxfit,
+          ));
+    } else {
+      final String fullImagePath = '${AppConfig.app_image_url}$imagePath';
+      // final String thumbnailImagePath =
+      //     '${AppConfig.app_image_thumbs_url}$imagePath';
+
+      return GestureDetector(
+        onTap: onTap,
+        child: OptimizedCacheImage(
+          placeholder: (BuildContext context, String url) {
+            return  Image.asset(
+            'assets/images/placeholder_image.png',
+            width: width,
+            height: height,
+            fit: boxfit,
+            );
+          },
+          width: width,
+          height: height,
+          fit: boxfit,
+          imageUrl: fullImagePath,
+          errorWidget: (BuildContext context, String url, Object error) =>
+              Image.asset(
+            'assets/images/placeholder_image.png',
+            width: width,
+            height: height,
+            fit: boxfit,
+          ),
+        ),
+      );
+    }
+  }
+}
+
 class AppNetworkImageWithUrl extends StatelessWidget {
   const AppNetworkImageWithUrl(
       {Key key,

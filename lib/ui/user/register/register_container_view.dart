@@ -5,7 +5,6 @@ import 'package:dni_ecommerce/repository/user_repository.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'register_view.dart';
 
 class RegisterContainerView extends StatefulWidget {
