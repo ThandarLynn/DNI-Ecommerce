@@ -1,5 +1,3 @@
-import 'package:dni_ecommerce/config/app_config.dart';
-
 class AppUrl {
   AppUrl._();
 
@@ -16,19 +14,13 @@ class AppUrl {
 
   static const String app_about_app_url = 'rest/abouts/get';
 
-  static const String app_contact_us_url =
-      'rest/contacts/add/api_key/${AppConfig.app_api_key}';
-
-  static const String app_image_upload_url =
-      'rest/images/upload/api_key/${AppConfig.app_api_key}';
-
   static const String app_collection_url = 'rest/collections/get';
 
   static const String app_all_collection_url =
       'rest/products/all_collection_products';
 
   static const String app_post_app_app_info_url =
-      'rest/appinfo/get_delete_history/api_key/${AppConfig.app_api_key}';
+      'rest/appinfo/get_delete_histor';
 
   static const String app_post_app_user_register_url = 'register';
 
@@ -44,19 +36,19 @@ class AppUrl {
   static const String app_post_app_user_change_password_url = 'reset';
 
   static const String app_post_app_user_update_profile_url =
-      'rest/users/profile_update/api_key/${AppConfig.app_api_key}';
+      'rest/users/profile_update';
 
   static const String app_post_app_phone_login_url =
-      'rest/users/phone_register/api_key/${AppConfig.app_api_key}';
+      'rest/users/phone_register';
 
   static const String app_post_app_fb_login_url =
-      'rest/users/facebook_register/api_key/${AppConfig.app_api_key}';
+      'rest/users/facebook_register';
 
   static const String app_post_app_google_login_url =
-      'rest/users/google_register/api_key/${AppConfig.app_api_key}';
+      'rest/users/google_registe';
 
   static const String app_post_app_apple_login_url =
-      'rest/users/apple_register/api_key/${AppConfig.app_api_key}';
+      'rest/users/apple_register';
 
   static const String app_post_app_resend_code_url = 'rest/users/request_code';
 
@@ -93,31 +85,9 @@ class AppUrl {
 
   static const String app_commentDetail_url = 'rest/commentdetails/get';
 
-  static const String app_commentHeaderPost_url =
-      'rest/commentheaders/press/api_key/${AppConfig.app_api_key}';
-
-  static const String app_commentDetailPost_url =
-      'rest/commentdetails/press/api_key/${AppConfig.app_api_key}';
-
-  static const String app_downloadProductPost_url =
-      'rest/downloads/download_product/api_key/${AppConfig.app_api_key}';
-
-  static const String app_noti_register_url =
-      'rest/notis/register/api_key/${AppConfig.app_api_key}';
-
-  static const String app_noti_post_url =
-      'rest/notis/is_read/api_key/${AppConfig.app_api_key}';
-
-  static const String app_noti_unregister_url =
-      'rest/notis/unregister/api_key/${AppConfig.app_api_key}';
-
-  static const String app_ratingPost_url =
-      'rest/rates/add_rating/api_key/${AppConfig.app_api_key}';
+  static const String app_ratingPost_url = 'rest/rates/add_rating';
 
   static const String app_ratingList_url = 'rest/rates/get';
-
-  static const String app_favouritePost_url =
-      'rest/favourites/press/api_key/${AppConfig.app_api_key}';
 
   static const String app_topselling_productList_url = 'products/tsproducts';
 
@@ -125,14 +95,17 @@ class AppUrl {
 
   static const String app_gallery_url = 'imageGallery';
 
-  static const String app_couponDiscount_url =
-      'rest/coupons/check/api_key/${AppConfig.app_api_key}';
+  static const String app_couponDiscount_url = 'rest/coupons/check';
 
-  static const String app_token_url = 'rest/paypal/get_token';
+  static const String app_contact_us_url = '';
 
   static const String app_transaction_submit_url =
-      'rest/transactionheaders/submit/api_key/${AppConfig.app_api_key}';
+      'rest/transactionheaders/submit';
 
   static const String app_collection_product_url =
       'rest/products/all_collection_products';
+
+  static const String app_post_ps_user_update_profile_url = '';
+
+  static const String app_token_url = 'rest/paypal/get_token';
 }

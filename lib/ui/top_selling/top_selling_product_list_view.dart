@@ -46,7 +46,7 @@ class _TopSellingProductListView extends State<TopSellingProductListView>
   }
 
   ProductRepository repo1;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
   dynamic data;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
@@ -63,7 +63,7 @@ class _TopSellingProductListView extends State<TopSellingProductListView>
   @override
   Widget build(BuildContext context) {
     repo1 = Provider.of<ProductRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
 
     if (!isConnectedToInternet && AppConfig.showAdMob) {
       print('loading ads....');
@@ -75,7 +75,7 @@ class _TopSellingProductListView extends State<TopSellingProductListView>
       lazy: false,
       create: (BuildContext context) {
         final TopSellingProductProvider provider = TopSellingProductProvider(
-            repo: repo1, psValueHolder: psValueHolder);
+            repo: repo1, appValueHolder: appValueHolder);
         provider.loadTopSellingProductList();
         _favouriteProductProvider = provider;
         return _favouriteProductProvider;

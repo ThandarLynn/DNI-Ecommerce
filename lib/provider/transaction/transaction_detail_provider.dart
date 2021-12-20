@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 class TransactionDetailProvider extends AppProvider {
   TransactionDetailProvider(
       {@required TransactionDetailRepository repo,
-      this.psValueHolder,
+      this.appValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -42,7 +42,7 @@ class TransactionDetailProvider extends AppProvider {
   }
 
   TransactionDetailRepository _repo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   AppResource<List<TransactionDetail>> _transactionDetailList =
       AppResource<List<TransactionDetail>>(

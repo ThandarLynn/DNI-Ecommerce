@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/api/common/app_status.dart';
 import 'package:dni_ecommerce/constant/app_constant.dart';
@@ -23,7 +22,7 @@ import 'package:flutter/material.dart';
 class UserProvider extends AppProvider {
   UserProvider(
       {@required UserRepository repo,
-      @required this.psValueHolder,
+      @required this.appValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -48,7 +47,7 @@ class UserProvider extends AppProvider {
   }
 
   UserRepository _repo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
   User holderUser;
   bool isCheckBoxSelect = true;
   ShippingCountry selectedCountry;
@@ -89,33 +88,33 @@ class UserProvider extends AppProvider {
     return _user;
   }
 
-  Future<dynamic> postUserEmailVerify(
-    Map<dynamic, dynamic> jsonMap,
-  ) async {
-    isLoading = true;
+  // Future<dynamic> postUserEmailVerify(
+  //   Map<dynamic, dynamic> jsonMap,
+  // ) async {
+  //   isLoading = true;
 
-    isConnectedToInternet = await Utils.checkInternetConnectivity();
+  //   isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.postUserEmailVerify(
-        jsonMap, isConnectedToInternet, AppStatus.PROGRESS_LOADING);
+  //   _user = await _repo.postUserEmailVerify(
+  //       jsonMap, isConnectedToInternet, AppStatus.PROGRESS_LOADING);
 
-    return _user;
-  }
+  //   return _user;
+  // }
 
-  Future<dynamic> postImageUpload(
-    String userId,
-    String platformName,
-    File imageFile,
-  ) async {
-    isLoading = true;
+  // Future<dynamic> postImageUpload(
+  //   String userId,
+  //   String platformName,
+  //   File imageFile,
+  // ) async {
+  //   isLoading = true;
 
-    isConnectedToInternet = await Utils.checkInternetConnectivity();
+  //   isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.postImageUpload(userId, platformName, imageFile,
-        isConnectedToInternet, AppStatus.PROGRESS_LOADING);
+  //   _user = await _repo.postImageUpload(userId, platformName, imageFile,
+  //       isConnectedToInternet, AppStatus.PROGRESS_LOADING);
 
-    return _user;
-  }
+  //   return _user;
+  // }
 
   Future<dynamic> postUserLogin(
     Map<dynamic, dynamic> jsonMap,
@@ -443,7 +442,7 @@ class UserProvider extends AppProvider {
   //             userName: user.displayName,
   //             userEmail: email,
   //             profilePhotoUrl: user.photoURL,
-  //             deviceToken: psValueHolder.deviceToken);
+  //             deviceToken: appValueHolder.deviceToken);
 
   //     final AppResource<User> _apiStatus =
   //         await postAppleLogin(appleLoginParameterHolder.toMap());
@@ -665,7 +664,7 @@ class UserProvider extends AppProvider {
   //       userName: user.displayName,
   //       userEmail: email,
   //       profilePhotoUrl: user.photoURL,
-  //       deviceToken: psValueHolder.deviceToken,
+  //       deviceToken: appValueHolder.deviceToken,
   //     );
 
   //     final AppResource<User> _apiStatus =
@@ -852,7 +851,7 @@ class UserProvider extends AppProvider {
   //       userName: user.displayName,
   //       userEmail: email,
   //       profilePhotoUrl: '',
-  //       deviceToken: psValueHolder.deviceToken,
+  //       deviceToken: appValueHolder.deviceToken,
   //       profileImgId: facebookUser['id'],
   //     );
 
@@ -990,7 +989,7 @@ class UserProvider extends AppProvider {
         UserLoginParameterHolder(
       userEmail: email,
       userPassword: password,
-      // deviceToken: psValueHolder.deviceToken,
+      // deviceToken: appValueHolder.deviceToken,
     );
 
     final AppResource<User> _apiStatus =
@@ -1073,10 +1072,10 @@ class UserProvider extends AppProvider {
             //         resourceUser.data.userEmail,
             //         password);
 
-            //     psValueHolder.userIdToVerify = user.userId;
-            //     psValueHolder.userNameToVerify = user.userName;
-            //     psValueHolder.userEmailToVerify = user.userEmail;
-            //     psValueHolder.userPasswordToVerify = user.userPassword;
+            //     appValueHolder.userIdToVerify = user.userId;
+            //     appValueHolder.userNameToVerify = user.userName;
+            //     appValueHolder.userEmailToVerify = user.userEmail;
+            //     appValueHolder.userPasswordToVerify = user.userPassword;
 
             //     final dynamic returnData = await Navigator.pushNamed(
             //         context, RoutePaths.user_verify_email_container,
@@ -1085,14 +1084,14 @@ class UserProvider extends AppProvider {
             //     if (returnData != null && returnData is User) {
             //       final User user = returnData;
             //       if (Provider != null && Provider.of != null) {
-            //         psValueHolder =
+            //         appValueHolder =
             //             Provider.of<AppValueHolder>(context, listen: false);
             //       }
-            //       psValueHolder.loginUserId = user.userId;
-            //       psValueHolder.userIdToVerify = '';
-            //       psValueHolder.userNameToVerify = '';
-            //       psValueHolder.userEmailToVerify = '';
-            //       psValueHolder.userPasswordToVerify = '';
+            //       appValueHolder.loginUserId = user.userId;
+            //       appValueHolder.userIdToVerify = '';
+            //       appValueHolder.userNameToVerify = '';
+            //       appValueHolder.userEmailToVerify = '';
+            //       appValueHolder.userPasswordToVerify = '';
             //       print(user.userId);
 
             //       Navigator.pop(context, resourceUser.data);
@@ -1201,7 +1200,7 @@ class UserProvider extends AppProvider {
       userEmail: email,
       userPassword: password,
       passwordConfirmation: password,
-      deviceToken: psValueHolder.deviceToken,
+      deviceToken: appValueHolder.deviceToken,
     );
 
     final AppResource<User> _apiStatus =
@@ -1214,10 +1213,10 @@ class UserProvider extends AppProvider {
       await replaceVerifyUserData(_apiStatus.data.userId,
           _apiStatus.data.userName, _apiStatus.data.userEmail, password);
 
-      psValueHolder.userIdToVerify = user.userId;
-      psValueHolder.userNameToVerify = user.userName;
-      psValueHolder.userEmailToVerify = user.userEmail;
-      psValueHolder.userPasswordToVerify = user.userPassword;
+      appValueHolder.userIdToVerify = user.userId;
+      appValueHolder.userNameToVerify = user.userName;
+      appValueHolder.userEmailToVerify = user.userEmail;
+      appValueHolder.userPasswordToVerify = user.userPassword;
     }
 
     return _apiStatus;

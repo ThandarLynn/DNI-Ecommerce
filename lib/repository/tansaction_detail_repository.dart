@@ -13,14 +13,14 @@ import 'Common/app_repository.dart';
 
 class TransactionDetailRepository extends AppRepository {
   TransactionDetailRepository(
-      {@required AppApiService psApiService,
+      {@required AppApiService appApiService,
       @required TransactionDetailDao transactionDetailDao}) {
-    _psApiService = psApiService;
+    _appApiService = appApiService;
     _transactionDetailDao = transactionDetailDao;
   }
 
   String primaryKey = 'id';
-  AppApiService _psApiService;
+  AppApiService _appApiService;
   TransactionDetailDao _transactionDetailDao;
 
   Future<dynamic> insert(TransactionDetail transaction) async {
@@ -50,8 +50,9 @@ class TransactionDetailRepository extends AppRepository {
         await _transactionDetailDao.getAll(finder: finder, status: status));
 
     if (isConnectedToInternet) {
-      final AppResource<List<TransactionDetail>> _resource = await _psApiService
-          .getTransactionDetail(transaction.id, limit, offset);
+      final AppResource<List<TransactionDetail>> _resource =
+          await _appApiService.getTransactionDetail(
+              transaction.id, limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _transactionDetailDao.deleteWithFinder(finder);
@@ -81,8 +82,9 @@ class TransactionDetailRepository extends AppRepository {
         await _transactionDetailDao.getAll(finder: finder, status: status));
 
     if (isConnectedToInternet) {
-      final AppResource<List<TransactionDetail>> _resource = await _psApiService
-          .getTransactionDetail(transaction.id, limit, offset);
+      final AppResource<List<TransactionDetail>> _resource =
+          await _appApiService.getTransactionDetail(
+              transaction.id, limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _transactionDetailDao.insertAll(primaryKey, _resource.data);

@@ -24,7 +24,7 @@ class ResetPasswordView extends StatefulWidget {
 
 class _ResetPasswordViewState extends State<ResetPasswordView> {
   UserRepository userRepo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
@@ -32,14 +32,14 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
   @override
   Widget build(BuildContext context) {
     userRepo = Provider.of<UserRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
     const Widget _largeSpacingWidget = SizedBox(
       height: AppDimens.space8,
     );
     return AppWidgetWithAppBar<UserProvider>(
         appBarTitle: Utils.getString('reset_password__title') ?? '',
         initProvider: () {
-          return UserProvider(repo: userRepo, psValueHolder: psValueHolder);
+          return UserProvider(repo: userRepo, appValueHolder: appValueHolder);
         },
         onProviderReady: (UserProvider provider) {
           return provider;

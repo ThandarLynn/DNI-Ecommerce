@@ -127,9 +127,9 @@ class AppColors {
 
   static const Color _c_rating_color = Colors.yellow;
 
-  static const Color ps_ctheme__color_about_us = Colors.cyan;
-  static const Color ps_ctheme__color_application = Colors.blue;
-  static const Color ps_ctheme__color_line = Color(0xFFbdbdbd);
+  static const Color app_ctheme__color_about_us = Colors.cyan;
+  static const Color app_ctheme__color_application = Colors.blue;
+  static const Color app_ctheme__color_line = Color(0xFFbdbdbd);
 
   static void loadColor(BuildContext context) {
     if (Utils.isLightMode(context)) {

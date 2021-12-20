@@ -11,13 +11,13 @@ import 'Common/app_repository.dart';
 
 class BlogRepository extends AppRepository {
   BlogRepository(
-      {@required AppApiService psApiService, @required BlogDao blogDao}) {
-    _psApiService = psApiService;
+      {@required AppApiService appApiService, @required BlogDao blogDao}) {
+    _appApiService = appApiService;
     _blogDao = blogDao;
   }
 
   String primaryKey = 'id';
-  AppApiService _psApiService;
+  AppApiService _appApiService;
   BlogDao _blogDao;
 
   Future<dynamic> insert(Product blog) async {
@@ -43,7 +43,7 @@ class BlogRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<List<Product>> _resource =
-          await _psApiService.getBlogList(limit, offset);
+          await _appApiService.getBlogList(limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _blogDao.deleteAll();
@@ -68,7 +68,7 @@ class BlogRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<List<Product>> _resource =
-          await _psApiService.getBlogList(limit, offset);
+          await _appApiService.getBlogList(limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _blogDao.insertAll(primaryKey, _resource.data);

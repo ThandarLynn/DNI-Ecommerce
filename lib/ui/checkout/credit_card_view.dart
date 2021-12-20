@@ -26,7 +26,7 @@ class CreditCardView extends StatefulWidget {
       {Key key,
       @required this.basketList,
       @required this.couponDiscount,
-      @required this.psValueHolder,
+      @required this.appValueHolder,
       @required this.transactionSubmitProvider,
       @required this.userLoginProvider,
       @required this.basketProvider,
@@ -38,7 +38,7 @@ class CreditCardView extends StatefulWidget {
 
   final List<Basket> basketList;
   final String couponDiscount;
-  final AppValueHolder psValueHolder;
+  final AppValueHolder appValueHolder;
   final TransactionHeaderProvider transactionSubmitProvider;
   final UserProvider userLoginProvider;
   final BasketProvider basketProvider;
@@ -171,17 +171,17 @@ class CreditCardViewState extends State<CreditCardView> {
   @override
   Widget build(BuildContext context) {
     dynamic stripeNow(String token) async {
-      if (widget.psValueHolder.standardShippingEnable == AppConst.ONE) {
+      if (widget.appValueHolder.standardShippingEnable == AppConst.ONE) {
         widget.basketProvider.checkoutCalculationHelper.calculate(
             basketList: widget.basketList,
             couponDiscountString: widget.couponDiscount,
-            psValueHolder: widget.psValueHolder,
+            appValueHolder: widget.appValueHolder,
             shippingPriceStringFormatting: '0.0');
-      } else if (widget.psValueHolder.zoneShippingEnable == AppConst.ONE) {
+      } else if (widget.appValueHolder.zoneShippingEnable == AppConst.ONE) {
         widget.basketProvider.checkoutCalculationHelper.calculate(
             basketList: widget.basketList,
             couponDiscountString: widget.couponDiscount,
-            psValueHolder: widget.psValueHolder,
+            appValueHolder: widget.appValueHolder,
             shippingPriceStringFormatting: '0.0');
       }
 

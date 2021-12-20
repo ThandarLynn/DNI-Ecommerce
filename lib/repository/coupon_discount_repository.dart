@@ -9,12 +9,12 @@ import 'Common/app_repository.dart';
 
 class CouponDiscountRepository extends AppRepository {
   CouponDiscountRepository({
-    @required AppApiService psApiService,
+    @required AppApiService appApiService,
   }) {
-    _psApiService = psApiService;
+    _appApiService = appApiService;
   }
   String primaryKey = 'id';
-  AppApiService _psApiService;
+  AppApiService _appApiService;
 
   Future<AppResource<CouponDiscount>> postCouponDiscount(
       Map<dynamic, dynamic> jsonMap,
@@ -22,7 +22,7 @@ class CouponDiscountRepository extends AppRepository {
       AppStatus status,
       {bool isLoadFromServer = true}) async {
     final AppResource<CouponDiscount> _resource =
-        await _psApiService.postCouponDiscount(jsonMap);
+        await _appApiService.postCouponDiscount(jsonMap);
     if (_resource.status == AppStatus.SUCCESS) {
       return _resource;
     } else {

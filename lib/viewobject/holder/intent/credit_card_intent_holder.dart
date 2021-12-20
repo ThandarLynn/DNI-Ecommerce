@@ -10,7 +10,7 @@ class CreditCardIntentHolder {
   const CreditCardIntentHolder({
     @required this.basketList,
     @required this.couponDiscount,
-    @required this.psValueHolder,
+    @required this.appValueHolder,
     @required this.transactionSubmitProvider,
     @required this.userProvider,
     @required this.basketProvider,
@@ -21,7 +21,7 @@ class CreditCardIntentHolder {
 
   final List<Basket> basketList;
   final String couponDiscount;
-  final AppValueHolder psValueHolder;
+  final AppValueHolder appValueHolder;
   final TransactionHeaderProvider transactionSubmitProvider;
   final UserProvider userProvider;
   final BasketProvider basketProvider;

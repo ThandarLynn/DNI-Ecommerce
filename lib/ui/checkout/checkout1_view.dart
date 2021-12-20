@@ -452,7 +452,7 @@ class _Checkout1ViewState extends State<Checkout1View> {
     if (await Utils.checkInternetConnectivity()) {
       final ProfileUpdateParameterHolder profileUpdateParameterHolder =
           ProfileUpdateParameterHolder(
-        userId: userProvider.psValueHolder.loginUserId,
+        userId: userProvider.appValueHolder.loginUserId,
         userName: userProvider.user.data.userName,
         userEmail: userEmailController.text.trim(),
         userPhone: userPhoneController.text,
@@ -493,9 +493,8 @@ class _Checkout1ViewState extends State<Checkout1View> {
             context: context,
             builder: (BuildContext contet) {
               return SuccessDialog(
-                message: Utils.getString('edit_profile__success'),
-                onPressed: () {}
-              );
+                  message: Utils.getString('edit_profile__success'),
+                  onPressed: () {});
             });
       } else {
         AppProgressDialog.dismissDialog();

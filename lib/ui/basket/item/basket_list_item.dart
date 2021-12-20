@@ -217,7 +217,7 @@ class _IconAndTextWidgetState extends State<_IconAndTextWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final AppValueHolder psValueHolder = Provider.of<AppValueHolder>(context);
+    final AppValueHolder appValueHolder = Provider.of<AppValueHolder>(context);
 
     initQty();
 
@@ -226,7 +226,7 @@ class _IconAndTextWidgetState extends State<_IconAndTextWidget> {
           id: widget.basket.id,
           productId: widget.basket.product.id,
           qty: widget.basket.qty,
-          shopId: psValueHolder.shopId,
+          shopId: appValueHolder.shopId,
           selectedColorId: widget.basket.selectedColorId,
           selectedColorValue: widget.basket.selectedColorValue,
           basketPrice: widget.basket.basketPrice,

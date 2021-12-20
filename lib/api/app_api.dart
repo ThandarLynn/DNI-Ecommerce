@@ -6,15 +6,11 @@ import 'package:dni_ecommerce/viewobject/common/app_object.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:path/path.dart';
-// import 'dart:async' show Future;
-// import 'package:flutter/services.dart' show rootBundle;
-// import 'dart:convert';
-// import 'package:flutter/services.dart';
 import 'common/app_resource.dart';
 import 'common/app_status.dart';
 
 abstract class AppApi {
-  AppResource<T> psObjectConvert<T>(dynamic dataList, T data) {
+  AppResource<T> appObjectConvert<T>(dynamic dataList, T data) {
     return AppResource<T>(dataList.status, dataList.message, data);
   }
 
@@ -47,7 +43,7 @@ abstract class AppApi {
   //     final dynamic jsonText =
   //         await rootBundle.loadString('assets/json/product_detail.json');
 
-  //     // if (psApiResponse.isSuccessful()) {
+  //     // if (appApiService.isSuccessful()) {
   //     final dynamic hashMap = json.decode(jsonText);
 
   //     if (!(hashMap is Map)) {
@@ -61,7 +57,7 @@ abstract class AppApi {
   //     }
   //     // } else {
   //     //   return AppResource<R>(
-  //     //       AppStatus.ERROR, psApiResponse.errorMessage, null);
+  //     //       AppStatus.ERROR, appApiService.errorMessage, null);
   //     // }
   //   } finally {
   //     client.close();
@@ -83,10 +79,10 @@ abstract class AppApi {
         },
       );
       print('${AppConfig.app_url}$url');
-      final AppApiResponse psApiResponse = AppApiResponse(response);
-      print(psApiResponse.toString());
+      final AppApiResponse appApiService = AppApiResponse(response);
+      print(appApiService.toString());
 
-      if (psApiResponse.isSuccessful()) {
+      if (appApiService.isSuccessful()) {
         final dynamic hashMap = json.decode(response.body);
 
         if (!(hashMap is Map)) {
@@ -100,7 +96,7 @@ abstract class AppApi {
         }
       } else {
         return AppResource<R>(
-            AppStatus.ERROR, psApiResponse.errorMessage, null);
+            AppStatus.ERROR, appApiService.errorMessage, null);
       }
     } finally {
       client.close();
@@ -126,9 +122,9 @@ abstract class AppApi {
         print(e.error);
       });
 
-      final AppApiResponse psApiResponse = AppApiResponse(response);
+      final AppApiResponse appApiService = AppApiResponse(response);
 
-      if (psApiResponse.isSuccessful()) {
+      if (appApiService.isSuccessful()) {
         final dynamic hashMap = json.decode(response.body);
 
         if (!(hashMap is Map)) {
@@ -142,7 +138,7 @@ abstract class AppApi {
         }
       } else {
         return AppResource<R>(
-            AppStatus.ERROR, psApiResponse.errorMessage, null);
+            AppStatus.ERROR, appApiService.errorMessage, null);
       }
     } finally {
       client.close();
@@ -169,11 +165,11 @@ abstract class AppApi {
       request.files.add(multipartFile);
       final StreamedResponse response = await request.send();
 
-      final AppApiResponse psApiResponse =
+      final AppApiResponse appApiService =
           AppApiResponse(await http.Response.fromStream(response));
 
-      if (psApiResponse.isSuccessful()) {
-        final dynamic hashMap = json.decode(psApiResponse.body);
+      if (appApiService.isSuccessful()) {
+        final dynamic hashMap = json.decode(appApiService.body);
 
         if (!(hashMap is Map)) {
           final List<T> tList = <T>[];
@@ -186,7 +182,7 @@ abstract class AppApi {
         }
       } else {
         return AppResource<R>(
-            AppStatus.ERROR, psApiResponse.errorMessage, null);
+            AppStatus.ERROR, appApiService.errorMessage, null);
       }
     } finally {
       client.close();

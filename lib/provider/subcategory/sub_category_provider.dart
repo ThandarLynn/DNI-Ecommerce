@@ -12,7 +12,9 @@ import 'package:dni_ecommerce/viewobject/sub_category.dart';
 
 class SubCategoryProvider extends AppProvider {
   SubCategoryProvider(
-      {@required SubCategoryRepository repo, this.psValueHolder, int limit = 0})
+      {@required SubCategoryRepository repo,
+      this.appValueHolder,
+      int limit = 0})
       : super(repo, limit) {
     _repo = repo;
     print('SubCategory Provider: $hashCode');
@@ -41,7 +43,7 @@ class SubCategoryProvider extends AppProvider {
 
   StreamController<AppResource<List<SubCategory>>> subCategoryListStream;
   SubCategoryRepository _repo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   AppResource<List<SubCategory>> _subCategoryList =
       AppResource<List<SubCategory>>(AppStatus.NOACTION, '', <SubCategory>[]);

@@ -11,14 +11,15 @@ import 'Common/app_repository.dart';
 
 class GalleryRepository extends AppRepository {
   GalleryRepository(
-      {@required AppApiService psApiService, @required GalleryDao galleryDao}) {
-    _psApiService = psApiService;
+      {@required AppApiService appApiService,
+      @required GalleryDao galleryDao}) {
+    _appApiService = appApiService;
     _galleryDao = galleryDao;
   }
 
   String primaryKey = 'id';
   String imgParentId = 'product_id';
-  AppApiService _psApiService;
+  AppApiService _appApiService;
   GalleryDao _galleryDao;
 
   Future<dynamic> insert(Gallery image) async {
@@ -47,7 +48,7 @@ class GalleryRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<List<Gallery>> _resource =
-          await _psApiService.getGalleryList(parentImgId, limit, offset);
+          await _appApiService.getGalleryList(parentImgId, limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _galleryDao.deleteWithFinder(

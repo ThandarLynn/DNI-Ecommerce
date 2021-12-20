@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 class ShippingCountryProvider extends AppProvider {
   ShippingCountryProvider(
       {@required ShippingCountryRepository repo,
-      @required this.psValueHolder,
+      @required this.appValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -46,7 +46,7 @@ class ShippingCountryProvider extends AppProvider {
   StreamController<AppResource<List<ShippingCountry>>>
       shippingCountryListStream;
   ShippingCountryRepository _repo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   AppResource<List<ShippingCountry>> _shippingCountryList =
       AppResource<List<ShippingCountry>>(

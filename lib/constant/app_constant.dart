@@ -139,7 +139,7 @@ class AppConst {
   static const int REQUEST_CODE__DASHBOARD_FB_SIGNIN_FRAGMENT = 2012;
   static const int REQUEST_CODE__DASHBOARD_GOOGLE_VERIFY_FRAGMENT = 2013;
 
-  static final NumberFormat psFormat = NumberFormat(AppConfig.priceFormat);
+  static final NumberFormat numberFormat = NumberFormat(AppConfig.priceFormat);
   static const String priceTwoDecimalFormatString = '###.00';
   static final NumberFormat priceTwoDecimalFormat =
       NumberFormat(priceTwoDecimalFormatString);

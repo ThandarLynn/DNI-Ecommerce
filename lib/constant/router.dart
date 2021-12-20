@@ -45,24 +45,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             return DashboardView();
           });
 
-    // case '${RoutePaths.force_update}':
-    //   final Object args = settings.arguments;
-    //   final PSAppVersion psAppVersion = args ?? PSAppVersion;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           ForceUpdateView(psAppVersion: psAppVersion));
-
-    // case '${RoutePaths.user_register_container}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           RegisterContainerView());
     case '${RoutePaths.login_container}':
       return PageRouteBuilder<dynamic>(
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
               LoginContainerView());
-    // case '${RoutePaths.appinfo}':
-    //   return MaterialPageRoute<dynamic>(
-    //       builder: (BuildContext context) => AppInfoView());
+
     case '${RoutePaths.subCategoryGrid}':
       return MaterialPageRoute<Category>(builder: (BuildContext context) {
         final Object args = settings.arguments;
@@ -70,75 +57,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         return SubCategoryGridView(category: category);
       });
 
-    // case '${RoutePaths.user_verify_email_container}':
-    //   final Object args = settings.arguments;
-    //   final String userId = args ?? String;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           VerifyEmailContainerView(userId: userId));
-
     case '${RoutePaths.user_forgot_password_container}':
       return PageRouteBuilder<dynamic>(
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
               ForgotPasswordContainerView());
-
-    // case '${RoutePaths.setting}':
-    //   return MaterialPageRoute<dynamic>(
-    //       builder: (BuildContext context) => SettingContainerView());
-
-    // case '${RoutePaths.more}':
-    //   return MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-    //     final Object args = settings.arguments;
-    //     final String userName = args ?? String;
-    //     return MoreContainerView(userName: userName);
-    //   });
-
-    // case '${RoutePaths.introSlider}':
-    //   return MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-    //     final Object args = settings.arguments;
-    //     final int settingSlider = args ?? int;
-    //     return IntroSliderView(settingSlider:settingSlider);
-    //   });
-
-    // case '${RoutePaths.user_phone_signin_container}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           PhoneSignInContainerView());
-
-    // case '${RoutePaths.user_phone_verify_container}':
-    //   final Object args = settings.arguments;
-
-    //   final VerifyPhoneIntentHolder verifyPhoneIntentParameterHolder =
-    //       args ?? VerifyPhoneIntentHolder;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           VerifyPhoneContainerView(
-    //             userName: verifyPhoneIntentParameterHolder.userName,
-    //             phoneNumber: verifyPhoneIntentParameterHolder.phoneNumber,
-    //             phoneId: verifyPhoneIntentParameterHolder.phoneId,
-    //           ));
-
-    // case '${RoutePaths.payStack}':
-    //   final Object args = settings.arguments;
-
-    //   final CreditCardIntentHolder creditCardInterntHolder =
-    //       args ?? CreditCardIntentHolder;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           PayStackView(
-    //               basketList: creditCardInterntHolder.basketList,
-    //               couponDiscount: creditCardInterntHolder.couponDiscount,
-    //               transactionSubmitProvider:
-    //                   creditCardInterntHolder.transactionSubmitProvider,
-    //               psValueHolder: creditCardInterntHolder.psValueHolder,
-    //               basketProvider: creditCardInterntHolder.basketProvider,
-    //               userLoginProvider: creditCardInterntHolder.userProvider,
-    //               memoText: creditCardInterntHolder.memoText,
-    //               payStackKey: creditCardInterntHolder.payStackKey,
-    //               shippingCostProvider:
-    //                   creditCardInterntHolder.shippingCostProvider,
-    //               shippingMethodProvider:
-    //                   creditCardInterntHolder.shippingMethodProvider));
 
     case '${RoutePaths.user_update_password}':
       return PageRouteBuilder<dynamic>(
@@ -152,15 +74,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         return ResetPasswordView(userToken: userToken);
       });
 
-    //             case '${RoutePaths.contactUs}':
-    //   return MaterialPageRoute<dynamic>(
-    //       builder: (BuildContext context) => ContactUsContainerView());
-
-    // case '${RoutePaths.profile_container}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           ProfileContainerView());
-
     case '${RoutePaths.languageList}':
       return PageRouteBuilder<dynamic>(
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
@@ -172,60 +85,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return PageRouteBuilder<dynamic>(
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
               CategoryListViewContainerView(appBarTitle: title));
-
-    // case '${RoutePaths.notiList}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           const NotiListView());
-    // case '${RoutePaths.creditCard}':
-    //   final Object args = settings.arguments;
-
-    //   final CreditCardIntentHolder creditCardParameterHolder =
-    //       args ?? CreditCardIntentHolder;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           CreditCardView(
-    //               basketList: creditCardParameterHolder.basketList,
-    //               couponDiscount: creditCardParameterHolder.couponDiscount,
-    //               transactionSubmitProvider:
-    //                   creditCardParameterHolder.transactionSubmitProvider,
-    //               userLoginProvider: creditCardParameterHolder.userProvider,
-    //               basketProvider: creditCardParameterHolder.basketProvider,
-    //               psValueHolder: creditCardParameterHolder.psValueHolder,
-    //               // shippingCostProvider:
-    //               //     creditCardParameterHolder.shippingCostProvider,
-    //               // shippingMethodProvider:
-    //               //     creditCardParameterHolder.shippingMethodProvider,
-    //               memoText: creditCardParameterHolder.memoText,
-    //               publishKey: creditCardParameterHolder.publishKey));
-
-    // case '${RoutePaths.notiSetting}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           NotificationSettingView());
-
-    // case '${RoutePaths.termsAndRefund}':
-    //   final Object args = settings.arguments;
-    //   final PrivacyPolicyIntentHolder privacyPolicyIntentHolder = args ?? int;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           TermsAndRefundContainerView(
-    //               title: privacyPolicyIntentHolder.title,
-    //               description: privacyPolicyIntentHolder.description));
-
-    // // case '${RoutePaths.subCategoryList}':
-    // //   final Object args = settings.arguments;
-    // //   final Category category = args ?? Category;
-    // //   return PageRouteBuilder<dynamic>(
-    // //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    // //           SubCategoryListView(category: category));
-
-    // case '${RoutePaths.noti}':
-    //   final Object args = settings.arguments;
-    //   final Noti noti = args ?? Noti;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           NotiView(noti: noti));
 
     case '${RoutePaths.filterProductList}':
       final Object args = settings.arguments;
@@ -254,30 +113,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
               PrivacyPolicyContainerView());
 
-    // case '${RoutePaths.blogList}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           BlogListContainerView());
-
-    // case '${RoutePaths.blogDetail}':
-    //   final Object args = settings.arguments;
-    //   final Blog blog = args ?? Blog;
-    //   return MaterialPageRoute<Widget>(builder: (BuildContext context) {
-    //     return BlogView(
-    //       blog: blog,
-    //       heroTagImage: blog.id,
-    //     );
-    //   });
-
     case '${RoutePaths.transactionList}':
       return PageRouteBuilder<dynamic>(
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
               TransactionListContainerView());
-
-    // case '${RoutePaths.historyList}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           HistoryListContainerView());
 
     case '${RoutePaths.transactionDetail}':
       final Object args = settings.arguments;
@@ -316,73 +155,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
               FilterListView(selectedData: args));
 
-    // case '${RoutePaths.commentList}':
-    //   final Object args = settings.arguments;
-    //   final Product product = args ?? Product;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           CommentListView(product: product));
-
-    // case '${RoutePaths.itemSearch}':
-    //   final Object args = settings.arguments;
-    //   final ProductParameterHolder productParameterHolder =
-    //       args ?? ProductParameterHolder;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           ItemSearchView(productParameterHolder: productParameterHolder));
-
-    // case '${RoutePaths.itemSort}':
-    //   final Object args = settings.arguments;
-    //   final ProductParameterHolder productParameterHolder =
-    //       args ?? ProductParameterHolder;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           ItemSortingView(productParameterHolder: productParameterHolder));
-
-    // case '${RoutePaths.commentDetail}':
-    //   final Object args = settings.arguments;
-    //   final CommentHeader commentHeader = args ?? CommentHeader;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           CommentDetailListView(
-    //             commentHeader: commentHeader,
-    //           ));
-
-    // case '${RoutePaths.favouriteProductList}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           TopSellingProductListContainerView());
-
-    // case '${RoutePaths.collectionProductList}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           CollectionHeaderListContainerView());
-
-    // case '${RoutePaths.productListByCollectionId}':
-    //   final Object args = settings.arguments;
-    //   final ProductListByCollectionIdView productCollectionIdView =
-    //       args ?? ProductListByCollectionIdView;
-
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           ProductListByCollectionIdView(
-    //             productCollectionHeader:
-    //                 productCollectionIdView.productCollectionHeader,
-    //             appBarTitle: productCollectionIdView.appBarTitle,
-    //           ));
-
-    // case '${RoutePaths.ratingList}':
-    //   final Object args = settings.arguments;
-    //   final String productDetailId = args ?? String;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           RatingListView(productDetailid: productDetailId));
-
-    // case '${RoutePaths.editProfile}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           EditProfileView());
-
     case '${RoutePaths.countryList}':
       return PageRouteBuilder<dynamic>(
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
@@ -408,17 +180,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
               GalleryView(selectedDefaultImage: selectedDefaultImage));
 
-    // case '${RoutePaths.searchCategory}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           CategoryFilterListView());
-    // case '${RoutePaths.searchSubCategory}':
-    //   final Object args = settings.arguments;
-    //   final String category = args ?? String;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           SubCategorySearchListView(categoryId: category));
-
     case '${RoutePaths.basketList}':
       return PageRouteBuilder<dynamic>(
           pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
@@ -434,22 +195,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               CheckoutContainerView(
                 basketList: checkoutIntentHolder.basketList,
               ));
-
-    // case '${RoutePaths.trendingCategoryList}':
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           TrendingCategoryListView());
-
-    // case '${RoutePaths.attributeDetailList}':
-    //   final Object args = settings.arguments;
-    //   final AttributeDetailIntentHolder attributeDetailIntentHolder =
-    //       args ?? AttributeDetailIntentHolder;
-    //   return PageRouteBuilder<dynamic>(
-    //       pageBuilder: (_, Animation<double> a1, Animation<double> a2) =>
-    //           AttributeDetailListView(
-    //             attributeDetail: attributeDetailIntentHolder.attributeDetail,
-    //             product: attributeDetailIntentHolder.product,
-    //           ));
 
     default:
       return PageRouteBuilder<dynamic>(

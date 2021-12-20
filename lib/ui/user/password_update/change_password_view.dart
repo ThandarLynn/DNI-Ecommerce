@@ -21,7 +21,7 @@ class ChangePasswordView extends StatefulWidget {
 
 class _ChangePasswordViewState extends State<ChangePasswordView> {
   UserRepository userRepo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
@@ -29,14 +29,14 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
   @override
   Widget build(BuildContext context) {
     userRepo = Provider.of<UserRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
     const Widget _largeSpacingWidget = SizedBox(
       height: AppDimens.space8,
     );
     return AppWidgetWithAppBar<UserProvider>(
         appBarTitle: Utils.getString('change_password__title') ?? '',
         initProvider: () {
-          return UserProvider(repo: userRepo, psValueHolder: psValueHolder);
+          return UserProvider(repo: userRepo, appValueHolder: appValueHolder);
         },
         onProviderReady: (UserProvider provider) {
           return provider;
@@ -99,14 +99,14 @@ class PsButtonWidget extends StatelessWidget {
               if (await Utils.checkInternetConnectivity()) {
                 final ChangePasswordParameterHolder contactUsParameterHolder =
                     ChangePasswordParameterHolder(
-                        token: provider.psValueHolder.userToken,
+                        token: provider.appValueHolder.userToken,
                         password: passwordController.text,
                         passwordConfirm: passwordController.text);
 
                 final AppResource<ApiStatus> _apiStatus =
                     await provider.postChangePassword(
                         contactUsParameterHolder.toMap(),
-                        provider.psValueHolder.userToken);
+                        provider.appValueHolder.userToken);
 
                 if (_apiStatus.data != null) {
                   passwordController.clear();

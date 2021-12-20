@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:dni_ecommerce/config/app_config.dart';
 
 class AppProvider extends ChangeNotifier {
-  AppProvider(this.psRepository, int limit) {
+  AppProvider(this.appRepository, int limit) {
     if (limit != 0) {
       this.limit = limit;
     }
@@ -11,7 +11,7 @@ class AppProvider extends ChangeNotifier {
 
   bool isConnectedToInternet = false;
   bool isLoading = false;
-  AppRepository psRepository;
+  AppRepository appRepository;
 
   int offset = 0;
   int limit = AppConfig.DEFAULT_LOADING_LIMIT;
@@ -40,31 +40,31 @@ class AppProvider extends ChangeNotifier {
   }
 
   Future<void> loadValueHolder() async {
-    await psRepository.loadValueHolder();
+    await appRepository.loadValueHolder();
   }
 
   Future<void> replaceLoginUserId(String loginUserId, String userToken) async {
-    await psRepository.replaceLoginUserId(loginUserId, userToken);
+    await appRepository.replaceLoginUserId(loginUserId, userToken);
   }
 
   Future<void> replaceLoginUserName(String loginUserName) async {
-    await psRepository.replaceLoginUserName(loginUserName);
+    await appRepository.replaceLoginUserName(loginUserName);
   }
 
   Future<void> replaceNotiToken(String notiToken) async {
-    await psRepository.replaceNotiToken(notiToken);
+    await appRepository.replaceNotiToken(notiToken);
   }
 
   Future<void> replaceNotiSetting(bool notiSetting) async {
-    await psRepository.replaceNotiSetting(notiSetting);
+    await appRepository.replaceNotiSetting(notiSetting);
   }
 
   Future<void> replaceIsToShowIntroSlider(bool doNotShowAgain) async {
-    await psRepository.replaceIsToShowIntroSlider(doNotShowAgain);
+    await appRepository.replaceIsToShowIntroSlider(doNotShowAgain);
   }
 
   Future<void> replaceDate(String startDate, String endDate) async {
-    await psRepository.replaceDate(startDate, endDate);
+    await appRepository.replaceDate(startDate, endDate);
   }
 
   Future<void> replaceVerifyUserData(
@@ -72,12 +72,12 @@ class AppProvider extends ChangeNotifier {
       String userNameToVerify,
       String userEmailToVerify,
       String userPasswordToVerify) async {
-    await psRepository.replaceVerifyUserData(userIdToVerify, userNameToVerify,
+    await appRepository.replaceVerifyUserData(userIdToVerify, userNameToVerify,
         userEmailToVerify, userPasswordToVerify);
   }
 
   Future<void> replaceVersionForceUpdateData(bool appInfoForceUpdate) async {
-    await psRepository.replaceVersionForceUpdateData(appInfoForceUpdate);
+    await appRepository.replaceVersionForceUpdateData(appInfoForceUpdate);
   }
 
   Future<void> replaceAppInfoData(
@@ -85,7 +85,7 @@ class AppProvider extends ChangeNotifier {
       bool appInfoForceUpdate,
       String appInfoForceUpdateTitle,
       String appInfoForceUpdateMsg) async {
-    await psRepository.replaceAppInfoData(appInfoVersionNo, appInfoForceUpdate,
+    await appRepository.replaceAppInfoData(appInfoVersionNo, appInfoForceUpdate,
         appInfoForceUpdateTitle, appInfoForceUpdateMsg);
   }
 
@@ -100,7 +100,7 @@ class AppProvider extends ChangeNotifier {
     String whatsApp,
     String phone,
   ) async {
-    await psRepository.replaceShopInfoValueHolderData(
+    await appRepository.replaceShopInfoValueHolderData(
         overAllTaxLabel,
         overAllTaxValue,
         shippingTaxLabel,
@@ -120,7 +120,7 @@ class AppProvider extends ChangeNotifier {
       String standardShippingEnable,
       String zoneShippingEnable,
       String noShippingEnable) async {
-    await psRepository.replaceCheckoutEnable(
+    await appRepository.replaceCheckoutEnable(
         paypalEnabled,
         stripeEnabled,
         codEnabled,
@@ -131,10 +131,10 @@ class AppProvider extends ChangeNotifier {
   }
 
   Future<void> replacePublishKey(String pubKey) async {
-    await psRepository.replacePublishKey(pubKey);
+    await appRepository.replacePublishKey(pubKey);
   }
 
   Future<void> replacePayStackKey(String payStackKey) async {
-    await psRepository.replacePayStackKey(payStackKey);
+    await appRepository.replacePayStackKey(payStackKey);
   }
 }

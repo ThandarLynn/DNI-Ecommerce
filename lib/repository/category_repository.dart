@@ -12,14 +12,14 @@ import 'package:sembast/sembast.dart';
 import 'Common/app_repository.dart';
 
 class CategoryRepository extends AppRepository {
-  CategoryRepository({AppApiService psApiService, CategoryDao categoryDao}) {
-    _psApiService = psApiService;
+  CategoryRepository({AppApiService appApiService, CategoryDao categoryDao}) {
+    _appApiService = appApiService;
     _categoryDao = categoryDao;
   }
 
   String primaryKey = 'id';
   String mapKey = 'map_key';
-  AppApiService _psApiService;
+  AppApiService _appApiService;
   CategoryDao _categoryDao;
 
   void sinkCategoryListStream(
@@ -62,7 +62,7 @@ class CategoryRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<List<Category>> _resource =
-          await _psApiService.getCategoryList(limit, offset, holder.toMap());
+          await _appApiService.getCategoryList(limit, offset, holder.toMap());
 
       if (_resource.status == AppStatus.SUCCESS) {
         final List<CategoryMap> categoryMapList = <CategoryMap>[];
@@ -115,7 +115,7 @@ class CategoryRepository extends AppRepository {
 
   //   if (isConnectedToInternet) {
   //     final AppResource<List<Category>> _resource =
-  //         await _psApiService.getCategoryList(holder.toMap());
+  //         await _appApiService.getCategoryList(holder.toMap());
 
   //     if (_resource.status == AppStatus.SUCCESS) {
   //       final List<CategoryMap> categoryMapList = <CategoryMap>[];
@@ -171,7 +171,7 @@ class CategoryRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<List<Category>> _resource =
-          await _psApiService.getCategoryList(limit, offset, holder.toMap());
+          await _appApiService.getCategoryList(limit, offset, holder.toMap());
 
       if (_resource.status == AppStatus.SUCCESS) {
         final List<CategoryMap> categoryMapList = <CategoryMap>[];
@@ -207,7 +207,7 @@ class CategoryRepository extends AppRepository {
   //     bool isConnectedToInternet, AppStatus status,
   //     {bool isLoadFromServer = true}) async {
   //   final AppResource<AppStatus> _resource =
-  //       await _psApiService.postTouchCount(jsonMap);
+  //       await _appApiService.postTouchCount(jsonMap);
   //   if (_resource.status == AppStatus.SUCCESS) {
   //     return _resource;
   //   } else {

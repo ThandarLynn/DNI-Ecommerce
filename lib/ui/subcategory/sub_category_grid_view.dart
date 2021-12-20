@@ -96,7 +96,7 @@ class _ModelGridViewState extends State<SubCategoryGridView>
             lazy: false,
             create: (BuildContext context) {
               _subCategoryProvider =
-                  SubCategoryProvider(repo: repo1, psValueHolder: valueHolder);
+                  SubCategoryProvider(repo: repo1, appValueHolder: valueHolder);
               _subCategoryProvider.loadAllSubCategoryList(
                 widget.category.id,
               );

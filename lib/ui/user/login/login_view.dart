@@ -39,7 +39,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   UserRepository repo1;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   void updateCheckBox(BuildContext context, UserProvider provider) {
     if (provider.isCheckBoxSelect) {
@@ -59,14 +59,14 @@ class _LoginViewState extends State<LoginView> {
     );
 
     repo1 = Provider.of<UserRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
 
     return SliverToBoxAdapter(
         child: ChangeNotifierProvider<UserProvider>(
       lazy: false,
       create: (BuildContext context) {
         final UserProvider provider =
-            UserProvider(repo: repo1, psValueHolder: psValueHolder);
+            UserProvider(repo: repo1, appValueHolder: appValueHolder);
         print(provider.getCurrentFirebaseUser());
         return provider;
       },
@@ -579,13 +579,13 @@ class __ForgotPasswordAndRegisterWidgetState
                   );
                   if (returnData != null && returnData is User) {
                     final User user = returnData;
-                    widget.provider.psValueHolder =
+                    widget.provider.appValueHolder =
                         Provider.of<AppValueHolder>(context, listen: false);
-                    widget.provider.psValueHolder.loginUserId = user.userId;
-                    widget.provider.psValueHolder.userIdToVerify = '';
-                    widget.provider.psValueHolder.userNameToVerify = '';
-                    widget.provider.psValueHolder.userEmailToVerify = '';
-                    widget.provider.psValueHolder.userPasswordToVerify = '';
+                    widget.provider.appValueHolder.loginUserId = user.userId;
+                    widget.provider.appValueHolder.userIdToVerify = '';
+                    widget.provider.appValueHolder.userNameToVerify = '';
+                    widget.provider.appValueHolder.userEmailToVerify = '';
+                    widget.provider.appValueHolder.userPasswordToVerify = '';
                     Navigator.pop(context, user);
                   }
                 }

@@ -27,7 +27,7 @@
 //     with SingleTickerProviderStateMixin {
 //   UserRepository userRepository;
 //   UserProvider userProvider;
-//   AppValueHolder psValueHolder;
+//   AppValueHolder appValueHolder;
 //   AnimationController animationController;
 //   final TextEditingController userNameController = TextEditingController();
 //   final TextEditingController emailController = TextEditingController();
@@ -88,7 +88,7 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     userRepository = Provider.of<UserRepository>(context);
-//     psValueHolder = Provider.of<AppValueHolder>(context);
+//     appValueHolder = Provider.of<AppValueHolder>(context);
 
 //     Future<bool> _requestPop() {
 //       animationController.reverse().then<dynamic>(
@@ -109,10 +109,10 @@
 //             appBarTitle: Utils.getString('edit_profile__title') ?? '',
 //             initProvider: () {
 //               return UserProvider(
-//                   repo: userRepository, psValueHolder: psValueHolder);
+//                   repo: userRepository, appValueHolder: appValueHolder);
 //             },
 //             onProviderReady: (UserProvider provider) async {
-//               await provider.getUser(provider.psValueHolder.loginUserId);
+//               await provider.getUser(provider.appValueHolder.loginUserId);
 //               userProvider = provider;
 //             },
 //             builder:
@@ -494,7 +494,7 @@
 //           AppProgressDialog.dismissDialog();
 //           final AppResource<User> _apiStatus = await widget.userProvider
 //               .postImageUpload(
-//                   widget.userProvider.psValueHolder.loginUserId,
+//                   widget.userProvider.appValueHolder.loginUserId,
 //                   AppConst.PLATFORM,
 //                   await Utils.getImageFileFromAssets(
 //                       images[0], AppConfig.profileImageSize));

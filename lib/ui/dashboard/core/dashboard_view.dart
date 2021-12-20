@@ -188,7 +188,7 @@ class _HomeViewState extends State<DashboardView>
   dynamic getIndexFromBottonNavigationIndex(int param) {
     int index = AppConst.REQUEST_CODE__MENU_HOME_FRAGMENT;
     String title;
-    final AppValueHolder psValueHolder =
+    final AppValueHolder appValueHolder =
         Provider.of<AppValueHolder>(context, listen: false);
     switch (param) {
       case 0:
@@ -201,9 +201,9 @@ class _HomeViewState extends State<DashboardView>
       //   break;
       case 1:
         index = AppConst.REQUEST_CODE__DASHBOARD_SELECT_WHICH_USER_FRAGMENT;
-        title = (psValueHolder == null ||
-                psValueHolder.userIdToVerify == null ||
-                psValueHolder.userIdToVerify == '')
+        title = (appValueHolder == null ||
+                appValueHolder.userIdToVerify == null ||
+                appValueHolder.userIdToVerify == '')
             ? Utils.getString('home__bottom_app_bar_login')
             : Utils.getString('home__bottom_app_bar_verify_email');
         break;
@@ -318,13 +318,13 @@ class _HomeViewState extends State<DashboardView>
                   lazy: false,
                   create: (BuildContext context) {
                     return UserProvider(
-                        repo: userRepository, psValueHolder: valueHolder);
+                        repo: userRepository, appValueHolder: valueHolder);
                   }),
             ],
             child: Consumer<UserProvider>(
               builder:
                   (BuildContext context, UserProvider provider, Widget child) {
-                print(provider.psValueHolder.loginUserId);
+                print(provider.appValueHolder.loginUserId);
                 return ListView(padding: EdgeInsets.zero, children: <Widget>[
                   _DrawerHeaderWidget(),
                   ListTile(
@@ -436,8 +436,8 @@ class _HomeViewState extends State<DashboardView>
                         updateSelectedIndexWithAnimation(title, index);
                       }),
                   if (provider != null)
-                    if (provider.psValueHolder.loginUserId != null &&
-                        provider.psValueHolder.loginUserId != '')
+                    if (provider.appValueHolder.loginUserId != null &&
+                        provider.appValueHolder.loginUserId != '')
                       Visibility(
                         visible: true,
                         child: _DrawerMenuWidget(
@@ -452,8 +452,8 @@ class _HomeViewState extends State<DashboardView>
                             }),
                       ),
                   if (provider != null)
-                    if (provider.psValueHolder.loginUserId != null &&
-                        provider.psValueHolder.loginUserId != '')
+                    if (provider.appValueHolder.loginUserId != null &&
+                        provider.appValueHolder.loginUserId != '')
                       Visibility(
                         visible: true,
                         child: _DrawerMenuWidget(
@@ -469,8 +469,8 @@ class _HomeViewState extends State<DashboardView>
                         ),
                       ),
                   // if (provider != null)
-                  //   if (provider.psValueHolder.loginUserId != null &&
-                  //       provider.psValueHolder.loginUserId != '')
+                  //   if (provider.appValueHolder.loginUserId != null &&
+                  //       provider.appValueHolder.loginUserId != '')
                   //     Visibility(
                   //       visible: true,
                   //       child: _DrawerMenuWidget(
@@ -485,8 +485,8 @@ class _HomeViewState extends State<DashboardView>
                   //           }),
                   //     ),
                   if (provider != null)
-                    if (provider.psValueHolder.loginUserId != null &&
-                        provider.psValueHolder.loginUserId != '')
+                    if (provider.appValueHolder.loginUserId != null &&
+                        provider.appValueHolder.loginUserId != '')
                       Visibility(
                         visible: true,
                         child: ListTile(
@@ -827,18 +827,18 @@ class _HomeViewState extends State<DashboardView>
                   // lazy: false,
                   create: (BuildContext context) {
                 final UserProvider provider = UserProvider(
-                    repo: userRepository, psValueHolder: valueHolder);
+                    repo: userRepository, appValueHolder: valueHolder);
                 //provider.getUserLogin();
                 return provider;
               }, child: Consumer<UserProvider>(builder: (BuildContext context,
                       UserProvider provider, Widget child) {
                 if (provider == null ||
-                    provider.psValueHolder.userIdToVerify == null ||
-                    provider.psValueHolder.userIdToVerify == '') {
+                    provider.appValueHolder.userIdToVerify == null ||
+                    provider.appValueHolder.userIdToVerify == '') {
                   if (provider == null ||
-                      provider.psValueHolder == null ||
-                      provider.psValueHolder.loginUserId == null ||
-                      provider.psValueHolder.loginUserId == '') {
+                      provider.appValueHolder == null ||
+                      provider.appValueHolder.loginUserId == null ||
+                      provider.appValueHolder.loginUserId == '') {
                     return _CallLoginWidget(
                         currentIndex: _currentIndex,
                         animationController: animationController,
@@ -855,7 +855,7 @@ class _HomeViewState extends State<DashboardView>
                           }
                           if (userId != null) {
                             _userId = userId;
-                            provider.psValueHolder.loginUserId = userId;
+                            provider.appValueHolder.loginUserId = userId;
                           }
                         });
                   } else {
@@ -881,7 +881,7 @@ class _HomeViewState extends State<DashboardView>
                 //           (String title, int index, String userId) async {
                 //         if (userId != null) {
                 //           _userId = userId;
-                //           provider.psValueHolder.loginUserId = userId;
+                //           provider.appValueHolder.loginUserId = userId;
                 //         }
                 //         setState(() {
                 //           appBarTitle = title;
@@ -1113,7 +1113,7 @@ class _HomeViewState extends State<DashboardView>
                           animationController: animationController,
                           onRegisterSelected: (User user) {
                             _userId = user.userId;
-                            // widget.provider.psValueHolder.loginUserId = userId;
+                            // widget.provider.appValueHolder.loginUserId = userId;
                             if (user.status == AppConst.ONE) {
                               updateSelectedIndexWithAnimationUserId(
                                   Utils.getString('home__menu_drawer_profile'),
@@ -1221,19 +1221,19 @@ class _HomeViewState extends State<DashboardView>
                   lazy: false,
                   create: (BuildContext context) {
                     final UserProvider provider = UserProvider(
-                        repo: userRepository, psValueHolder: valueHolder);
+                        repo: userRepository, appValueHolder: valueHolder);
 
                     return provider;
                   },
                   child: Consumer<UserProvider>(builder: (BuildContext context,
                       UserProvider provider, Widget child) {
                     if (provider == null ||
-                        provider.psValueHolder.userIdToVerify == null ||
-                        provider.psValueHolder.userIdToVerify == '') {
+                        provider.appValueHolder.userIdToVerify == null ||
+                        provider.appValueHolder.userIdToVerify == '') {
                       if (provider == null ||
-                          provider.psValueHolder == null ||
-                          provider.psValueHolder.loginUserId == null ||
-                          provider.psValueHolder.loginUserId == '') {
+                          provider.appValueHolder == null ||
+                          provider.appValueHolder.loginUserId == null ||
+                          provider.appValueHolder.loginUserId == '') {
                         return Stack(
                           children: <Widget>[
                             Container(
@@ -1253,7 +1253,7 @@ class _HomeViewState extends State<DashboardView>
                                             .REQUEST_CODE__MENU_USER_PROFILE_FRAGMENT;
                                       });
                                       _userId = userId;
-                                      provider.psValueHolder.loginUserId =
+                                      provider.appValueHolder.loginUserId =
                                           userId;
                                     },
                                     onFbSignInSelected: (String userId) {
@@ -1262,7 +1262,7 @@ class _HomeViewState extends State<DashboardView>
                                             .REQUEST_CODE__MENU_USER_PROFILE_FRAGMENT;
                                       });
                                       _userId = userId;
-                                      provider.psValueHolder.loginUserId =
+                                      provider.appValueHolder.loginUserId =
                                           userId;
                                     },
                                     onPhoneSignInSelected: () {
@@ -1311,7 +1311,7 @@ class _HomeViewState extends State<DashboardView>
                                         _currentIndex = AppConst
                                             .REQUEST_CODE__MENU_USER_PROFILE_FRAGMENT;
                                         _userId = userId;
-                                        provider.psValueHolder.loginUserId =
+                                        provider.appValueHolder.loginUserId =
                                             userId;
                                       });
                                     },
@@ -1354,7 +1354,7 @@ class _HomeViewState extends State<DashboardView>
                       //         (String title, int index, String userId) async {
                       //       if (userId != null) {
                       //         _userId = userId;
-                      //         provider.psValueHolder.loginUserId = userId;
+                      //         provider.appValueHolder.loginUserId = userId;
                       //       }
                       //       setState(() {
                       //         appBarTitle = title;

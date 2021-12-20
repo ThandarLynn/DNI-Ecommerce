@@ -65,18 +65,18 @@ class _RegisterViewState extends State<RegisterView>
         lazy: false,
         create: (BuildContext context) {
           final UserProvider provider =
-              UserProvider(repo: repo1, psValueHolder: valueHolder);
+              UserProvider(repo: repo1, appValueHolder: valueHolder);
 
           return provider;
         },
         child: Consumer<UserProvider>(builder:
             (BuildContext context, UserProvider provider, Widget child) {
           nameController = TextEditingController(
-              text: provider.psValueHolder.userNameToVerify);
+              text: provider.appValueHolder.userNameToVerify);
           emailController = TextEditingController(
-              text: provider.psValueHolder.userEmailToVerify);
+              text: provider.appValueHolder.userEmailToVerify);
           passwordController = TextEditingController(
-              text: provider.psValueHolder.userPasswordToVerify);
+              text: provider.appValueHolder.userPasswordToVerify);
 
           return Stack(
             children: <Widget>[
@@ -213,9 +213,9 @@ void updateCheckBox(
   } else {
     provider.isCheckBoxSelect = true;
     //it is for holder
-    provider.psValueHolder.userNameToVerify = nameTextEditingController.text;
-    provider.psValueHolder.userEmailToVerify = emailTextEditingController.text;
-    provider.psValueHolder.userPasswordToVerify =
+    provider.appValueHolder.userNameToVerify = nameTextEditingController.text;
+    provider.appValueHolder.userEmailToVerify = emailTextEditingController.text;
+    provider.appValueHolder.userPasswordToVerify =
         passwordTextEditingController.text;
     Navigator.pushNamed(context, RoutePaths.privacyPolicy, arguments: 2);
   }
@@ -442,7 +442,7 @@ class __SignInButtonWidgetState extends State<_SignInButtonWidget> {
             //       userEmail: widget.emailTextEditingController.text,
             //       userPassword: widget.passwordTextEditingController.text,
             //       userPhone: '',
-            //       deviceToken: widget.provider.psValueHolder.deviceToken,
+            //       deviceToken: widget.provider.appValueHolder.deviceToken,
             //     );
 
             //     final AppResource<User> _apiStatus = await widget.provider
@@ -457,12 +457,12 @@ class __SignInButtonWidgetState extends State<_SignInButtonWidget> {
             //           _apiStatus.data.userEmail,
             //           widget.passwordTextEditingController.text);
 
-            //       widget.provider.psValueHolder.userIdToVerify = user.userId;
-            //       widget.provider.psValueHolder.userNameToVerify =
+            //       widget.provider.appValueHolder.userIdToVerify = user.userId;
+            //       widget.provider.appValueHolder.userNameToVerify =
             //           user.userName;
-            //       widget.provider.psValueHolder.userEmailToVerify =
+            //       widget.provider.appValueHolder.userEmailToVerify =
             //           user.userEmail;
-            //       widget.provider.psValueHolder.userPasswordToVerify =
+            //       widget.provider.appValueHolder.userPasswordToVerify =
             //           user.userPassword;
 
             //       //
@@ -476,14 +476,14 @@ class __SignInButtonWidgetState extends State<_SignInButtonWidget> {
             //         if (returnData != null && returnData is User) {
             //           final User user = returnData;
             //           if (Provider != null && Provider.of != null) {
-            //             widget.provider.psValueHolder =
+            //             widget.provider.appValueHolder =
             //                 Provider.of<AppValueHolder>(context, listen: false);
             //           }
-            //           widget.provider.psValueHolder.loginUserId = user.userId;
-            //           widget.provider.psValueHolder.userIdToVerify = '';
-            //           widget.provider.psValueHolder.userNameToVerify = '';
-            //           widget.provider.psValueHolder.userEmailToVerify = '';
-            //           widget.provider.psValueHolder.userPasswordToVerify = '';
+            //           widget.provider.appValueHolder.loginUserId = user.userId;
+            //           widget.provider.appValueHolder.userIdToVerify = '';
+            //           widget.provider.appValueHolder.userNameToVerify = '';
+            //           widget.provider.appValueHolder.userEmailToVerify = '';
+            //           widget.provider.appValueHolder.userPasswordToVerify = '';
             //           print(user.userId);
             //           Navigator.of(context).pop();
             //         }

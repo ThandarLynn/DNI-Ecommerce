@@ -12,13 +12,13 @@ import 'package:dni_ecommerce/viewobject/sub_category.dart';
 
 class SubCategoryRepository extends AppRepository {
   SubCategoryRepository(
-      {@required AppApiService psApiService,
+      {@required AppApiService appApiService,
       @required SubCategoryDao subCategoryDao}) {
-    _psApiService = psApiService;
+    _appApiService = appApiService;
     _subCategoryDao = subCategoryDao;
   }
 
-  AppApiService _psApiService;
+  AppApiService _appApiService;
   SubCategoryDao _subCategoryDao;
   final String _primaryKey = 'id';
 
@@ -49,7 +49,7 @@ class SubCategoryRepository extends AppRepository {
         .add(await _subCategoryDao.getAll(finder: finder, status: status));
 
     final AppResource<List<SubCategory>> _resource =
-        await _psApiService.getAllSubCategoryList(categoryId);
+        await _appApiService.getAllSubCategoryList(categoryId);
 
     if (_resource.status == AppStatus.SUCCESS) {
       await _subCategoryDao.deleteWithFinder(finder);
@@ -76,7 +76,7 @@ class SubCategoryRepository extends AppRepository {
         .add(await _subCategoryDao.getAll(finder: finder, status: status));
 
     final AppResource<List<SubCategory>> _resource =
-        await _psApiService.getAllSubCategoryList(categoryId);
+        await _appApiService.getAllSubCategoryList(categoryId);
 
     if (_resource.status == AppStatus.SUCCESS) {
       await _subCategoryDao.deleteWithFinder(finder);
@@ -104,7 +104,7 @@ class SubCategoryRepository extends AppRepository {
         .add(await _subCategoryDao.getAll(finder: finder, status: status));
 
     final AppResource<List<SubCategory>> _resource =
-        await _psApiService.getAllSubCategoryList(categoryId);
+        await _appApiService.getAllSubCategoryList(categoryId);
 
     if (_resource.status == AppStatus.SUCCESS) {
       _subCategoryDao

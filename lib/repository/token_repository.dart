@@ -8,17 +8,17 @@ import 'Common/app_repository.dart';
 
 class TokenRepository extends AppRepository {
   TokenRepository({
-    @required AppApiService psApiService,
+    @required AppApiService appApiService,
   }) {
-    _psApiService = psApiService;
+    _appApiService = appApiService;
   }
   String primaryKey = '';
-  AppApiService _psApiService;
+  AppApiService _appApiService;
 
   Future<AppResource<ApiStatus>> getToken(
       bool isConnectedToInternet, AppStatus status,
       {bool isLoadFromServer = true}) async {
-    final AppResource<ApiStatus> _resource = await _psApiService.getToken();
+    final AppResource<ApiStatus> _resource = await _appApiService.getToken();
     if (_resource.status == AppStatus.SUCCESS) {
       return _resource;
     } else {

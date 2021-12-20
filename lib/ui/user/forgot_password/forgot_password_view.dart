@@ -32,7 +32,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView>
     with SingleTickerProviderStateMixin {
   final TextEditingController userEmailController = TextEditingController();
   UserRepository repo1;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
   AnimationController animationController;
   @override
   void initState() {
@@ -56,14 +56,14 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView>
 
     animationController.forward();
     repo1 = Provider.of<UserRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
 
     return SliverToBoxAdapter(
       child: ChangeNotifierProvider<UserProvider>(
         lazy: false,
         create: (BuildContext context) {
           final UserProvider provider =
-              UserProvider(repo: repo1, psValueHolder: psValueHolder);
+              UserProvider(repo: repo1, appValueHolder: appValueHolder);
           return provider;
         },
         child: Consumer<UserProvider>(builder:
@@ -272,8 +272,7 @@ class __SendButtonWidgetState extends State<_SendButtonWidget> {
                   AppProgressDialog.dismissDialog();
 
                   if (_apiStatus.data != null) {
-                    Navigator.pushNamed(
-                        context, RoutePaths.reset_password,
+                    Navigator.pushNamed(context, RoutePaths.reset_password,
                         arguments: _apiStatus.data.token);
                     // showDialog<dynamic>(
                     //     context: context,

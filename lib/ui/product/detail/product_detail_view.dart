@@ -125,9 +125,9 @@ class _ProductDetailState extends State<ProductDetailView>
           //   lazy: false,
           //   create: (BuildContext context) {
           //     productDetailProvider = ProductDetailProvider(
-          //         repo: productRepo, psValueHolder: psValueHolder);
+          //         repo: productRepo, appValueHolder: appValueHolder);
 
-          //     final String loginUserId = Utils.checkUserLoginId(psValueHolder);
+          //     final String loginUserId = Utils.checkUserLoginId(appValueHolder);
           //     productDetailProvider.loadProduct(widget.productId, loginUserId);
 
           //     return productDetailProvider;
@@ -137,7 +137,7 @@ class _ProductDetailState extends State<ProductDetailView>
           //   lazy: false,
           //   create: (BuildContext context) {
           //     userProvider =
-          //         UserProvider(repo: userRepo, psValueHolder: valueHolder);
+          //         UserProvider(repo: userRepo, appValueHolder: valueHolder);
           //     userProvider.getUser(Utils.checkUserLoginId(valueHolder));
           //     return userProvider;
           //   },
@@ -159,7 +159,7 @@ class _ProductDetailState extends State<ProductDetailView>
             lazy: false,
             create: (BuildContext context) {
               touchCountProvider = TouchCountProvider(
-                  repo: productRepo, psValueHolder: valueHolder);
+                  repo: productRepo, appValueHolder: valueHolder);
               final String loginUserId = Utils.checkUserLoginId(valueHolder);
 
               final TouchCountParameterHolder touchCountParameterHolder =
@@ -331,7 +331,7 @@ class _ProductDetailState extends State<ProductDetailView>
                     controller: controller,
                     basketProvider: basketProvider,
                     productDetail: widget.productDetail,
-                    psValueHolder: valueHolder,
+                    appValueHolder: valueHolder,
                     intentQty: widget.intentQty ?? '',
                     intentSelectedColorId: widget.intentSelectedSizeId ?? '',
                     intentSelectedColorValue:
@@ -480,13 +480,13 @@ class _FavouriteWidget extends StatefulWidget {
 class __FavouriteWidgetState extends State<_FavouriteWidget> {
   Widget icon;
   ProductRepository favouriteRepo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
   HistoryProvider historyProvider;
 
   @override
   Widget build(BuildContext context) {
     favouriteRepo = Provider.of<ProductRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
     historyProvider = Provider.of<HistoryProvider>(context);
 
     if (widget.productDetail != null) {
@@ -827,7 +827,6 @@ class __HeaderPriceWidgetState extends State<_HeaderPriceWidget> {
                     left: AppDimens.space4, right: AppDimens.space4),
                 child: Align(
                   child: Text(
-                    '-' +
                         Utils.calculateDiscountPercent(
                                 widget.product.originalPrice,
                                 widget.product.unitPrice)
@@ -925,7 +924,7 @@ class _AddToBasketAndBuyButtonWidget extends StatefulWidget {
     @required this.controller,
     @required this.basketProvider,
     @required this.productDetail,
-    @required this.psValueHolder,
+    @required this.appValueHolder,
     @required this.intentQty,
     @required this.intentSelectedColorId,
     @required this.intentSelectedColorValue,
@@ -938,7 +937,7 @@ class _AddToBasketAndBuyButtonWidget extends StatefulWidget {
   final AnimationController controller;
   final BasketProvider basketProvider;
   final Product productDetail;
-  final AppValueHolder psValueHolder;
+  final AppValueHolder appValueHolder;
   final String intentQty;
   final String intentSelectedColorId;
   final String intentSelectedColorValue;
@@ -1037,7 +1036,7 @@ class __AddToBasketAndBuyButtonWidgetState
           id: id,
           productId: widget.productDetail.id,
           qty: qty ?? widget.productDetail.quantity,
-          shopId: widget.psValueHolder.shopId,
+          shopId: widget.appValueHolder.shopId,
           selectedColorId: colorId,
           selectedColorValue: colorValue,
           selectedSizeId: sizeId,
@@ -1071,7 +1070,7 @@ class __AddToBasketAndBuyButtonWidgetState
             arguments: widget.productDetail);
         if (result != null && result) {
           // widget.productProvider
-          //     .loadProduct(widget.product.id, widget.psValueHolder.loginUserId);
+          //     .loadProduct(widget.product.id, widget.appValueHolder.loginUserId);
         }
       }
     }
@@ -1187,7 +1186,7 @@ class __AddToBasketAndBuyButtonWidgetState
             //     icons: icons,
             //     label: iconsLabel,
             //     controller: widget.controller,
-            //     psValueHolder: widget.psValueHolder,
+            //     appValueHolder: widget.appValueHolder,
             //   ),
             // ),
             // const SizedBox(height: AppDimens.space12),
@@ -1739,13 +1738,13 @@ class _FloatingActionButton extends StatefulWidget {
     @required this.controller,
     @required this.icons,
     @required this.label,
-    @required this.psValueHolder,
+    @required this.appValueHolder,
   }) : super(key: key);
 
   final AnimationController controller;
   final List<IconData> icons;
   final List<String> label;
-  final AppValueHolder psValueHolder;
+  final AppValueHolder appValueHolder;
   @override
   __FloatingActionButtonState createState() => __FloatingActionButtonState();
 }
@@ -1753,9 +1752,11 @@ class _FloatingActionButton extends StatefulWidget {
 class __FloatingActionButtonState extends State<_FloatingActionButton> {
   @override
   Widget build(BuildContext context) {
-    final String whatsappUrl = 'https://wa.me/${widget.psValueHolder.whatsApp}';
-    final String messengerUrl = 'http://m.me/${widget.psValueHolder.messenger}';
-    final String phoneCall = 'tel://${widget.psValueHolder.phone}';
+    final String whatsappUrl =
+        'https://wa.me/${widget.appValueHolder.whatsApp}';
+    final String messengerUrl =
+        'http://m.me/${widget.appValueHolder.messenger}';
+    final String phoneCall = 'tel://${widget.appValueHolder.phone}';
 
     if (widget.icons.isNotEmpty && widget.label.isNotEmpty) {
       return Column(

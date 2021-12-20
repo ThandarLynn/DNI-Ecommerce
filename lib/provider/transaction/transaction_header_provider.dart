@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 class TransactionHeaderProvider extends AppProvider {
   TransactionHeaderProvider(
       {@required TransactionHeaderRepository repo,
-      @required this.psValueHolder,
+      @required this.appValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -62,7 +62,7 @@ class TransactionHeaderProvider extends AppProvider {
   }
 
   TransactionHeaderRepository _repo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   AppResource<TransactionHeader> get transactionHeader => _transactionSubmit;
   AppResource<TransactionHeader> _transactionSubmit =
@@ -94,7 +94,7 @@ class TransactionHeaderProvider extends AppProvider {
         transactionListStream,
         isConnectedToInternet,
         userId,
-        psValueHolder.userToken,
+        appValueHolder.userToken,
         limit,
         offset,
         AppStatus.PROGRESS_LOADING);
@@ -108,8 +108,8 @@ class TransactionHeaderProvider extends AppProvider {
       await _repo.getNextPageTransactionList(
           transactionListStream,
           isConnectedToInternet,
-          psValueHolder.loginUserId,
-          psValueHolder.userToken,
+          appValueHolder.loginUserId,
+          appValueHolder.userToken,
           limit,
           offset,
           AppStatus.PROGRESS_LOADING);
@@ -125,8 +125,8 @@ class TransactionHeaderProvider extends AppProvider {
     await _repo.getAllTransactionList(
         transactionListStream,
         isConnectedToInternet,
-        psValueHolder.loginUserId,
-        psValueHolder.userToken,
+        appValueHolder.loginUserId,
+        appValueHolder.userToken,
         limit,
         offset,
         AppStatus.PROGRESS_LOADING);
@@ -244,13 +244,13 @@ class TransactionHeaderProvider extends AppProvider {
       shippingPostalCode: user.shippingPostalCode,
       shippingEmail: user.shippingEmail,
       shippingPhone: user.shippingPhone,
-      shippingTaxPercent: psValueHolder.shippingTaxValue,
-      taxPercent: psValueHolder.overAllTaxValue,
+      shippingTaxPercent: appValueHolder.shippingTaxValue,
+      taxPercent: appValueHolder.overAllTaxValue,
       shippingMethodAmount: Utils.getPriceTwoDecimal(shippingMethodPrice) ?? '',
       shippingMethodName: shippingMethodName ?? '',
       memo: memoText ?? '',
       totalItemCount: totalItemCount.toString(),
-      isZoneShipping: psValueHolder.zoneShippingEnable,
+      isZoneShipping: appValueHolder.zoneShippingEnable,
       details: detailJson,
     );
     isLoading = true;

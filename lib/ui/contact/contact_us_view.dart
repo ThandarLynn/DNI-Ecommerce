@@ -1,4 +1,4 @@
-import 'package:dni_ecommerce/api/common/app_resource.dart';
+// import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/constant/app_dimens.dart';
 import 'package:dni_ecommerce/provider/contact/contact_us_provider.dart';
 import 'package:dni_ecommerce/repository/contact_us_repository.dart';
@@ -7,8 +7,8 @@ import 'package:dni_ecommerce/ui/common/dialog/success_dialog.dart';
 import 'package:dni_ecommerce/ui/common/app_button_widget.dart';
 import 'package:dni_ecommerce/ui/common/app_textfield_widget.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
-import 'package:dni_ecommerce/viewobject/common/api_status.dart';
-import 'package:dni_ecommerce/viewobject/holder/contact_us_holder.dart';
+// import 'package:dni_ecommerce/viewobject/common/api_status.dart';
+// import 'package:dni_ecommerce/viewobject/holder/contact_us_holder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

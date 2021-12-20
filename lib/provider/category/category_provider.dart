@@ -12,7 +12,7 @@ import 'package:dni_ecommerce/viewobject/category.dart';
 class CategoryProvider extends AppProvider {
   CategoryProvider(
       {@required CategoryRepository repo,
-      @required this.psValueHolder,
+      @required this.appValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -45,7 +45,7 @@ class CategoryProvider extends AppProvider {
   final CategoryParameterHolder category = CategoryParameterHolder();
 
   CategoryRepository _repo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   AppResource<List<Category>> _categoryList =
       AppResource<List<Category>>(AppStatus.NOACTION, '', <Category>[]);

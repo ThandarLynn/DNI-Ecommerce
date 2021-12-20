@@ -25,7 +25,7 @@ class AppSharedPreferencess {
 
   final StreamController<AppValueHolder> _valueController =
       StreamController<AppValueHolder>();
-  Stream<AppValueHolder> get psValueHolder => _valueController.stream;
+  Stream<AppValueHolder> get appValueHolder => _valueController.stream;
 
   Future<dynamic> loadValueHolder() async {
     final String _loginUserId =
@@ -135,7 +135,8 @@ class AppSharedPreferencess {
     _valueController.add(_valueHolder);
   }
 
-  Future<dynamic> replaceLoginUserId(String loginUserId,String userToken) async {
+  Future<dynamic> replaceLoginUserId(
+      String loginUserId, String userToken) async {
     await shared.setString(AppConst.VALUE_HOLDER__USER_ID, loginUserId);
     await shared.setString(AppConst.VALUE_HOLDER__USER_TOKEN, userToken);
 

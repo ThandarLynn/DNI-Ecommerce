@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 class ShippingCityProvider extends AppProvider {
   ShippingCityProvider(
       {@required ShippingCityRepository repo,
-      @required this.psValueHolder,
+      @required this.appValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -44,7 +44,7 @@ class ShippingCityProvider extends AppProvider {
   }
   StreamController<AppResource<List<ShippingCity>>> shippingCityListStream;
   ShippingCityRepository _repo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   AppResource<List<ShippingCity>> _shippingCityList =
       AppResource<List<ShippingCity>>(AppStatus.NOACTION, '', <ShippingCity>[]);

@@ -45,7 +45,7 @@ class CheckoutCalculationHelper {
   void calculate(
       {@required List<Basket> basketList,
       @required String couponDiscountString,
-      @required AppValueHolder psValueHolder,
+      @required AppValueHolder appValueHolder,
       @required String shippingPriceStringFormatting}) {
     // reset Data
     reset();
@@ -79,7 +79,7 @@ class CheckoutCalculationHelper {
 
       // Tax Calculation
       // subTotalPrice * Tax Percentage = Tax Amount
-      if (psValueHolder.overAllTaxLabel != '0') {
+      if (appValueHolder.overAllTaxLabel != '0') {
         tax = subTotalPrice * double.parse(AppConfig.overTaxValue);
       }
 
@@ -87,9 +87,9 @@ class CheckoutCalculationHelper {
         shippingCost = double.parse(shippingPriceStringFormatting);
         // Shipping Cost Calculation
         // shippingCost * Shipping Cost Percentage = Shipping Cost Amount
-        if (psValueHolder.shippingTaxLabel != '0' && shippingCost != 0.0) {
+        if (appValueHolder.shippingTaxLabel != '0' && shippingCost != 0.0) {
           shippingTax =
-              shippingCost * double.parse(psValueHolder.shippingTaxValue);
+              shippingCost * double.parse(appValueHolder.shippingTaxValue);
         }
       } else {
         shippingCost = 0.0;
@@ -122,5 +122,5 @@ class CheckoutCalculationHelper {
 
 String getPriceFormat(String price) {
   // final NumberFormat AppConst.psFormat = NumberFormat('###.00');
-  return AppConst.psFormat.format(double.parse(price));
+  return AppConst.numberFormat.format(double.parse(price));
 }

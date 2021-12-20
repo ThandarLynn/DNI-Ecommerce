@@ -11,33 +11,25 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-// import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'config/app_colors.dart';
 import 'config/app_config.dart';
 import 'config/app_theme_data.dart';
-import 'db/common/app_shared_preferences.dart';
 
 Future<void> main() async {
   // add this, and it should be the first line in main method
   WidgetsFlutterBinding.ensureInitialized();
 
-  // final FirebaseMessaging _fcm = FirebaseMessaging();
-  // if (Platform.isIOS) {
-  //   _fcm.requestNotificationPermissions(const IosNotificationSettings());
-  // }
-
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   if (prefs.getString('codeC') == null) {
-    await prefs.setString('codeC', ''); //null);
-    await prefs.setString('codeL', ''); //null);
+    await prefs.setString('codeC', '');
+    await prefs.setString('codeL', '');
   }
 
   await Firebase.initializeApp();
-  // NativeAdmob(adUnitID: Utils.getAdAppId());
 
   if (Platform.isIOS) {
     FirebaseMessaging.instance.requestPermission(
@@ -63,15 +55,15 @@ Future<void> main() async {
   await Utils.checkAppleSignInAvailable();
 
   runApp(MultiProvider(
-        providers: <SingleChildWidget>[
-          ...providers,
-        ],
-        child: EasyLocalization(
-      path: 'assets/langs',
-      saveLocale: true,
-      startLocale: AppConfig.defaultLanguage.toLocale(),
-      supportedLocales: getSupportedLanguages(),
-      child: MainApp())));
+      providers: <SingleChildWidget>[
+        ...providers,
+      ],
+      child: EasyLocalization(
+          path: 'assets/langs',
+          saveLocale: true,
+          startLocale: AppConfig.defaultLanguage.toLocale(),
+          supportedLocales: getSupportedLanguages(),
+          child: MainApp())));
 }
 
 List<Locale> getSupportedLanguages() {
@@ -88,15 +80,14 @@ class MainApp extends StatefulWidget {
   _MainAppState createState() => _MainAppState();
 }
 
-Future<dynamic> initAds() async {
-  if (AppConfig.showAdMob && await Utils.checkInternetConnectivity()) {
-    // FirebaseAdMob.instance.initialize(appId: Utils.getAdAppId());
-  }
-}
+// Future<dynamic> initAds() async {
+//   if (AppConfig.showAdMob && await Utils.checkInternetConnectivity()) {
+//     // FirebaseAdMob.instance.initialize(appId: Utils.getAdAppId());
+//   }
+// }
 
 class _MainAppState extends State<MainApp> {
   Completer<ThemeData> themeDataCompleter;
-  AppSharedPreferencess psSharedPreferences;
 
   @override
   void initState() {
@@ -110,24 +101,6 @@ class _MainAppState extends State<MainApp> {
       print('init completer');
       themeDataCompleter = Completer<ThemeData>();
     }
-
-    // if (psSharedPreferences == null) {
-    //   print('init ps shareperferences');
-    //   psSharedPreferences = AppSharedPreferencess.instance;
-    //   print('get shared');
-    //   psSharedPreferences.futureShared.then((SharedPreferences sh) {
-    //     psSharedPreferences.shared = sh;
-
-    //     print('init theme provider');
-    //     final PsThemeProvider psThemeProvider = PsThemeProvider(
-    //         repo: PsThemeRepository(psSharedPreferences: psSharedPreferences));
-
-    //     print('get theme');
-    //     final ThemeData themeData = psThemeProvider.getTheme();
-    //     themeDataCompleter.complete(themeData);
-    //     print('themedata loading completed');
-    //   });
-    // }
 
     return themeDataCompleter.future;
   }
@@ -147,31 +120,31 @@ class _MainAppState extends State<MainApp> {
     AppColors.loadColor(context);
     print(EasyLocalization.of(context).locale.languageCode);
     return DynamicTheme(
-            defaultBrightness: Brightness.light,
-            data: (Brightness brightness) {
-              if (brightness == Brightness.light) {
-                return themeData(ThemeData.light());
-              } else {
-                return themeData(ThemeData.dark());
-              }
-            },
-            themedWidgetBuilder: (BuildContext context, ThemeData theme) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                title: 'Thandar-Lynn',
-                theme: theme,
-                initialRoute: '/',
-                onGenerateRoute: router.generateRoute,
-                localizationsDelegates: <LocalizationsDelegate<dynamic>>[
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                  EasyLocalization.of(context).delegate,
-                  DefaultCupertinoLocalizations.delegate
-                ],
-                supportedLocales: EasyLocalization.of(context).supportedLocales,
-                locale: EasyLocalization.of(context).locale,
-              );
-            });
+        defaultBrightness: Brightness.light,
+        data: (Brightness brightness) {
+          if (brightness == Brightness.light) {
+            return themeData(ThemeData.light());
+          } else {
+            return themeData(ThemeData.dark());
+          }
+        },
+        themedWidgetBuilder: (BuildContext context, ThemeData theme) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Thandar-Lynn',
+            theme: theme,
+            initialRoute: '/',
+            onGenerateRoute: router.generateRoute,
+            localizationsDelegates: <LocalizationsDelegate<dynamic>>[
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              EasyLocalization.of(context).delegate,
+              DefaultCupertinoLocalizations.delegate
+            ],
+            supportedLocales: EasyLocalization.of(context).supportedLocales,
+            locale: EasyLocalization.of(context).locale,
+          );
+        });
   }
 }

@@ -32,15 +32,13 @@ class Utils {
     LaunchReview.launch(writeReview: writeReview, iOSAppId: iOSAppId);
   }
 
-  static String calculateDiscountPercent(String originalPrice, String unitPrice) {
+  static String calculateDiscountPercent(
+      String originalPrice, String unitPrice) {
     final NumberFormat dataformat = NumberFormat('###.0');
     final double discountPrice =
         (double.parse(originalPrice) - double.parse(unitPrice)) / 100;
     return dataformat.format(discountPrice);
   }
-
-  // final NumberFormat AppConst.psFormat = NumberFormat('###.00');
-  // return AppConst.psFormat.format(double.parse(price));
 
   static dynamic launchURL() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -113,7 +111,7 @@ class Utils {
   }
 
   static String getPriceFormat(String price) {
-    return AppConst.psFormat.format(double.parse(price));
+    return AppConst.numberFormat.format(double.parse(price));
   }
 
   static Widget flightShuttleBuilder(
@@ -156,26 +154,27 @@ class Utils {
     return AppConst.priceTwoDecimalFormat.format(double.parse(price));
   }
 
-  static String checkUserLoginId(AppValueHolder psValueHolder) {
-    if (psValueHolder.loginUserId == null || psValueHolder.loginUserId == '') {
+  static String checkUserLoginId(AppValueHolder appValueHolder) {
+    if (appValueHolder.loginUserId == null ||
+        appValueHolder.loginUserId == '') {
       return 'nologinuser';
     } else {
-      return psValueHolder.loginUserId;
+      return appValueHolder.loginUserId;
     }
   }
 
   static dynamic navigateOnUserVerificationView(
       BuildContext context, Function onLoginSuccess) async {
-    AppValueHolder psValueHolder =
+    AppValueHolder appValueHolder =
         Provider.of<AppValueHolder>(context, listen: false);
 
-    // if (psValueHolder == null ||
-    //     psValueHolder.userIdToVerify == null ||
-    //     psValueHolder.userIdToVerify == '') {
-    if (psValueHolder == null ||
-        psValueHolder == null ||
-        psValueHolder.loginUserId == null ||
-        psValueHolder.loginUserId == '') {
+    // if (appValueHolder == null ||
+    //     appValueHolder.userIdToVerify == null ||
+    //     appValueHolder.userIdToVerify == '') {
+    if (appValueHolder == null ||
+        appValueHolder == null ||
+        appValueHolder.loginUserId == null ||
+        appValueHolder.loginUserId == '') {
       final dynamic returnData = await Navigator.pushNamed(
         context,
         RoutePaths.login_container,
@@ -183,15 +182,15 @@ class Utils {
 
       if (returnData != null && returnData is User) {
         final User user = returnData;
-        psValueHolder = Provider.of<AppValueHolder>(context, listen: false);
-        psValueHolder.loginUserId = user.userId;
+        appValueHolder = Provider.of<AppValueHolder>(context, listen: false);
+        appValueHolder.loginUserId = user.userId;
       }
     } else {
       onLoginSuccess();
     }
     // } else {
     //   Navigator.pushNamed(context, RoutePaths.user_verify_email_container,
-    //       arguments: psValueHolder.userIdToVerify);
+    //       arguments: appValueHolder.userIdToVerify);
     // }
   }
 }

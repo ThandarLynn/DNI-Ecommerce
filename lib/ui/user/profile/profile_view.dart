@@ -83,10 +83,10 @@ class _TransactionListViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TransactionHeaderRepository transactionHeaderRepository;
-    AppValueHolder psValueHolder;
+    AppValueHolder appValueHolder;
     transactionHeaderRepository =
         Provider.of<TransactionHeaderRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
 
     return SliverToBoxAdapter(
         child: ChangeNotifierProvider<TransactionHeaderProvider>(
@@ -95,13 +95,13 @@ class _TransactionListViewWidget extends StatelessWidget {
               final TransactionHeaderProvider provider =
                   TransactionHeaderProvider(
                       repo: transactionHeaderRepository,
-                      psValueHolder: psValueHolder);
-              if (provider.psValueHolder.loginUserId == null ||
-                  provider.psValueHolder.loginUserId == '') {
+                      appValueHolder: appValueHolder);
+              if (provider.appValueHolder.loginUserId == null ||
+                  provider.appValueHolder.loginUserId == '') {
                 provider.loadTransactionList(userId);
               } else {
                 provider
-                    .loadTransactionList(provider.psValueHolder.loginUserId);
+                    .loadTransactionList(provider.appValueHolder.loginUserId);
               }
 
               return provider;
@@ -198,23 +198,24 @@ class __ProfileDetailWidgetState extends State<_ProfileDetailWidget> {
     //   height: 1,
     // );
     UserRepository userRepository;
-    AppValueHolder psValueHolder;
+    AppValueHolder appValueHolder;
     UserProvider provider;
     userRepository = Provider.of<UserRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
-    provider = UserProvider(repo: userRepository, psValueHolder: psValueHolder);
+    appValueHolder = Provider.of<AppValueHolder>(context);
+    provider =
+        UserProvider(repo: userRepository, appValueHolder: appValueHolder);
 
     return SliverToBoxAdapter(
       child: ChangeNotifierProvider<UserProvider>(
           lazy: false,
           create: (BuildContext context) {
             print(provider.getCurrentFirebaseUser());
-            if (provider.psValueHolder.loginUserId == null ||
-                provider.psValueHolder.loginUserId == '') {
+            if (provider.appValueHolder.loginUserId == null ||
+                provider.appValueHolder.loginUserId == '') {
               provider.getUser(widget.userId, widget.userToken);
             } else {
-              provider.getUser(provider.psValueHolder.loginUserId,
-                  provider.psValueHolder.userToken);
+              provider.getUser(provider.appValueHolder.loginUserId,
+                  provider.appValueHolder.userToken);
             }
             return provider;
           },
@@ -424,7 +425,7 @@ class __ProfileDetailWidgetState extends State<_ProfileDetailWidget> {
 //                   RoutePaths.editProfile,
 //                 );
 //                 if (returnData != null && returnData is bool) {
-//                   userProvider.getUser(userProvider.psValueHolder.loginUserId);
+//                   userProvider.getUser(userProvider.appValueHolder.loginUserId);
 //                 }
 //               } else if (checkText == 1) {
 //                 Navigator.pushNamed(

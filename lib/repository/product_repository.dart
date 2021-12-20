@@ -20,15 +20,16 @@ import 'package:sembast/sembast.dart';
 
 class ProductRepository extends AppRepository {
   ProductRepository(
-      {@required AppApiService psApiService, @required ProductDao productDao}) {
-    _psApiService = psApiService;
+      {@required AppApiService appApiService,
+      @required ProductDao productDao}) {
+    _appApiService = appApiService;
     _productDao = productDao;
   }
   String primaryKey = 'id';
   String mapKey = 'map_key';
   String collectionIdKey = 'collection_id';
   String mainProductIdKey = 'main_product_id';
-  AppApiService _psApiService;
+  AppApiService _appApiService;
   ProductDao _productDao;
 
   void sinkProductListStream(
@@ -105,7 +106,7 @@ class ProductRepository extends AppRepository {
     // Server Call
     if (isConnectedToInternet) {
       final AppResource<List<Product>> _resource =
-          await _psApiService.getProductList(holder.toMap(), limit, offset);
+          await _appApiService.getProductList(holder.toMap(), limit, offset);
 
       print('Param Key $paramKey');
       if (_resource.status == AppStatus.SUCCESS) {
@@ -163,7 +164,7 @@ class ProductRepository extends AppRepository {
             status: status));
     if (isConnectedToInternet) {
       final AppResource<List<Product>> _resource =
-          await _psApiService.getProductList(holder.toMap(), limit, offset);
+          await _appApiService.getProductList(holder.toMap(), limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         // Create Map List
@@ -210,7 +211,7 @@ class ProductRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<Product> _resource =
-          await _psApiService.getProductDetail(productId, loginUserId);
+          await _appApiService.getProductDetail(productId, loginUserId);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _productDao.deleteWithFinder(finder);
@@ -236,7 +237,7 @@ class ProductRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<Product> _resource =
-          await _psApiService.getProductDetail(productId, loginUserId);
+          await _appApiService.getProductDetail(productId, loginUserId);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _productDao.deleteWithFinder(finder);
@@ -257,7 +258,7 @@ class ProductRepository extends AppRepository {
   //     AppStatus status,
   //     {bool isLoadFromServer = true}) async {
   //   final AppResource<List<DownloadProduct>> _resource =
-  //       await _psApiService.postDownloadProductList(jsonMap);
+  //       await _appApiService.postDownloadProductList(jsonMap);
   //   if (_resource.status == AppStatus.SUCCESS) {
   //     return _resource;
   //   } else {
@@ -290,7 +291,7 @@ class ProductRepository extends AppRepository {
     // Server Call
     if (isConnectedToInternet) {
       final AppResource<List<Product>> _resource =
-          await _psApiService.getTopSellingProductList(limit, offset);
+          await _appApiService.getTopSellingProductList(limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         // Create Map List
@@ -342,7 +343,7 @@ class ProductRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<List<Product>> _resource =
-          await _psApiService.getTopSellingProductList(limit, offset);
+          await _appApiService.getTopSellingProductList(limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         // Create Map List
@@ -397,7 +398,7 @@ class ProductRepository extends AppRepository {
     // Server Call
     if (isConnectedToInternet) {
       final AppResource<List<Product>> _resource =
-          await _psApiService.getTopRatedProductList(limit, offset);
+          await _appApiService.getTopRatedProductList(limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         // Create Map List
@@ -413,8 +414,7 @@ class ProductRepository extends AppRepository {
 
         // Delete and Insert Map Dao
         await topRatedProductDao.deleteAll();
-        await topRatedProductDao.insertAll(
-            primaryKey, favouriteProductMapList);
+        await topRatedProductDao.insertAll(primaryKey, favouriteProductMapList);
         // Insert Product
         await _productDao.insertAll(primaryKey, _resource.data);
       } else {
@@ -438,8 +438,7 @@ class ProductRepository extends AppRepository {
       int offset,
       AppStatus status,
       {bool isLoadFromServer = true}) async {
-    final TopRatedProductDao topRatedProductDao =
-        TopRatedProductDao.instance;
+    final TopRatedProductDao topRatedProductDao = TopRatedProductDao.instance;
     // Load from Db and Send to UI
     sinkTopSellingProductListStream(
         favouriteProductListStream,
@@ -449,7 +448,7 @@ class ProductRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<List<Product>> _resource =
-          await _psApiService.getTopRatedProductList(limit, offset);
+          await _appApiService.getTopRatedProductList(limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         // Create Map List
@@ -469,8 +468,7 @@ class ProductRepository extends AppRepository {
           ));
         }
 
-        await topRatedProductDao.insertAll(
-            primaryKey, favouriteProductMapList);
+        await topRatedProductDao.insertAll(primaryKey, favouriteProductMapList);
 
         // Insert Product
         await _productDao.insertAll(primaryKey, _resource.data);
@@ -486,7 +484,7 @@ class ProductRepository extends AppRepository {
       bool isConnectedToInternet, AppStatus status,
       {bool isLoadFromServer = true}) async {
     final AppResource<ApiStatus> _resource =
-        await _psApiService.postTouchCount(jsonMap);
+        await _appApiService.postTouchCount(jsonMap);
     if (_resource.status == AppStatus.SUCCESS) {
       return _resource;
     } else {
@@ -522,7 +520,7 @@ class ProductRepository extends AppRepository {
 
   //   // Server Call
   //   if (isConnectedToInternet) {
-  //     final AppResource<List<Product>> _resource = await _psApiService
+  //     final AppResource<List<Product>> _resource = await _appApiService
   //         .getRelatedProductList(productId, categoryId, limit, offset);
 
   //     if (_resource.status == AppStatus.SUCCESS) {
@@ -583,7 +581,7 @@ class ProductRepository extends AppRepository {
 
   //   // Server Call
   //   if (isConnectedToInternet) {
-  //     final AppResource<List<Product>> _resource = await _psApiService
+  //     final AppResource<List<Product>> _resource = await _appApiService
   //         .getProductListByCollectionId(collectionId, limit, offset);
 
   //     if (_resource.status == AppStatus.SUCCESS) {
@@ -642,7 +640,7 @@ class ProductRepository extends AppRepository {
   //           status: status));
 
   //   if (isConnectedToInternet) {
-  //     final AppResource<List<Product>> _resource = await _psApiService
+  //     final AppResource<List<Product>> _resource = await _appApiService
   //         .getProductListByCollectionId(collectionId, limit, offset);
 
   //     if (_resource.status == AppStatus.SUCCESS) {

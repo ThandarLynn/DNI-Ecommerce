@@ -56,7 +56,7 @@ class _CheckoutContainerViewState extends State<CheckoutContainerView> {
   CouponDiscountProvider couponDiscountProvider;
   BasketProvider basketProvider;
   TransactionHeaderProvider transactionSubmitProvider;
-  AppApiService psApiService;
+  AppApiService appApiService;
   TokenRepository tokenRepository;
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class _CheckoutContainerViewState extends State<CheckoutContainerView> {
     couponDiscountRepo = Provider.of<CouponDiscountRepository>(context);
     transactionHeaderRepo = Provider.of<TransactionHeaderRepository>(context);
     basketRepository = Provider.of<BasketRepository>(context);
-    psApiService = Provider.of<AppApiService>(context);
+    appApiService = Provider.of<AppApiService>(context);
     tokenRepository = Provider.of<TokenRepository>(context);
     return MultiProvider(
         providers: <SingleChildWidget>[
@@ -93,16 +93,16 @@ class _CheckoutContainerViewState extends State<CheckoutContainerView> {
               lazy: false,
               create: (BuildContext context) {
                 userProvider = UserProvider(
-                    repo: userRepository, psValueHolder: valueHolder);
+                    repo: userRepository, appValueHolder: valueHolder);
                 userProvider
-                    .getUserFromDB(userProvider.psValueHolder.loginUserId);
+                    .getUserFromDB(userProvider.appValueHolder.loginUserId);
                 return userProvider;
               }),
           ChangeNotifierProvider<TransactionHeaderProvider>(
               lazy: false,
               create: (BuildContext context) {
                 transactionSubmitProvider = TransactionHeaderProvider(
-                    repo: transactionHeaderRepo, psValueHolder: valueHolder);
+                    repo: transactionHeaderRepo, appValueHolder: valueHolder);
 
                 return transactionSubmitProvider;
               }),
@@ -306,7 +306,7 @@ class _CheckoutContainerViewState extends State<CheckoutContainerView> {
                                   transactionSubmitProvider,
                               userProvider: userProvider,
                               basketProvider: basketProvider,
-                              psValueHolder: valueHolder,
+                              appValueHolder: valueHolder,
                               memoText: checkout3ViewState.memoController.text,
                               publishKey: valueHolder.publishKey,
                               payStackKey: valueHolder.payStackKey));
@@ -340,7 +340,7 @@ class _CheckoutContainerViewState extends State<CheckoutContainerView> {
                                   transactionSubmitProvider,
                               userProvider: userProvider,
                               basketProvider: basketProvider,
-                              psValueHolder: valueHolder,
+                              appValueHolder: valueHolder,
                               memoText: checkout3ViewState.memoController.text,
                               publishKey: valueHolder.publishKey,
                               payStackKey: valueHolder.payStackKey));

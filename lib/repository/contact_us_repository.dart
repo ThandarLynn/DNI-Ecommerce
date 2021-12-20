@@ -9,18 +9,18 @@ import 'Common/app_repository.dart';
 
 class ContactUsRepository extends AppRepository {
   ContactUsRepository({
-    @required AppApiService psApiService,
+    @required AppApiService appApiService,
   }) {
-    _psApiService = psApiService;
+    _appApiService = appApiService;
   }
   String primaryKey = 'id';
-  AppApiService _psApiService;
+  AppApiService _appApiService;
 
   Future<AppResource<ApiStatus>> postContactUs(Map<dynamic, dynamic> jsonMap,
       bool isConnectedToInternet, AppStatus status,
       {bool isLoadFromServer = true}) async {
     final AppResource<ApiStatus> _resource =
-        await _psApiService.postContactUs(jsonMap);
+        await _appApiService.postContactUs(jsonMap);
     if (_resource.status == AppStatus.SUCCESS) {
       return _resource;
     } else {

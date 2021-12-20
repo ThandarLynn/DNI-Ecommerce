@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:dni_ecommerce/api/app_api_service.dart';
 import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/api/common/app_status.dart';
@@ -12,12 +11,12 @@ import 'package:sembast/sembast.dart';
 
 class UserRepository extends AppRepository {
   UserRepository(
-      {@required AppApiService psApiService, @required UserDao userDao}) {
-    _psApiService = psApiService;
+      {@required AppApiService appApiService, @required UserDao userDao}) {
+    _appApiService = appApiService;
     _userDao = userDao;
   }
 
-  AppApiService _psApiService;
+  AppApiService _appApiService;
   UserDao _userDao;
   final String _userPrimaryKey = 'id';
   // final String _userLoginPrimaryKey = 'map_key';
@@ -57,7 +56,7 @@ class UserRepository extends AppRepository {
       bool isConnectedToInternet, AppStatus status,
       {bool isLoadFromServer = true}) async {
     final AppResource<User> _resource =
-        await _psApiService.postUserRegister(jsonMap);
+        await _appApiService.postUserRegister(jsonMap);
     if (_resource.status == AppStatus.SUCCESS) {
       return _resource;
     } else {
@@ -72,7 +71,7 @@ class UserRepository extends AppRepository {
       bool isConnectedToInternet, AppStatus status,
       {bool isLoadFromServer = true}) async {
     final AppResource<User> _resource =
-        await _psApiService.postUserLogin(jsonMap);
+        await _appApiService.postUserLogin(jsonMap);
     if (_resource.status == AppStatus.SUCCESS) {
       // await _userLoginDao.deleteAll();
       await insert(_resource.data);
@@ -105,47 +104,47 @@ class UserRepository extends AppRepository {
     userStream.sink.add(await _userDao.getOne(finder: finder, status: status));
   }
 
-  Future<AppResource<User>> postUserEmailVerify(Map<dynamic, dynamic> jsonMap,
-      bool isConnectedToInternet, AppStatus status,
-      {bool isLoadFromServer = true}) async {
-    final AppResource<User> _resource =
-        await _psApiService.postUserEmailVerify(jsonMap);
-    if (_resource.status == AppStatus.SUCCESS) {
-      // await _userLoginDao.deleteAll();
-      await insert(_resource.data);
-      // final String userId = _resource.data.userId;
-      // final UserLogin userLogin =
-      //     UserLogin(id: userId, login: true, user: _resource.data);
-      // await insertUserLogin(userLogin);
-      return _resource;
-    } else {
-      final Completer<AppResource<User>> completer =
-          Completer<AppResource<User>>();
-      completer.complete(_resource);
-      return completer.future;
-    }
-  }
+  // Future<AppResource<User>> postUserEmailVerify(Map<dynamic, dynamic> jsonMap,
+  //     bool isConnectedToInternet, AppStatus status,
+  //     {bool isLoadFromServer = true}) async {
+  //   final AppResource<User> _resource =
+  //       await _appApiService.postUserEmailVerify(jsonMap);
+  //   if (_resource.status == AppStatus.SUCCESS) {
+  //     // await _userLoginDao.deleteAll();
+  //     await insert(_resource.data);
+  //     // final String userId = _resource.data.userId;
+  //     // final UserLogin userLogin =
+  //     //     UserLogin(id: userId, login: true, user: _resource.data);
+  //     // await insertUserLogin(userLogin);
+  //     return _resource;
+  //   } else {
+  //     final Completer<AppResource<User>> completer =
+  //         Completer<AppResource<User>>();
+  //     completer.complete(_resource);
+  //     return completer.future;
+  //   }
+  // }
 
-  Future<AppResource<User>> postImageUpload(String userId, String platformName,
-      File imageFile, bool isConnectedToInternet, AppStatus status,
-      {bool isLoadFromServer = true}) async {
-    final AppResource<User> _resource =
-        await _psApiService.postGalleryUpload(userId, platformName, imageFile);
-    if (_resource.status == AppStatus.SUCCESS) {
-      // await _userLoginDao.deleteAll();
-      await insert(_resource.data);
-      // final String userId = _resource.data.userId;
-      // final UserLogin userLogin =
-      //     UserLogin(id: userId, login: true, user: _resource.data);
-      // await insertUserLogin(userLogin);
-      return _resource;
-    } else {
-      final Completer<AppResource<User>> completer =
-          Completer<AppResource<User>>();
-      completer.complete(_resource);
-      return completer.future;
-    }
-  }
+  // Future<AppResource<User>> postImageUpload(String userId, String platformName,
+  //     File imageFile, bool isConnectedToInternet, AppStatus status,
+  //     {bool isLoadFromServer = true}) async {
+  //   final AppResource<User> _resource =
+  //       await _appApiService.postGalleryUpload(userId, platformName, imageFile);
+  //   if (_resource.status == AppStatus.SUCCESS) {
+  //     // await _userLoginDao.deleteAll();
+  //     await insert(_resource.data);
+  //     // final String userId = _resource.data.userId;
+  //     // final UserLogin userLogin =
+  //     //     UserLogin(id: userId, login: true, user: _resource.data);
+  //     // await insertUserLogin(userLogin);
+  //     return _resource;
+  //   } else {
+  //     final Completer<AppResource<User>> completer =
+  //         Completer<AppResource<User>>();
+  //     completer.complete(_resource);
+  //     return completer.future;
+  //   }
+  // }
 
   Future<AppResource<ApiStatus>> postForgotPassword(
       Map<dynamic, dynamic> jsonMap,
@@ -153,7 +152,7 @@ class UserRepository extends AppRepository {
       AppStatus status,
       {bool isLoadFromServer = true}) async {
     final AppResource<ApiStatus> _resource =
-        await _psApiService.postForgotPassword(jsonMap);
+        await _appApiService.postForgotPassword(jsonMap);
     if (_resource.status == AppStatus.SUCCESS) {
       return _resource;
     } else {
@@ -171,7 +170,7 @@ class UserRepository extends AppRepository {
       AppStatus status,
       {bool isLoadFromServer = true}) async {
     final AppResource<ApiStatus> _resource =
-        await _psApiService.postChangePassword(jsonMap, userToken);
+        await _appApiService.postChangePassword(jsonMap, userToken);
     if (_resource.status == AppStatus.SUCCESS) {
       return _resource;
     } else {
@@ -186,7 +185,7 @@ class UserRepository extends AppRepository {
       bool isConnectedToInternet, AppStatus status,
       {bool isLoadFromServer = true}) async {
     final AppResource<User> _resource =
-        await _psApiService.postProfileUpdate(jsonMap);
+        await _appApiService.postProfileUpdate(jsonMap);
     if (_resource.status == AppStatus.SUCCESS) {
       // await _userLoginDao.deleteAll();
       await insert(_resource.data);
@@ -207,7 +206,7 @@ class UserRepository extends AppRepository {
   //     bool isConnectedToInternet, ApiStatus status,
   //     {bool isLoadFromServer = true}) async {
   //   final AppResource<User> _resource =
-  //       await _psApiService.postPhoneLogin(jsonMap);
+  //       await _appApiService.postPhoneLogin(jsonMap);
   //   if (_resource.status == AppStatus.SUCCESS) {
   //     await _userLoginDao.deleteAll();
   //     await insert(_resource.data);
@@ -228,7 +227,7 @@ class UserRepository extends AppRepository {
   //     bool isConnectedToInternet, ApiStatus status,
   //     {bool isLoadFromServer = true}) async {
   //   final AppResource<User> _resource =
-  //       await _psApiService.postFBLogin(jsonMap);
+  //       await _appApiService.postFBLogin(jsonMap);
   //   if (_resource.status == AppStatus.SUCCESS) {
   //     await _userLoginDao.deleteAll();
   //     await insert(_resource.data);
@@ -249,7 +248,7 @@ class UserRepository extends AppRepository {
   //     bool isConnectedToInternet, ApiStatus status,
   //     {bool isLoadFromServer = true}) async {
   //   final AppResource<User> _resource =
-  //       await _psApiService.postGoogleLogin(jsonMap);
+  //       await _appApiService.postGoogleLogin(jsonMap);
   //   if (_resource.status == AppStatus.SUCCESS) {
   //     await _userLoginDao.deleteAll();
   //     await insert(_resource.data);
@@ -270,7 +269,7 @@ class UserRepository extends AppRepository {
   //     bool isConnectedToInternet, ApiStatus status,
   //     {bool isLoadFromServer = true}) async {
   //   final AppResource<User> _resource =
-  //       await _psApiService.postAppleLogin(jsonMap);
+  //       await _appApiService.postAppleLogin(jsonMap);
   //   if (_resource.status == AppStatus.SUCCESS) {
   //     await _userLoginDao.deleteAll();
   //     await insert(_resource.data);
@@ -291,7 +290,7 @@ class UserRepository extends AppRepository {
       bool isConnectedToInternet, AppStatus status,
       {bool isLoadFromServer = true}) async {
     final AppResource<ApiStatus> _resource =
-        await _psApiService.postResendCode(jsonMap);
+        await _appApiService.postResendCode(jsonMap);
     if (_resource.status == AppStatus.SUCCESS) {
       return _resource;
     } else {
@@ -315,7 +314,7 @@ class UserRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<User> _resource =
-          await _psApiService.getUser(loginUserId, userToken);
+          await _appApiService.getUser(loginUserId, userToken);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _userDao.deleteWithFinder(finder);

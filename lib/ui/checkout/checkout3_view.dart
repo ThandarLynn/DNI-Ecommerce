@@ -292,12 +292,12 @@ class _Checkout3ViewState extends State<Checkout3View> {
       UserProvider userProvider,
       TransactionHeaderProvider transactionSubmitProvider,
       CouponDiscountProvider couponDiscountProvider,
-      AppValueHolder psValueHolder,
+      AppValueHolder appValueHolder,
       BasketProvider basketProvider) async {
     basketProvider.checkoutCalculationHelper.calculate(
         basketList: widget.basketList,
         couponDiscountString: couponDiscountProvider.couponDiscount,
-        psValueHolder: psValueHolder,
+        appValueHolder: appValueHolder,
         shippingPriceStringFormatting: '0.0');
 
     // final BraintreePayment braintreePayment = BraintreePayment();

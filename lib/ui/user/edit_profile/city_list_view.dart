@@ -46,7 +46,7 @@ class _CityListViewState extends State<CityListView>
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         shippingCityProvider.nextShippingCityList(
-            psValueHolder.shopId, psValueHolder.shopId);
+            appValueHolder.shopId, appValueHolder.shopId);
       }
     });
 
@@ -60,7 +60,7 @@ class _CityListViewState extends State<CityListView>
   }
 
   ShippingCityRepository repo1;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _CityListViewState extends State<CityListView>
     }
 
     repo1 = Provider.of<ShippingCityRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
 
     print(
         '............................Build UI Again ............................');
@@ -89,7 +89,7 @@ class _CityListViewState extends State<CityListView>
             appBarTitle: Utils.getString('city_list__app_bar_name') ?? '',
             initProvider: () {
               return ShippingCityProvider(
-                  repo: repo1, psValueHolder: psValueHolder);
+                  repo: repo1, appValueHolder: appValueHolder);
             },
             onProviderReady: (ShippingCityProvider provider) {
               provider.loadShippingCityList(
@@ -150,7 +150,7 @@ class _CityListViewState extends State<CityListView>
                       }),
                   onRefresh: () {
                     return provider.resetShippingCityList(
-                        psValueHolder.shopId, psValueHolder.shopId);
+                        appValueHolder.shopId, appValueHolder.shopId);
                   },
                 )),
                 AppProgressIndicator(provider.shippingCityList.status)

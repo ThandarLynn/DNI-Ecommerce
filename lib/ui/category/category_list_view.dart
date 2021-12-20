@@ -53,7 +53,7 @@ class _CategoryListViewState extends State<CategoryListView>
   }
 
   CategoryRepository repo1;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
   dynamic data;
 
   bool isConnectedToInternet = false;
@@ -88,7 +88,7 @@ class _CategoryListViewState extends State<CategoryListView>
     }
 
     repo1 = Provider.of<CategoryRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
     print(
         '............................Build UI Again ............................');
     return WillPopScope(
@@ -97,7 +97,7 @@ class _CategoryListViewState extends State<CategoryListView>
             lazy: false,
             create: (BuildContext context) {
               final CategoryProvider provider =
-                  CategoryProvider(repo: repo1, psValueHolder: psValueHolder);
+                  CategoryProvider(repo: repo1, appValueHolder: appValueHolder);
               provider.loadCategoryList();
               _categoryProvider = provider;
               return _categoryProvider;
@@ -186,7 +186,7 @@ class _CategoryListViewState extends State<CategoryListView>
                                             // // } else {
                                             // // final String loginUserId =
                                             // //     Utils.checkUserLoginId(
-                                            // //         psValueHolder);
+                                            // //         appValueHolder);
                                             // // final TouchCountParameterHolder
                                             // //     touchCountParameterHolder =
                                             // //     TouchCountParameterHolder(

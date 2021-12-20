@@ -12,14 +12,14 @@ import 'Common/app_repository.dart';
 
 class TransactionHeaderRepository extends AppRepository {
   TransactionHeaderRepository(
-      {@required AppApiService psApiService,
+      {@required AppApiService appApiService,
       @required TransactionHeaderDao transactionHeaderDao}) {
-    _psApiService = psApiService;
+    _appApiService = appApiService;
     _transactionHeaderDao = transactionHeaderDao;
   }
 
   String primaryKey = 'order_id';
-  AppApiService _psApiService;
+  AppApiService _appApiService;
   TransactionHeaderDao _transactionHeaderDao;
 
   Future<dynamic> insert(TransactionHeader transaction) async {
@@ -50,8 +50,9 @@ class TransactionHeaderRepository extends AppRepository {
         await _transactionHeaderDao.getAll(finder: finder, status: status));
 
     if (isConnectedToInternet) {
-      final AppResource<List<TransactionHeader>> _resource = await _psApiService
-          .getTransactionList(loginUserId, userToken, limit, offset);
+      final AppResource<List<TransactionHeader>> _resource =
+          await _appApiService.getTransactionList(
+              loginUserId, userToken, limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         if (isNeedDelete) {
@@ -86,8 +87,9 @@ class TransactionHeaderRepository extends AppRepository {
         await _transactionHeaderDao.getAll(finder: finder, status: status));
 
     if (isConnectedToInternet) {
-      final AppResource<List<TransactionHeader>> _resource = await _psApiService
-          .getTransactionList(loginUserId, userToken, limit, offset);
+      final AppResource<List<TransactionHeader>> _resource =
+          await _appApiService.getTransactionList(
+              loginUserId, userToken, limit, offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _transactionHeaderDao.insertAll(primaryKey, _resource.data);
@@ -105,7 +107,7 @@ class TransactionHeaderRepository extends AppRepository {
     print(jsonMapData);
 
     final AppResource<TransactionHeader> _resource =
-        await _psApiService.postTransactionSubmit(jsonMap);
+        await _appApiService.postTransactionSubmit(jsonMap);
     if (_resource.status == AppStatus.SUCCESS) {
       return _resource;
     } else {

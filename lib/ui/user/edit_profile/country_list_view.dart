@@ -41,7 +41,7 @@ class _CountryListViewState extends State<CountryListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        shippingCountryProvider.nextShippingCountryList(psValueHolder.shopId);
+        shippingCountryProvider.nextShippingCountryList(appValueHolder.shopId);
       }
     });
 
@@ -55,7 +55,7 @@ class _CountryListViewState extends State<CountryListView>
   }
 
   ShippingCountryRepository repo1;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class _CountryListViewState extends State<CountryListView>
     }
 
     repo1 = Provider.of<ShippingCountryRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
 
     print(
         '............................Build UI Again ............................');
@@ -84,7 +84,7 @@ class _CountryListViewState extends State<CountryListView>
             appBarTitle: Utils.getString('country_list__app_bar_name') ?? '',
             initProvider: () {
               return ShippingCountryProvider(
-                  repo: repo1, psValueHolder: psValueHolder);
+                  repo: repo1, appValueHolder: appValueHolder);
             },
             onProviderReady: (ShippingCountryProvider provider) {
               provider.loadShippingCountryList(
@@ -146,7 +146,7 @@ class _CountryListViewState extends State<CountryListView>
                       }),
                   onRefresh: () {
                     return provider
-                        .resetShippingCountryList(psValueHolder.shopId);
+                        .resetShippingCountryList(appValueHolder.shopId);
                   },
                 )),
                 AppProgressIndicator(provider.shippingCountryList.status)

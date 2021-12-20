@@ -12,7 +12,7 @@ import 'package:flutter/cupertino.dart';
 class TopRatedProductProvider extends AppProvider {
   TopRatedProductProvider(
       {@required ProductRepository repo,
-      @required this.psValueHolder,
+      @required this.appValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -45,7 +45,7 @@ class TopRatedProductProvider extends AppProvider {
   StreamController<AppResource<List<Product>>> topSellingListStream;
 
   ProductRepository _repo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   AppResource<List<Product>> _topRatedProductList =
       AppResource<List<Product>>(AppStatus.NOACTION, '', <Product>[]);

@@ -4,12 +4,6 @@ class AppConfig {
   AppConfig._();
 
   ///
-  /// API Key
-  /// If you change here, you need to update in server.
-  ///
-  static const String app_api_key = 'teampsisthebest';
-
-  ///
   /// API URL
   /// Change your backend url
   ///

@@ -43,7 +43,7 @@ class _TransactionListViewState extends State<TransactionListView>
   }
 
   TransactionHeaderRepository repo1;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
   dynamic data;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
@@ -64,15 +64,15 @@ class _TransactionListViewState extends State<TransactionListView>
       checkConnection();
     }
     repo1 = Provider.of<TransactionHeaderRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
     print(
         '............................Build UI Again ............................');
     return ChangeNotifierProvider<TransactionHeaderProvider>(
       lazy: false,
       create: (BuildContext context) {
         final TransactionHeaderProvider provider = TransactionHeaderProvider(
-            repo: repo1, psValueHolder: psValueHolder);
-        provider.loadTransactionList(psValueHolder.loginUserId);
+            repo: repo1, appValueHolder: appValueHolder);
+        provider.loadTransactionList(appValueHolder.loginUserId);
         _transactionProvider = provider;
         return _transactionProvider;
       },
@@ -94,7 +94,7 @@ class _TransactionListViewState extends State<TransactionListView>
             //             return ChooseFilterTransactionDialog(
             //               onDailyTap: () {
             //                 provider
-            //                     .loadTransactionList(psValueHolder.loginUserId);
+            //                     .loadTransactionList(appValueHolder.loginUserId);
             //               },
             //               onWeeklyTap: () {},
             //               onMonthlyTap: () {},

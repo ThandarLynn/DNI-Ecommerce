@@ -84,7 +84,7 @@ class _TransactionItemListViewState extends State<TransactionItemListView>
           create: (BuildContext context) {
             final TransactionDetailProvider provider =
                 TransactionDetailProvider(
-                    repo: repo1, psValueHolder: valueHolder);
+                    repo: repo1, appValueHolder: valueHolder);
             provider.loadTransactionDetailList(widget.transaction);
             _transactionDetailProvider = provider;
             return provider;

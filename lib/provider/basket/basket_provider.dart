@@ -12,7 +12,7 @@ import 'helper/checkout_calculation_helper.dart';
 
 class BasketProvider extends AppProvider {
   BasketProvider(
-      {@required BasketRepository repo, this.psValueHolder, int limit = 0})
+      {@required BasketRepository repo, this.appValueHolder, int limit = 0})
       : super(repo, limit) {
     _repo = repo;
     print('Basket Provider: $hashCode');
@@ -35,7 +35,7 @@ class BasketProvider extends AppProvider {
   }
   StreamController<AppResource<List<Basket>>> basketListStream;
   BasketRepository _repo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
   dynamic daoSubscription;
 
   AppResource<List<Basket>> _basketList =

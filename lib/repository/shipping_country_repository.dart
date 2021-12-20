@@ -12,14 +12,14 @@ import 'Common/app_repository.dart';
 
 class ShippingCountryRepository extends AppRepository {
   ShippingCountryRepository(
-      {@required AppApiService psApiService,
+      {@required AppApiService appApiService,
       @required ShippingCountryDao shippingCountryDao}) {
-    _psApiService = psApiService;
+    _appApiService = appApiService;
     _shippingCountryDao = shippingCountryDao;
   }
 
   String primaryKey = 'id';
-  AppApiService _psApiService;
+  AppApiService _appApiService;
   ShippingCountryDao _shippingCountryDao;
 
   Future<dynamic> insert(ShippingCountry shippingCountry) async {
@@ -49,7 +49,7 @@ class ShippingCountryRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<List<ShippingCountry>> _resource =
-          await _psApiService.getCountryList(limit, offset, holder.toMap());
+          await _appApiService.getCountryList(limit, offset, holder.toMap());
 
       if (_resource.status == AppStatus.SUCCESS) {
         if (isNeedDelete) {
@@ -82,7 +82,7 @@ class ShippingCountryRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<List<ShippingCountry>> _resource =
-          await _psApiService.getCountryList(limit, offset, holder.toMap());
+          await _appApiService.getCountryList(limit, offset, holder.toMap());
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _shippingCountryDao.insertAll(primaryKey, _resource.data);

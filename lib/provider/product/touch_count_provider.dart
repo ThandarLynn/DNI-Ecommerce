@@ -12,7 +12,7 @@ import 'package:flutter/cupertino.dart';
 class TouchCountProvider extends AppProvider {
   TouchCountProvider(
       {@required ProductRepository repo,
-      @required this.psValueHolder,
+      @required this.appValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -25,7 +25,7 @@ class TouchCountProvider extends AppProvider {
   }
 
   ProductRepository _repo;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   AppResource<ApiStatus> _apiStatus =
       AppResource<ApiStatus>(AppStatus.NOACTION, '', null);

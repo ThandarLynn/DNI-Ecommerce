@@ -13,14 +13,14 @@ import 'Common/app_repository.dart';
 
 class ShippingCityRepository extends AppRepository {
   ShippingCityRepository(
-      {@required AppApiService psApiService,
+      {@required AppApiService appApiService,
       @required ShippingCityDao shippingCityDao}) {
-    _psApiService = psApiService;
+    _appApiService = appApiService;
     _shippingCityDao = shippingCityDao;
   }
 
   String primaryKey = 'id';
-  AppApiService _psApiService;
+  AppApiService _appApiService;
   ShippingCityDao _shippingCityDao;
 
   Future<dynamic> insert(ShippingCity shippingCity) async {
@@ -51,7 +51,7 @@ class ShippingCityRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<List<ShippingCity>> _resource =
-          await _psApiService.getCityList(limit, offset, holder.toMap());
+          await _appApiService.getCityList(limit, offset, holder.toMap());
 
       if (_resource.status == AppStatus.SUCCESS) {
         if (isNeedDelete) {
@@ -85,7 +85,7 @@ class ShippingCityRepository extends AppRepository {
 
     if (isConnectedToInternet) {
       final AppResource<List<ShippingCity>> _resource =
-          await _psApiService.getCityList(limit, offset, holder.toMap());
+          await _appApiService.getCityList(limit, offset, holder.toMap());
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _shippingCityDao.insertAll(primaryKey, _resource.data);

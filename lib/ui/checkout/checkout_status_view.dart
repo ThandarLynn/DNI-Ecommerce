@@ -98,8 +98,9 @@ class _CheckoutStatusViewState extends State<CheckoutStatusView> {
       lazy: false,
       create: (BuildContext context) {
         final UserProvider provider =
-            UserProvider(repo: repo1, psValueHolder: valueHolder);
-        provider.getUser(provider.psValueHolder.loginUserId,provider.psValueHolder.userToken);
+            UserProvider(repo: repo1, appValueHolder: valueHolder);
+        provider.getUser(provider.appValueHolder.loginUserId,
+            provider.appValueHolder.userToken);
         _userProvider = provider;
         return _userProvider;
       },
@@ -223,7 +224,7 @@ class _CheckoutStatusViewState extends State<CheckoutStatusView> {
                                 transationInfoText:
                                     '\$ ${Utils.getPriceFormat(widget.transactionHeader.taxAmount)}',
                                 title:
-                                    '${Utils.getString('transaction_detail__tax')}(${provider.psValueHolder.overAllTaxLabel} %) :',
+                                    '${Utils.getString('transaction_detail__tax')}(${provider.appValueHolder.overAllTaxLabel} %) :',
                               ),
                               _TransactionNoTextWidget(
                                 transationInfoText:
@@ -235,7 +236,7 @@ class _CheckoutStatusViewState extends State<CheckoutStatusView> {
                                 transationInfoText:
                                     '\$ ${Utils.getPriceFormat(widget.transactionHeader.shippingAmount)}',
                                 title:
-                                    '${Utils.getString('transaction_detail__shipping_tax')}(${provider.psValueHolder.shippingTaxLabel} %) :',
+                                    '${Utils.getString('transaction_detail__shipping_tax')}(${provider.appValueHolder.shippingTaxLabel} %) :',
                               ),
                               const SizedBox(
                                 height: AppDimens.space12,

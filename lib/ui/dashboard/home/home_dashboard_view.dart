@@ -66,7 +66,7 @@ class _HomeDashboardViewState extends State<HomeDashboardView> {
               create: (BuildContext context) {
                 _topSellingProductProvider = TopSellingProductProvider(
                     repo: repo2,
-                    psValueHolder: valueHolder,
+                    appValueHolder: valueHolder,
                     limit: AppConfig.LATEST_PRODUCT_LOADING_LIMIT);
                 _topSellingProductProvider.loadTopSellingProductList();
                 return _topSellingProductProvider;
@@ -76,7 +76,7 @@ class _HomeDashboardViewState extends State<HomeDashboardView> {
               create: (BuildContext context) {
                 _topRatedProductProvider = TopRatedProductProvider(
                     repo: repo2,
-                    psValueHolder: valueHolder,
+                    appValueHolder: valueHolder,
                     limit: AppConfig.LATEST_PRODUCT_LOADING_LIMIT);
                 _topRatedProductProvider.loadTopRatedProductList();
                 return _topRatedProductProvider;
@@ -86,7 +86,7 @@ class _HomeDashboardViewState extends State<HomeDashboardView> {
               create: (BuildContext context) {
                 _categoryProvider ??= CategoryProvider(
                     repo: repo1,
-                    psValueHolder: valueHolder,
+                    appValueHolder: valueHolder,
                     limit: AppConfig.CATEGORY_LOADING_LIMIT);
                 _categoryProvider.loadCategoryList().then((dynamic value) {
                   // Utils.psPrint("Is Has Internet " + value);
@@ -147,7 +147,7 @@ class _HomeDashboardViewState extends State<HomeDashboardView> {
                             curve: Curves.fastOutSlowIn))), //animation
               ),
               _HomeCategoryHorizontalListWidget(
-                psValueHolder: valueHolder,
+                appValueHolder: valueHolder,
                 animationController: widget.animationController,
                 //animationController,
                 animation: Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -970,12 +970,12 @@ class _HomeCategoryHorizontalListWidget extends StatefulWidget {
       {Key key,
       @required this.animationController,
       @required this.animation,
-      @required this.psValueHolder})
+      @required this.appValueHolder})
       : super(key: key);
 
   final AnimationController animationController;
   final Animation<double> animation;
-  final AppValueHolder psValueHolder;
+  final AppValueHolder appValueHolder;
 
   @override
   __HomeCategoryHorizontalListWidgetState createState() =>

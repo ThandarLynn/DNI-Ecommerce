@@ -27,7 +27,7 @@ class _FilterListViewState extends State<FilterListView> {
 
   final CategoryParameterHolder categoryIconList = CategoryParameterHolder();
   CategoryRepository categoryRepository;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   @override
   void initState() {
@@ -62,12 +62,12 @@ class _FilterListViewState extends State<FilterListView> {
       checkConnection();
     }
     categoryRepository = Provider.of<CategoryRepository>(context);
-    psValueHolder = Provider.of<AppValueHolder>(context);
+    appValueHolder = Provider.of<AppValueHolder>(context);
     return AppWidgetWithAppBar<CategoryProvider>(
         appBarTitle: Utils.getString('search__category') ?? '',
         initProvider: () {
           return CategoryProvider(
-              repo: categoryRepository, psValueHolder: psValueHolder);
+              repo: categoryRepository, appValueHolder: appValueHolder);
         },
         onProviderReady: (CategoryProvider provider) {
           provider.loadCategoryList(); //categoryIconList.toMap()

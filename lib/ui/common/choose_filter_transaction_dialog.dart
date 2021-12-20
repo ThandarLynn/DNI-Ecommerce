@@ -27,7 +27,7 @@ class ChooseFilterTransactionDialog extends StatefulWidget {
 
 class _LogoutDialogState extends State<ChooseFilterTransactionDialog> {
   UserRepository repo1;
-  AppValueHolder psValueHolder;
+  AppValueHolder appValueHolder;
 
   @override
   Widget build(BuildContext context) {

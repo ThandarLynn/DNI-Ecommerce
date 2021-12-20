@@ -158,7 +158,7 @@ class _Checkout2ViewState extends State<Checkout2View> {
                                         basketList: widget.basketList,
                                         couponDiscountString:
                                             _apiStatus.data.couponAmount,
-                                        psValueHolder: valueHolder,
+                                        appValueHolder: valueHolder,
                                         shippingPriceStringFormatting: '0.0');
 
                                 showDialog<dynamic>(
@@ -217,7 +217,7 @@ class _Checkout2ViewState extends State<Checkout2View> {
               ),
             ),
             _OrderSummaryWidget(
-              psValueHolder: valueHolder,
+              appValueHolder: valueHolder,
               basketList: widget.basketList,
               couponDiscount: couponDiscountProvider.couponDiscount ?? '-',
               basketProvider: basketProvider,
@@ -234,13 +234,13 @@ class _OrderSummaryWidget extends StatelessWidget {
     Key key,
     @required this.basketList,
     @required this.couponDiscount,
-    @required this.psValueHolder,
+    @required this.appValueHolder,
     @required this.basketProvider,
   }) : super(key: key);
 
   final List<Basket> basketList;
   final String couponDiscount;
-  final AppValueHolder psValueHolder;
+  final AppValueHolder appValueHolder;
   final BasketProvider basketProvider;
   @override
   Widget build(BuildContext context) {
@@ -253,7 +253,7 @@ class _OrderSummaryWidget extends StatelessWidget {
     basketProvider.checkoutCalculationHelper.calculate(
         basketList: basketList,
         couponDiscountString: couponDiscount,
-        psValueHolder: psValueHolder,
+        appValueHolder: appValueHolder,
         shippingPriceStringFormatting: '0.0');
 
     const Widget _dividerWidget = Divider(
@@ -317,7 +317,7 @@ class _OrderSummaryWidget extends StatelessWidget {
               transationInfoText:
                   '\$ ${basketProvider.checkoutCalculationHelper.taxFormattedString}',
               title:
-                  '${Utils.getString('checkout__tax')} (${psValueHolder.overAllTaxLabel} %) :',
+                  '${Utils.getString('checkout__tax')} (${appValueHolder.overAllTaxLabel} %) :',
             ),
             // if (shippingCostProvider.shippingCost.data != null &&
             //     shippingCostProvider.shippingCost.data.shippingZone != null &&
@@ -343,7 +343,7 @@ class _OrderSummaryWidget extends StatelessWidget {
               transationInfoText:
                   '\$ ${basketProvider.checkoutCalculationHelper.shippingTaxFormattedString}',
               title:
-                  '${Utils.getString('checkout__shipping_tax')} (${psValueHolder.shippingTaxLabel} %) :',
+                  '${Utils.getString('checkout__shipping_tax')} (${appValueHolder.shippingTaxLabel} %) :',
             ),
             _spacingWidget,
             _dividerWidget,

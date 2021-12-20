@@ -11,7 +11,7 @@
 // class TopNewProductProvider extends AppProvider {
 //   TopNewProductProvider(
 //       {@required ProductRepository repo,
-//       @required this.psValueHolder,
+//       @required this.appValueHolder,
 //       int limit = 0})
 //       : super(repo, limit) {
 //     _repo = repo;
@@ -39,7 +39,7 @@
 //     });
 //   }
 
-//   AppValueHolder psValueHolder;
+//   AppValueHolder appValueHolder;
 //   ProductRepository _repo;
 
 //   AppResource<List<Product>> _relatedProductList =
