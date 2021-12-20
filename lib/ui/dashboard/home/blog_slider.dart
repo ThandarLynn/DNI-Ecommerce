@@ -30,7 +30,7 @@ class _CollectionProductSliderState extends State<BlogSliderView> {
           CarouselSlider(
             options: CarouselOptions(
                 enlargeCenterPage: true,
-                autoPlay: true,
+                autoPlay: false,
                 viewportFraction: 0.9,
                 autoPlayInterval: const Duration(seconds: 5),
                 onPageChanged: (int i, CarouselPageChangedReason reason) {
