@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:dni_ecommerce/provider/product/touch_count_provider.dart';
 import 'package:dni_ecommerce/ui/common/app_back_button_with_circle_bg_widget.dart';
+import 'package:dni_ecommerce/ui/common/dialog/rating_input_dialog.dart';
+// import 'package:dni_ecommerce/ui/common/smooth_star_rating_widget.dart';
 import 'package:dni_ecommerce/ui/product/detail/detail_info_tile_view.dart';
 import 'package:dni_ecommerce/ui/product/detail/size_list_item_view.dart';
 import 'package:dni_ecommerce/viewobject/ItemColor.dart';
@@ -765,6 +767,9 @@ class __HeaderPriceWidgetState extends State<_HeaderPriceWidget> {
     print('******* ${widget.unitPriceFormatString}');
     if (widget.product != null && widget.product.unitPrice != null) {
       return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children:<Widget>[
+        Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
@@ -827,8 +832,7 @@ class __HeaderPriceWidgetState extends State<_HeaderPriceWidget> {
                     left: AppDimens.space4, right: AppDimens.space4),
                 child: Align(
                   child: Text(
-                        Utils.calculateDiscountPercent(
-                                widget.product.originalPrice,
+                    Utils.calculateDiscountPercent(widget.product.originalPrice,
                                 widget.product.unitPrice)
                             .toString() +
                         '%',
@@ -841,12 +845,24 @@ class __HeaderPriceWidgetState extends State<_HeaderPriceWidget> {
               ),
             )
           else
-            Container(),
-          const SizedBox(
-            width: AppDimens.space10,
-          ),
+            Container()
         ],
-      );
+      ),
+        Row(children: <Widget>[
+            Container(
+                width: 100,
+                child: PSButtonWithIconWidget(
+                    hasShadow: true,
+                    colorData: AppColors.mainColor,
+                    titleText: 'Give Rating',
+                    onPressed: () async {
+                      await showDialog<dynamic>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const RatingInputDialog();
+                          });
+                    })),
+          ])]);
     } else {
       return Container();
     }

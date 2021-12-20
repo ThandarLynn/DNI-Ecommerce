@@ -141,7 +141,9 @@ class AppApiService extends AppApi {
     final String url = '${AppUrl.app_product_url}?name=' +
             paramMap['searchterm'] +
             '&cat_id=' +
-            paramMap['cat_id'] ??
+            paramMap['cat_id'] +
+            '&sub_cat_id=' +
+            paramMap['sub_cat_id'] ??
         '';
 
     ///limit/$limit/offset/$offset
