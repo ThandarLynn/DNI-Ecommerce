@@ -18,7 +18,7 @@ import 'package:dni_ecommerce/viewobject/basket.dart';
 import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
 import 'package:dni_ecommerce/viewobject/transaction_header.dart';
 import 'package:dni_ecommerce/viewobject/holder/intent/checkout_status_intent_holder.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+// import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
 
 class CreditCardView extends StatefulWidget {
@@ -139,11 +139,11 @@ class CreditCardViewState extends State<CreditCardView> {
   String cardHolderName = '';
   String cvvCode = '';
   bool isCvvFocused = false;
-  CardFieldInputDetails cardData;
+  // CardFieldInputDetails cardData;
 
   @override
   void initState() {
-    Stripe.publishableKey = widget.publishKey;
+    // Stripe.publishableKey = widget.publishKey;
     super.initState();
   }
 
@@ -170,48 +170,48 @@ class CreditCardViewState extends State<CreditCardView> {
 
   @override
   Widget build(BuildContext context) {
-    dynamic stripeNow(String token) async {
-      if (widget.appValueHolder.standardShippingEnable == AppConst.ONE) {
-        widget.basketProvider.checkoutCalculationHelper.calculate(
-            basketList: widget.basketList,
-            couponDiscountString: widget.couponDiscount,
-            appValueHolder: widget.appValueHolder,
-            shippingPriceStringFormatting: '0.0');
-      } else if (widget.appValueHolder.zoneShippingEnable == AppConst.ONE) {
-        widget.basketProvider.checkoutCalculationHelper.calculate(
-            basketList: widget.basketList,
-            couponDiscountString: widget.couponDiscount,
-            appValueHolder: widget.appValueHolder,
-            shippingPriceStringFormatting: '0.0');
-      }
+    // dynamic stripeNow(String token) async {
+    //   if (widget.appValueHolder.standardShippingEnable == AppConst.ONE) {
+    //     widget.basketProvider.checkoutCalculationHelper.calculate(
+    //         basketList: widget.basketList,
+    //         couponDiscountString: widget.couponDiscount,
+    //         appValueHolder: widget.appValueHolder,
+    //         shippingPriceStringFormatting: '0.0');
+    //   } else if (widget.appValueHolder.zoneShippingEnable == AppConst.ONE) {
+    //     widget.basketProvider.checkoutCalculationHelper.calculate(
+    //         basketList: widget.basketList,
+    //         couponDiscountString: widget.couponDiscount,
+    //         appValueHolder: widget.appValueHolder,
+    //         shippingPriceStringFormatting: '0.0');
+    //   }
 
-      callTransactionSubmitApi(
-          context,
-          widget.basketProvider,
-          widget.userLoginProvider,
-          widget.transactionSubmitProvider,
-          // widget.shippingMethodProvider,
-          widget.basketList,
-          token,
-          widget.couponDiscount,
-          widget.memoText);
-    }
+    //   callTransactionSubmitApi(
+    //       context,
+    //       widget.basketProvider,
+    //       widget.userLoginProvider,
+    //       widget.transactionSubmitProvider,
+    //       // widget.shippingMethodProvider,
+    //       widget.basketList,
+    //       token,
+    //       widget.couponDiscount,
+    //       widget.memoText);
+    // }
 
     return AppWidgetWithAppBarWithNoProvider(
       appBarTitle: 'Credit Card',
       child: Column(
         children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(AppDimens.space16),
-            child: CardField(
-              autofocus: true,
-              onCardChanged: (CardFieldInputDetails card) async {
-                setState(() {
-                  cardData = card;
-                });
-              },
-            ),
-          ),
+          // Container(
+          //   padding: const EdgeInsets.all(AppDimens.space16),
+          //   child: CardField(
+          //     autofocus: true,
+          //     onCardChanged: (CardFieldInputDetails card) async {
+          //       setState(() {
+          //         cardData = card;
+          //       });
+          //     },
+          //   ),
+          // ),
           Container(
             margin: const EdgeInsets.only(
                 left: AppDimens.space12, right: AppDimens.space12),
@@ -220,16 +220,16 @@ class CreditCardViewState extends State<CreditCardView> {
               width: double.infinity,
               titleText: Utils.getString('credit_card__pay'),
               onPressed: () async {
-                if (cardData != null && cardData.complete) {
-                  await AppProgressDialog.showDialog(context);
-                  final PaymentMethod paymentMethod = await Stripe.instance
-                      .createPaymentMethod(const PaymentMethodParams.card());
-                  print(paymentMethod.id);
-                  await stripeNow(paymentMethod.id);
-                } else {
-                  callWarningDialog(
-                      context, Utils.getString('contact_us__fail'));
-                }
+                // if (cardData != null && cardData.complete) {
+                //   await AppProgressDialog.showDialog(context);
+                //   final PaymentMethod paymentMethod = await Stripe.instance
+                //       .createPaymentMethod(const PaymentMethodParams.card());
+                //   print(paymentMethod.id);
+                //   await stripeNow(paymentMethod.id);
+                // } else {
+                //   callWarningDialog(
+                //       context, Utils.getString('contact_us__fail'));
+                // }
               },
             ),
           ),

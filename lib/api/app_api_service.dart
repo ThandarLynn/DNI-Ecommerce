@@ -109,7 +109,7 @@ class AppApiService extends AppApi {
   /// Get User
   ///
   Future<AppResource<User>> getUser(String userId, String userToken) async {
-    final String url = '${AppUrl.app_user_url}';
+    const String url = '${AppUrl.app_user_url}';
 
     return await getServerCall<User, User>(User(), url, token: userToken);
   }
@@ -119,7 +119,7 @@ class AppApiService extends AppApi {
   ///
   Future<AppResource<List<Category>>> getCategoryList(
       int limit, int offset, Map<dynamic, dynamic> jsonMap) async {
-    final String url = '${AppUrl.app_category_url}';
+    const String url = '${AppUrl.app_category_url}';
 
     ///limit/$limit/offset/$offset
 
@@ -163,7 +163,7 @@ class AppApiService extends AppApi {
   ///
 
   Future<AppResource<List<Product>>> getBlogList(int limit, int offset) async {
-    final String url =
+    const String url =
         '${AppUrl.app_bloglist_url}'; //limit/$limit/offset/$offset
 
     return await getServerCall<Product, List<Product>>(Product(), url);
@@ -174,7 +174,7 @@ class AppApiService extends AppApi {
 
   Future<AppResource<List<TransactionHeader>>> getTransactionList(
       String userId, String userToken, int limit, int offset) async {
-    final String url = '${AppUrl.app_transactionList_url}';
+    const String url = '${AppUrl.app_transactionList_url}';
 
     ///user_id/$userId/limit/$limit/offset/$offset
 
@@ -204,7 +204,7 @@ class AppApiService extends AppApi {
   ///
   Future<AppResource<List<Product>>> getTopSellingProductList(
       int limit, int offset) async {
-    final String url = '${AppUrl.app_topselling_productList_url}';
+    const String url = '${AppUrl.app_topselling_productList_url}';
 
     return await getServerCall<Product, List<Product>>(Product(), url);
   }
@@ -214,7 +214,7 @@ class AppApiService extends AppApi {
   ///
   Future<AppResource<List<Product>>> getTopRatedProductList(
       int limit, int offset) async {
-    final String url = '${AppUrl.app_top_rated_productList_url}';
+    const String url = '${AppUrl.app_top_rated_productList_url}';
 
     return await getServerCall<Product, List<Product>>(Product(), url);
   }

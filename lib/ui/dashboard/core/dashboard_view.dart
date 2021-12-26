@@ -584,26 +584,26 @@ class _HomeViewState extends State<DashboardView>
                       }
                     },
                   ),
-                  // ListTile(
-                  //   leading: Icon(
-                  //     Icons.star_border,
-                  //     color: AppColors.mainColorWithWhite,
-                  //   ),
-                  //   title: Text(
-                  //     Utils.getString('home__menu_drawer_rate_this_app'),
-                  //     style: Theme.of(context).textTheme.bodyText2,
-                  //   ),
-                  //   onTap: () {
-                  //     // Navigator.pop(context);
-                  //     // if (Platform.isIOS) {
-                  //     //   Utils.launchAppStoreURL(
-                  //     //       iOSAppId: AppConfig.iOSAppStoreId,
-                  //     //       writeReview: true);
-                  //     // } else {
-                  //     //   Utils.launchURL();
-                  //     // }
-                  //   },
-                  // )
+                  ListTile(
+                    leading: Icon(
+                      Icons.star_border,
+                      color: AppColors.mainColorWithWhite,
+                    ),
+                    title: Text(
+                      Utils.getString('home__menu_drawer_rate_this_app'),
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      if (Platform.isIOS) {
+                        Utils.launchAppStoreURL(
+                            iOSAppId: AppConfig.iOSAppStoreId,
+                            writeReview: true);
+                      } else {
+                        Utils.launchURL();
+                      }
+                    },
+                  )
                 ]);
               },
             ),

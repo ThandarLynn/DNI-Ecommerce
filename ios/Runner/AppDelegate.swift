@@ -1,8 +1,8 @@
 import UIKit
 import Flutter
 import Firebase
-import Braintree
-import GoogleMaps
+// import Braintree
+// import GoogleMaps
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -20,7 +20,7 @@ import GoogleMaps
     GMSServices.provideAPIKey("AIzaSyATAyoY0jwNqHA281sFD9JkgBYaqgF6KHE")
     
     GeneratedPluginRegistrant.register(with: self)
-    BTAppSwitch.setReturnURLScheme("com.tdl.dni_ecommerce.braintree")
+    // BTAppSwitch.setReturnURLScheme("com.tdl.dni_ecommerce.braintree")
        
    if #available(iOS 10.0, *) {
      UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
@@ -30,18 +30,18 @@ import GoogleMaps
 
   override
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-    if url.scheme?.localizedCaseInsensitiveCompare("com.tdl.dni_ecommerce.braintree") == .orderedSame {
-        return BTAppSwitch.handleOpen(url, options: options)
-    }
+    // if url.scheme?.localizedCaseInsensitiveCompare("com.tdl.dni_ecommerce.braintree") == .orderedSame {
+    //     return BTAppSwitch.handleOpen(url, options: options)
+    // }
     return false
   }
 
 // If you support iOS 8, add the following method.
 override
 func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-    if url.scheme?.localizedCaseInsensitiveCompare("com.tdl.dni_ecommerce.braintree") == .orderedSame {
-        return BTAppSwitch.handleOpen(url, sourceApplication: sourceApplication)
-    }
+    // if url.scheme?.localizedCaseInsensitiveCompare("com.tdl.dni_ecommerce.braintree") == .orderedSame {
+    //     return BTAppSwitch.handleOpen(url, sourceApplication: sourceApplication)
+    // }
     return false
 }
   override func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

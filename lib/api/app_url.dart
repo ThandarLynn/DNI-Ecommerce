@@ -91,7 +91,7 @@ class AppUrl {
 
   static const String app_topselling_productList_url = 'products/tsproducts';
 
-  static const String app_top_rated_productList_url = 'products/lproducts';
+  static const String app_top_rated_productList_url = 'products/toprated';
 
   static const String app_gallery_url = 'imageGallery';
 

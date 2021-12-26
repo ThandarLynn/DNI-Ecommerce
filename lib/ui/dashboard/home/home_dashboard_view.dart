@@ -248,7 +248,7 @@ class __TopSellingProductHorizontalListWidgetState
                       Navigator.pushNamed(context, RoutePaths.filterProductList,
                           arguments: ProductListIntentHolder(
                               appBarTitle: Utils.getString(
-                                  'dashboard__discount_product'),
+                                  'dashboard__top_selling_product'),
                               productParameterHolder: ProductParameterHolder()
                                   .getDiscountParameterHolder()));
                     },
@@ -405,7 +405,7 @@ class __TopRatedProductHorizontalListWidgetState
                       Navigator.pushNamed(context, RoutePaths.filterProductList,
                           arguments: ProductListIntentHolder(
                               appBarTitle: Utils.getString(
-                                  'dashboard__discount_product'),
+                                  'dashboard__top_rated_product'),
                               productParameterHolder: ProductParameterHolder()
                                   .getDiscountParameterHolder()));
                     },

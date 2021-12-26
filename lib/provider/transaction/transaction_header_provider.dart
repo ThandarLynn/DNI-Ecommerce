@@ -164,9 +164,10 @@ class TransactionHeaderProvider extends AppProvider {
     final List<String> attributePriceStr = <String>[];
     double totalItemCount = 0.0;
     String transactionId = '';
-    transactionId += basketList[0].id;
+
     for (Basket basket in basketList) {
       totalItemCount += double.parse(basket.qty);
+      transactionId += basket.id;
     }
 
     final List<Map<String, dynamic>> detailJson = <Map<String, dynamic>>[];

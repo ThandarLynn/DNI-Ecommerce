@@ -38,12 +38,12 @@ dependencies:
     path: packages/flutter_map  
   optimized_cached_image: 
     path: packages/optimized_cached_image  
-  multi_image_picker: 
-    path: packages/multi_image_picker
+  # multi_image_picker: 
+  #   path: packages/multi_image_picker
   easy_localization: 
     path: packages/easy_localization
-  latlong:
-    path: packages/latlong
+  # latlong:
+  #   path: packages/latlong
   flutter_widget_from_html: 0.6.0-rc.2021031201 
   sembast: 3.0.0+4
   path_provider: 2.0.1
@@ -51,40 +51,39 @@ dependencies:
   shimmer: 1.1.2
   url_launcher: 6.0.2
   carousel_slider: 3.0.0
-  firebase_core: 1.0.1
-  firebase_messaging: 9.0.0
-  firebase_database: 6.1.0
+  # firebase_core: 1.0.1
+  # firebase_messaging: 9.0.0
+  # firebase_database: 6.1.0
   firebase_auth: 1.0.1
-  # flutter_native_admob: 2.1.0+3
-  google_mobile_ads: 0.12.2+1
-  google_sign_in: 5.0.0
-  flutter_facebook_login: 3.0.0
-  flutter_webview_plugin: 0.3.11
+  # google_mobile_ads: 0.12.2+1
+  # google_sign_in: 5.0.0
+  # flutter_facebook_login: 3.0.0
+  # flutter_webview_plugin: 0.3.11
   photo_view: 0.10.3
   progress_dialog: 1.2.4
-  braintree_payment: 1.2.2
+  # braintree_payment: 1.2.2
   launch_review: 2.0.0
   package_info: 0.4.3
   flutter_icons: 1.1.0
-  flutter_stripe: 1.2.0
-  flutter_credit_card: 0.1.4
+  # flutter_stripe: 1.2.0
+  # flutter_credit_card: 0.1.4
   fluttertoast: 7.1.6
-  permission_handler: 6.1.0
-  permission_handler_platform_interface: 3.1.1
-  geocoder: 0.2.1
-  geolocator: 7.0.1
+  # permission_handler: 6.1.0
+  # permission_handler_platform_interface: 3.1.1
+  # geocoder: 0.2.1
+  # geolocator: 7.0.1
   share: 2.0.4
-  the_apple_sign_in: 1.1.1
-  razorpay_flutter: 1.2.3
-  group_radio_button: 1.0.1
-  flutter_native_image: 0.0.5+3
-  flutter_paystack: 1.0.5
-  firebase_dynamic_links: 0.5.0+11
-  in_app_purchase: 1.0.5
-  camera: 0.8.0
-  flutter_linkify: 4.0.2
-  google_maps_flutter: 2.0.4
-  flutter_datetime_picker: 1.5.0
+  # the_apple_sign_in: 1.1.1
+  # razorpay_flutter: 1.2.3
+  # group_radio_button: 1.0.1
+  # flutter_native_image: 0.0.5+3
+  # flutter_paystack: 1.0.5
+  # firebase_dynamic_links: 0.5.0+11
+  # in_app_purchase: 1.0.5
+  # camera: 0.8.0
+  # flutter_linkify: 4.0.2
+  # google_maps_flutter: 2.0.4
+  # flutter_datetime_picker: 1.5.0
   
 dev_dependencies:
   flutter_test:

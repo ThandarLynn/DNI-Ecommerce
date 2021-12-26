@@ -14,18 +14,18 @@ import 'package:flutter/material.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
-import 'package:the_apple_sign_in/the_apple_sign_in.dart';
+// import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Utils {
   Utils._();
 
-  static int isAppleSignInAvailable = 0;
-  static Future<void> checkAppleSignInAvailable() async {
-    final bool _isAvailable = await TheAppleSignIn.isAvailable();
+  // static int isAppleSignInAvailable = 0;
+  // static Future<void> checkAppleSignInAvailable() async {
+  //   // final bool _isAvailable = await TheAppleSignIn.isAvailable();
 
-    isAppleSignInAvailable = _isAvailable ? 1 : 2;
-  }
+  //   isAppleSignInAvailable = _isAvailable ? 1 : 2;
+  // }
 
   static dynamic launchAppStoreURL(
       {String iOSAppId, bool writeReview = false}) async {

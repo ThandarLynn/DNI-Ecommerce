@@ -93,7 +93,10 @@ class TransactionDetailProvider extends AppProvider {
     List<String> attributeNameStr = <String>[];
     final List<String> attributePriceStr = <String>[];
     String transactionId = '';
-    transactionId += basketList[0].id;
+
+    for (Basket basket in basketList) {
+      transactionId += basket.id;
+    }
 
     for (int i = 0; i < basketList.length; i++) {
       for (BasketSelectedAttribute basketSelectedAttribute

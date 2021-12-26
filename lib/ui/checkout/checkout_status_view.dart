@@ -20,7 +20,9 @@ class CheckoutStatusView extends StatefulWidget {
   final TransactionHeader transactionHeader;
 
   @override
-  _CheckoutStatusViewState createState() => _CheckoutStatusViewState();
+  _CheckoutStatusViewState createState() {
+    return _CheckoutStatusViewState();
+  }
 }
 
 class _CheckoutStatusViewState extends State<CheckoutStatusView> {
