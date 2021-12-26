@@ -1076,6 +1076,11 @@ class __AddToBasketAndBuyButtonWidgetState
           '${widget.productDetail.id}$colorId ${basketSelectedAttribute.getSelectedAttributeIdByHeaderId()}';
       // Check All Attribute is selected
 
+      widget.productDetail.discountAmount =
+          ((double.parse(widget.productDetail.originalPrice) -
+                      double.parse(widget.productDetail.unitPrice)) *
+                  double.parse(qty ?? widget.productDetail.quantity))
+              .toString();
       basket = Basket(
           id: id,
           productId: widget.productDetail.id,

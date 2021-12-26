@@ -46,6 +46,7 @@ class BasketProvider extends AppProvider {
 
   final CheckoutCalculationHelper checkoutCalculationHelper =
       CheckoutCalculationHelper();
+  String selectedDays = 'Any';
 
   @override
   void dispose() {

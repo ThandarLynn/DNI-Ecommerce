@@ -1,0 +1,54 @@
+[
+	{
+		"id": "cityefff014d0d465701cbd93f7cd69e4a8d",
+		"country_id": "country6b63e45a6d62e4f58531474036545e1f",
+		"name": "Bagan",
+		"status": "1",
+		"added_date": "2019-09-09 20:53:41",
+		"updated_date": "2019-09-09 20:53:41",
+		"added_user_id": "c4ca4238a0b923820dcc509a6f75849b",
+		"updated_user_id": "",
+		"updated_flag": "0",
+		"added_date_str": "2 year ago",
+		"rating_status": "0"
+	},
+	{
+		"id": "city43367b76f51ca0c307d9e50cec1c8cf4",
+		"country_id": "country6b63e45a6d62e4f58531474036545e1f",
+		"name": "Mandalay",
+		"status": "1",
+		"added_date": "2019-09-09 20:51:49",
+		"updated_date": "2019-09-09 20:51:49",
+		"added_user_id": "c4ca4238a0b923820dcc509a6f75849b",
+		"updated_user_id": "",
+		"updated_flag": "0",
+		"added_date_str": "2 year ago",
+		"rating_status": "0"
+	},
+	{
+		"id": "city01e54c0d5292875918c0981e42f41589",
+		"country_id": "country6b63e45a6d62e4f58531474036545e1f",
+		"name": "Taungyi",
+		"status": "1",
+		"added_date": "2019-09-09 20:51:06",
+		"updated_date": "2019-09-09 20:51:06",
+		"added_user_id": "c4ca4238a0b923820dcc509a6f75849b",
+		"updated_user_id": "",
+		"updated_flag": "0",
+		"added_date_str": "2 year ago",
+		"rating_status": "0"
+	},
+	{
+		"id": "citye5cc8997c4850a890b9f8f8f9301c6ad",
+		"country_id": "country6b63e45a6d62e4f58531474036545e1f",
+		"name": "Yangon",
+		"status": "1",
+		"added_date": "2019-09-09 20:50:39",
+		"updated_date": "2019-09-09 20:50:39",
+		"added_user_id": "c4ca4238a0b923820dcc509a6f75849b",
+		"updated_user_id": "",
+		"updated_flag": "0",
+		"added_date_str": "2 year ago",
+		"rating_status": "0"
+	}
+]

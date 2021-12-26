@@ -5,6 +5,7 @@ import 'package:dni_ecommerce/db/cateogry_dao.dart';
 import 'package:dni_ecommerce/db/gallery_dao.dart';
 import 'package:dni_ecommerce/db/product_dao.dart';
 import 'package:dni_ecommerce/db/product_map_dao.dart';
+import 'package:dni_ecommerce/db/shipping_method_dao.dart';
 import 'package:dni_ecommerce/db/sub_category_dao.dart';
 import 'package:dni_ecommerce/db/top_rated_product_dao.dart';
 import 'package:dni_ecommerce/db/top_selling_product_dao.dart';
@@ -17,6 +18,7 @@ import 'package:dni_ecommerce/repository/history_repsitory.dart';
 import 'package:dni_ecommerce/repository/product_repository.dart';
 import 'package:dni_ecommerce/repository/shipping_city_repository.dart';
 import 'package:dni_ecommerce/repository/shipping_country_repository.dart';
+import 'package:dni_ecommerce/repository/shipping_method_repository.dart';
 import 'package:dni_ecommerce/repository/sub_category_repository.dart';
 import 'package:dni_ecommerce/repository/tansaction_detail_repository.dart';
 import 'package:dni_ecommerce/repository/token_repository.dart';
@@ -57,6 +59,7 @@ List<SingleChildWidget> independentProviders = <SingleChildWidget>[
   Provider<UserDao>.value(value: UserDao.instance),
   Provider<ShippingCountryDao>.value(value: ShippingCountryDao.instance),
   Provider<ShippingCityDao>.value(value: ShippingCityDao.instance),
+  Provider<ShippingMethodDao>.value(value: ShippingMethodDao.instance),
   Provider<HistoryDao>.value(value: HistoryDao.instance),
   Provider<GalleryDao>.value(value: GalleryDao.instance),
   Provider<BasketDao>.value(value: BasketDao.instance),
@@ -151,6 +154,12 @@ List<SingleChildWidget> _dependentProviders = <SingleChildWidget>[
             ShippingCityRepository shippingCityRepository) =>
         ShippingCityRepository(
             shippingCityDao: shippingCityDao, appApiService: appApiService),
+  ),
+  ProxyProvider2<AppApiService, ShippingMethodDao, ShippingMethodRepository>(
+    update: (_, AppApiService appApiService, ShippingMethodDao shippingCityDao,
+            ShippingMethodRepository shippingCityRepository) =>
+        ShippingMethodRepository(
+            shippingMethodDao: shippingCityDao, appApiService: appApiService),
   ),
   ProxyProvider<AppApiService, CouponDiscountRepository>(
     update: (_, AppApiService appApiService,

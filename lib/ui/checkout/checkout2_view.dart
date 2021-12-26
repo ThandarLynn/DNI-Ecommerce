@@ -1,23 +1,18 @@
-// import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/config/app_colors.dart';
 import 'package:dni_ecommerce/constant/app_dimens.dart';
 import 'package:dni_ecommerce/provider/basket/basket_provider.dart';
 import 'package:dni_ecommerce/provider/coupon_discount/coupon_discount_provider.dart';
+import 'package:dni_ecommerce/provider/shipping_method/shipping_method_provider.dart';
 import 'package:dni_ecommerce/provider/user/user_provider.dart';
 import 'package:dni_ecommerce/repository/basket_repository.dart';
 import 'package:dni_ecommerce/repository/coupon_discount_repository.dart';
+import 'package:dni_ecommerce/repository/shipping_method_repository.dart';
 import 'package:dni_ecommerce/repository/user_repository.dart';
-// import 'package:dni_ecommerce/ui/common/dialog/error_dialog.dart';
-// import 'package:dni_ecommerce/ui/common/dialog/success_dialog.dart';
-// import 'package:dni_ecommerce/ui/common/dialog/warning_dialog_view.dart';
-// import 'package:dni_ecommerce/ui/common/app_textfield_widget.dart';
+import 'package:dni_ecommerce/ui/checkout/shipping_method_item_view.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:dni_ecommerce/viewobject/basket.dart';
 import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
-// import 'package:dni_ecommerce/viewobject/coupon_discount.dart';
-// import 'package:dni_ecommerce/viewobject/holder/intent/coupon_discount_holder.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 
 class Checkout2View extends StatefulWidget {
@@ -47,17 +42,20 @@ class _Checkout2ViewState extends State<Checkout2View> {
   AppValueHolder valueHolder;
   CouponDiscountProvider couponDiscountProvider;
   UserProvider userProvider;
+  ShippingMethodRepository shippingMethodRepository;
+  ShippingMethodProvider shippingMethodProvider;
 
   @override
   Widget build(BuildContext context) {
     couponDiscountRepo = Provider.of<CouponDiscountRepository>(context);
     basketRepository = Provider.of<BasketRepository>(context);
-
+    shippingMethodProvider = Provider.of<ShippingMethodProvider>(context);
+    shippingMethodRepository = Provider.of<ShippingMethodRepository>(context);
     valueHolder = Provider.of<AppValueHolder>(context);
     userRepository = Provider.of<UserRepository>(context);
 
-    return Consumer<BasketProvider>(builder: (BuildContext context,
-        BasketProvider shippingMethodProvider, Widget child) {
+    return Consumer<ShippingMethodProvider>(builder: (BuildContext context,
+        ShippingMethodProvider shippingMethodProvider, Widget child) {
       couponDiscountProvider = Provider.of<CouponDiscountProvider>(context,
           listen: false); // Listen : False is important.
       final BasketProvider basketProvider =
@@ -67,6 +65,89 @@ class _Checkout2ViewState extends State<Checkout2View> {
       return SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            Container(
+              color: AppColors.backgroundColor,
+              padding: const EdgeInsets.only(
+                left: AppDimens.space12,
+                right: AppDimens.space12,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const SizedBox(
+                    height: AppDimens.space16,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(
+                        left: AppDimens.space16, right: AppDimens.space16),
+                    child: Text(
+                      Utils.getString('checkout2__shipping_method'),
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppDimens.space16,
+                  ),
+                  const Divider(
+                    height: 2,
+                  ),
+                  const SizedBox(
+                    height: AppDimens.space16,
+                  ),
+                  Container(
+                    height: AppDimens.space140,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: shippingMethodProvider
+                            .shippingMethodList.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ShippingMethodItemView(
+                            shippingMethod: shippingMethodProvider
+                                .shippingMethodList.data[index],
+                            shippingMethodProvider: shippingMethodProvider,
+                            onShippingMethodTap: () {
+                              setState(() {
+                                shippingMethodProvider.selectedShippingMethod =
+                                    shippingMethodProvider
+                                        .shippingMethodList.data[index];
+                                shippingMethodProvider.selectedPrice =
+                                    shippingMethodProvider
+                                        .shippingMethodList.data[index].price;
+                                basketProvider.selectedDays =
+                                    shippingMethodProvider
+                                        .shippingMethodList.data[index].days;
+                                shippingMethodProvider.selectedShippingName =
+                                    shippingMethodProvider
+                                        .shippingMethodList.data[index].name;
+                              });
+                              basketProvider.checkoutCalculationHelper
+                                  .calculate(
+                                      appValueHolder: valueHolder,
+                                      basketList: widget.basketList,
+                                      couponDiscountString:
+                                          couponDiscountProvider
+                                                  .couponDiscount ??
+                                              '-',
+                                      shippingPriceStringFormatting:
+                                          shippingMethodProvider
+                                                      .selectedPrice ==
+                                                  '0.0'
+                                              ? shippingMethodProvider
+                                                  .defaultShippingPrice
+                                              : shippingMethodProvider
+                                                      .selectedPrice ??
+                                                  '0.0');
+                            },
+                          );
+                        }),
+                  ),
+                  const SizedBox(
+                    height: AppDimens.space24,
+                  ),
+                ],
+              ),
+            ),
+
             // Container(
             //   color: AppColors.backgroundColor,
             //   margin: const EdgeInsets.only(top: AppDimens.space8),
@@ -217,11 +298,11 @@ class _Checkout2ViewState extends State<Checkout2View> {
             //   ),
             // ),
             _OrderSummaryWidget(
-              appValueHolder: valueHolder,
-              basketList: widget.basketList,
-              couponDiscount: couponDiscountProvider.couponDiscount ?? '-',
-              basketProvider: basketProvider,
-            ),
+                appValueHolder: valueHolder,
+                basketList: widget.basketList,
+                couponDiscount: couponDiscountProvider.couponDiscount ?? '-',
+                basketProvider: basketProvider,
+                shippingMethodProvider: shippingMethodProvider),
           ],
         ),
       );
@@ -236,12 +317,14 @@ class _OrderSummaryWidget extends StatelessWidget {
     @required this.couponDiscount,
     @required this.appValueHolder,
     @required this.basketProvider,
+    @required this.shippingMethodProvider,
   }) : super(key: key);
 
   final List<Basket> basketList;
   final String couponDiscount;
   final AppValueHolder appValueHolder;
   final BasketProvider basketProvider;
+  final ShippingMethodProvider shippingMethodProvider;
   @override
   Widget build(BuildContext context) {
     // String currencySymbol;
@@ -299,12 +382,12 @@ class _OrderSummaryWidget extends StatelessWidget {
                   '\$ ${basketProvider.checkoutCalculationHelper.totalDiscountFormattedString}',
               title: '${Utils.getString('checkout__discount')} :',
             ),
-            _OrderSummeryTextWidget(
-              transationInfoText: couponDiscount == '-'
-                  ? '-'
-                  : '\$ ${basketProvider.checkoutCalculationHelper.couponDiscountFormattedString}',
-              title: '${Utils.getString('checkout__coupon_discount')} :',
-            ),
+            // _OrderSummeryTextWidget(
+            //   transationInfoText: couponDiscount == '-'
+            //       ? '-'
+            //       : '\$ ${basketProvider.checkoutCalculationHelper.couponDiscountFormattedString}',
+            //   title: '${Utils.getString('checkout__coupon_discount')} :',
+            // ),
             _spacingWidget,
             _dividerWidget,
             _OrderSummeryTextWidget(
@@ -352,6 +435,14 @@ class _OrderSummaryWidget extends StatelessWidget {
                   '\$ ${basketProvider.checkoutCalculationHelper.totalPriceFormattedString}',
               title: '${Utils.getString('transaction_detail__total')} :',
             ),
+            _spacingWidget,
+            _dividerWidget,
+            _OrderSummeryTextWidget(
+              transationInfoText: '${basketProvider.selectedDays}  ' +
+                  Utils.getString('checkout2__days'),
+              title: '${Utils.getString('checkout2__shipping_method')} :',
+            ),
+            _spacingWidget,
             _spacingWidget,
           ],
         ));

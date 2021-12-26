@@ -234,7 +234,7 @@
   "checkout1__billing_address": "BILLING ADDRESS",
   "checkout1__same_billing_address": "Same With Shipping Address",
   "checkout1__contact_info": "CONTACT INFO",
-  "checkout2__shipping_method": "Shipping Method",
+  "checkout2__shipping_method": "Shipping Policy",
   "checkout2__days": "Days",
   "checkout3__payment_method_offline": "OFFLINE PAYMENT METHOD",
   "checkout3__payment_method_online": "ONLINE PAYMENT METHOD",

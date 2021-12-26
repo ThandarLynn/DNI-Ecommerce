@@ -6,6 +6,7 @@ import 'package:dni_ecommerce/viewobject/common/app_object.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:path/path.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'common/app_resource.dart';
 import 'common/app_status.dart';
 
@@ -35,34 +36,52 @@ abstract class AppApi {
     }
   }
 
-  // Future<AppResource<R>> getJsonServerCall<T extends AppObject<dynamic>, R>(
-  //     T obj, String url,
-  //     {String token}) async {
-  //   final Client client = http.Client();
-  //   try {
-  //     final dynamic jsonText =
-  //         await rootBundle.loadString('assets/json/product_detail.json');
+  Future<AppResource<R>> getJsonServerCall<T extends AppObject<dynamic>, R>(
+      T obj, String url,
+      {String token}) async {
+    final Client client = http.Client();
+    try {
+      final dynamic jsonText = await rootBundle.loadString(url);
 
-  //     // if (appApiService.isSuccessful()) {
-  //     final dynamic hashMap = json.decode(jsonText);
+      final dynamic hashMap = json.decode(jsonText);
 
-  //     if (!(hashMap is Map)) {
-  //       final List<T> tList = <T>[];
-  //       hashMap.forEach((dynamic data) {
-  //         tList.add(obj.fromMap(data as dynamic));
-  //       });
-  //       return AppResource<R>(AppStatus.SUCCESS, '', tList ?? R);
-  //     } else {
-  //       return AppResource<R>(AppStatus.SUCCESS, '', obj.fromMap(hashMap));
-  //     }
-  //     // } else {
-  //     //   return AppResource<R>(
-  //     //       AppStatus.ERROR, appApiService.errorMessage, null);
-  //     // }
-  //   } finally {
-  //     client.close();
-  //   }
-  // }
+      if (!(hashMap is Map)) {
+        // final List<T> tList = <T>[];
+        // hashMap.forEach((dynamic data) {
+        //   tList.add(obj.fromMap(data as dynamic));
+        // });
+        return AppResource<R>(
+            AppStatus.SUCCESS, '', obj.fromMapList(hashMap) ?? R);
+      } else {
+        return AppResource<R>(AppStatus.SUCCESS, '', obj.fromMap(hashMap));
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  Future<AppResource<R>> postJsonData<T extends AppObject<dynamic>, R>(
+      T obj, String url, Map<dynamic, dynamic> jsonMap,
+      {String token}) async {
+    final Client client = http.Client();
+    try {
+      final dynamic jsonText = await rootBundle.loadString(url);
+
+      final dynamic hashMap = json.decode(jsonText);
+
+      if (!(hashMap is Map)) {
+        final List<T> tList = <T>[];
+        hashMap.forEach((dynamic data) {
+          tList.add(obj.fromMap(data));
+        });
+        return AppResource<R>(AppStatus.SUCCESS, '', tList ?? R);
+      } else {
+        return AppResource<R>(AppStatus.SUCCESS, '', obj.fromMap(hashMap));
+      }
+    } finally {
+      client.close();
+    }
+  }
 
   Future<AppResource<R>> getServerCall<T extends AppObject<dynamic>, R>(
       T obj, String url,

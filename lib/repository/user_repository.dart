@@ -40,18 +40,6 @@ class UserRepository extends AppRepository {
     return _userDao.delete(user);
   }
 
-  // Future<dynamic> insertUserLogin(UserLogin user) async {
-  //   return _userLoginDao.insert(_userLoginPrimaryKey, user);
-  // }
-
-  // Future<dynamic> updateUserLogin(UserLogin user) async {
-  //   return _userLoginDao.update(user);
-  // }
-
-  // Future<dynamic> deleteUserLogin(UserLogin user) async {
-  //   return _userLoginDao.delete(user);
-  // }
-
   Future<AppResource<User>> postUserRegister(Map<dynamic, dynamic> jsonMap,
       bool isConnectedToInternet, AppStatus status,
       {bool isLoadFromServer = true}) async {
@@ -88,13 +76,13 @@ class UserRepository extends AppRepository {
     }
   }
 
-  // Future<dynamic> getUserLogin(String loginUserId,
-  //     StreamController<dynamic> userLoginStream, ApiStatus status) async {
-  //   final Finder finder = Finder(filter: Filter.equals('id', loginUserId));
-
-  //   userLoginStream.sink
-  //       .add(await _userLoginDao.getOne(finder: finder, status: status));
-  // }
+  Future<dynamic> updateUserDB(
+      User user, StreamController<dynamic> userStream, AppStatus status) async {
+    final Finder finder =
+        Finder(filter: Filter.equals(_userPrimaryKey, user.userId));
+    await _userDao.insert(_userPrimaryKey, user);
+    userStream.sink.add(await _userDao.getOne(finder: finder, status: status));
+  }
 
   Future<dynamic> getUserFromDB(String loginUserId,
       StreamController<dynamic> userStream, AppStatus status) async {
@@ -103,48 +91,6 @@ class UserRepository extends AppRepository {
 
     userStream.sink.add(await _userDao.getOne(finder: finder, status: status));
   }
-
-  // Future<AppResource<User>> postUserEmailVerify(Map<dynamic, dynamic> jsonMap,
-  //     bool isConnectedToInternet, AppStatus status,
-  //     {bool isLoadFromServer = true}) async {
-  //   final AppResource<User> _resource =
-  //       await _appApiService.postUserEmailVerify(jsonMap);
-  //   if (_resource.status == AppStatus.SUCCESS) {
-  //     // await _userLoginDao.deleteAll();
-  //     await insert(_resource.data);
-  //     // final String userId = _resource.data.userId;
-  //     // final UserLogin userLogin =
-  //     //     UserLogin(id: userId, login: true, user: _resource.data);
-  //     // await insertUserLogin(userLogin);
-  //     return _resource;
-  //   } else {
-  //     final Completer<AppResource<User>> completer =
-  //         Completer<AppResource<User>>();
-  //     completer.complete(_resource);
-  //     return completer.future;
-  //   }
-  // }
-
-  // Future<AppResource<User>> postImageUpload(String userId, String platformName,
-  //     File imageFile, bool isConnectedToInternet, AppStatus status,
-  //     {bool isLoadFromServer = true}) async {
-  //   final AppResource<User> _resource =
-  //       await _appApiService.postGalleryUpload(userId, platformName, imageFile);
-  //   if (_resource.status == AppStatus.SUCCESS) {
-  //     // await _userLoginDao.deleteAll();
-  //     await insert(_resource.data);
-  //     // final String userId = _resource.data.userId;
-  //     // final UserLogin userLogin =
-  //     //     UserLogin(id: userId, login: true, user: _resource.data);
-  //     // await insertUserLogin(userLogin);
-  //     return _resource;
-  //   } else {
-  //     final Completer<AppResource<User>> completer =
-  //         Completer<AppResource<User>>();
-  //     completer.complete(_resource);
-  //     return completer.future;
-  //   }
-  // }
 
   Future<AppResource<ApiStatus>> postForgotPassword(
       Map<dynamic, dynamic> jsonMap,
@@ -201,90 +147,6 @@ class UserRepository extends AppRepository {
       return completer.future;
     }
   }
-
-  // Future<AppResource<User>> postPhoneLogin(Map<dynamic, dynamic> jsonMap,
-  //     bool isConnectedToInternet, ApiStatus status,
-  //     {bool isLoadFromServer = true}) async {
-  //   final AppResource<User> _resource =
-  //       await _appApiService.postPhoneLogin(jsonMap);
-  //   if (_resource.status == AppStatus.SUCCESS) {
-  //     await _userLoginDao.deleteAll();
-  //     await insert(_resource.data);
-  //     final String userId = _resource.data.userId;
-  //     final UserLogin userLogin =
-  //         UserLogin(id: userId, login: true, user: _resource.data);
-  //     await insertUserLogin(userLogin);
-  //     return _resource;
-  //   } else {
-  //     final Completer<AppResource<User>> completer =
-  //         Completer<AppResource<User>>();
-  //     completer.complete(_resource);
-  //     return completer.future;
-  //   }
-  // }
-
-  // Future<AppResource<User>> postFBLogin(Map<dynamic, dynamic> jsonMap,
-  //     bool isConnectedToInternet, ApiStatus status,
-  //     {bool isLoadFromServer = true}) async {
-  //   final AppResource<User> _resource =
-  //       await _appApiService.postFBLogin(jsonMap);
-  //   if (_resource.status == AppStatus.SUCCESS) {
-  //     await _userLoginDao.deleteAll();
-  //     await insert(_resource.data);
-  //     final String userId = _resource.data.userId;
-  //     final UserLogin userLogin =
-  //         UserLogin(id: userId, login: true, user: _resource.data);
-  //     await insertUserLogin(userLogin);
-  //     return _resource;
-  //   } else {
-  //     final Completer<AppResource<User>> completer =
-  //         Completer<AppResource<User>>();
-  //     completer.complete(_resource);
-  //     return completer.future;
-  //   }
-  // }
-
-  // Future<AppResource<User>> postGoogleLogin(Map<dynamic, dynamic> jsonMap,
-  //     bool isConnectedToInternet, ApiStatus status,
-  //     {bool isLoadFromServer = true}) async {
-  //   final AppResource<User> _resource =
-  //       await _appApiService.postGoogleLogin(jsonMap);
-  //   if (_resource.status == AppStatus.SUCCESS) {
-  //     await _userLoginDao.deleteAll();
-  //     await insert(_resource.data);
-  //     final String userId = _resource.data.userId;
-  //     final UserLogin userLogin =
-  //         UserLogin(id: userId, login: true, user: _resource.data);
-  //     await insertUserLogin(userLogin);
-  //     return _resource;
-  //   } else {
-  //     final Completer<AppResource<User>> completer =
-  //         Completer<AppResource<User>>();
-  //     completer.complete(_resource);
-  //     return completer.future;
-  //   }
-  // }
-
-  // Future<AppResource<User>> postAppleLogin(Map<dynamic, dynamic> jsonMap,
-  //     bool isConnectedToInternet, ApiStatus status,
-  //     {bool isLoadFromServer = true}) async {
-  //   final AppResource<User> _resource =
-  //       await _appApiService.postAppleLogin(jsonMap);
-  //   if (_resource.status == AppStatus.SUCCESS) {
-  //     await _userLoginDao.deleteAll();
-  //     await insert(_resource.data);
-  //     final String userId = _resource.data.userId;
-  //     final UserLogin userLogin =
-  //         UserLogin(id: userId, login: true, user: _resource.data);
-  //     await insertUserLogin(userLogin);
-  //     return _resource;
-  //   } else {
-  //     final Completer<AppResource<User>> completer =
-  //         Completer<AppResource<User>>();
-  //     completer.complete(_resource);
-  //     return completer.future;
-  //   }
-  // }
 
   Future<AppResource<ApiStatus>> postResendCode(Map<dynamic, dynamic> jsonMap,
       bool isConnectedToInternet, AppStatus status,

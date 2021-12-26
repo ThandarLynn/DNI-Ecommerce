@@ -129,6 +129,9 @@ flutter:
    - assets/images/delivery_car_img.png
    - assets/images/trending.png
    - assets/images/user_default_photo.png
+   - assets/json/shipping_country.json
+   - assets/json/shipping_city.json
+   - assets/json/shipping_method.json
    
 
   # An image asset can refer to one or more resolution-specific "variants", see

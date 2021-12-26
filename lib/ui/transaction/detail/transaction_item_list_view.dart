@@ -265,13 +265,13 @@ class _TransactionNoWidget extends StatelessWidget {
                   : '\$ ${Utils.getPriceFormat(transaction.discountAmount)}',
               title: '${Utils.getString('transaction_detail__discount')} :',
             ),
-            _TransactionNoTextWidget(
-              transationInfoText: transaction.cuponDiscountAmount == '0'
-                  ? '-'
-                  : '\$ ${Utils.getPriceFormat(transaction.cuponDiscountAmount)}',
-              title:
-                  '${Utils.getString('transaction_detail__coupon_discount')} :',
-            ),
+            // _TransactionNoTextWidget(
+            //   transationInfoText: transaction.cuponDiscountAmount == '0'
+            //       ? '-'
+            //       : '\$ ${Utils.getPriceFormat(transaction.cuponDiscountAmount)}',
+            //   title:
+            //       '${Utils.getString('transaction_detail__coupon_discount')} :',
+            // ),
             const SizedBox(
               height: AppDimens.space12,
             ),
@@ -287,18 +287,18 @@ class _TransactionNoWidget extends StatelessWidget {
               title:
                   '${Utils.getString('transaction_detail__tax')}(${valueHolder.overAllTaxLabel} %) :',
             ),
-            _TransactionNoTextWidget(
-              transationInfoText:
-                  '\$ ${Utils.getPriceFormat(transaction.shippingMethodAmount)}',
-              title:
-                  '${Utils.getString('transaction_detail__shipping_cost')} :',
-            ),
-            _TransactionNoTextWidget(
-              transationInfoText:
-                  '\$ ${Utils.getPriceFormat(transaction.shippingAmount)}',
-              title:
-                  '${Utils.getString('transaction_detail__shipping_tax')}(${valueHolder.shippingTaxLabel} %) :',
-            ),
+            // _TransactionNoTextWidget(
+            //   transationInfoText:
+            //       '\$ ${Utils.getPriceFormat(transaction.shippingMethodAmount)}',
+            //   title:
+            //       '${Utils.getString('transaction_detail__shipping_cost')} :',
+            // ),
+            // _TransactionNoTextWidget(
+            //   transationInfoText:
+            //       '\$ ${Utils.getPriceFormat(transaction.shippingAmount)}',
+            //   title:
+            //       '${Utils.getString('transaction_detail__shipping_tax')}(${valueHolder.shippingTaxLabel} %) :',
+            // ),
             const SizedBox(
               height: AppDimens.space12,
             ),
@@ -307,6 +307,15 @@ class _TransactionNoWidget extends StatelessWidget {
               transationInfoText:
                   '\$ ${Utils.getPriceFormat(transaction.balanceAmount)}',
               title: '${Utils.getString('transaction_detail__total')} :',
+            ),
+            const SizedBox(
+              height: AppDimens.space12,
+            ),
+            _dividerWidget,
+            _TransactionNoTextWidget(
+              transationInfoText: '${transaction.selectedDays}  ' +
+                  Utils.getString('checkout2__days'),
+              title: '${Utils.getString('checkout2__shipping_method')} :',
             ),
             const SizedBox(
               height: AppDimens.space12,
@@ -404,10 +413,10 @@ class _AddressWidget extends StatelessWidget {
               ),
             ),
             _dividerWidget,
-            _TextWidgetForAddress(
-              addressInfoText: transaction.shippingPhone,
-              title: Utils.getString('transaction_detail__phone'),
-            ),
+            // _TextWidgetForAddress(
+            //   addressInfoText: transaction.shippingPhone,
+            //   title: Utils.getString('transaction_detail__phone'),
+            // ),
             _TextWidgetForAddress(
               addressInfoText: transaction.shippingEmail,
               title: Utils.getString('transaction_detail__email'),
@@ -434,14 +443,14 @@ class _AddressWidget extends StatelessWidget {
               ),
             ),
             _dividerWidget,
-            _TextWidgetForAddress(
-              addressInfoText: transaction.billingPhone,
-              title: Utils.getString('transaction_detail__phone'),
-            ),
-            _TextWidgetForAddress(
-              addressInfoText: transaction.billingEmail,
-              title: Utils.getString('transaction_detail__email'),
-            ),
+            // _TextWidgetForAddress(
+            //   addressInfoText: transaction.billingPhone,
+            //   title: Utils.getString('transaction_detail__phone'),
+            // ),
+            // _TextWidgetForAddress(
+            //   addressInfoText: transaction.billingEmail,
+            //   title: Utils.getString('transaction_detail__email'),
+            // ),
             _TextWidgetForAddress(
               addressInfoText: transaction.billingAddress1,
               title: Utils.getString('transaction_detail__address'),

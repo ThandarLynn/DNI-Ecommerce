@@ -1,18 +1,14 @@
-import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/config/app_colors.dart';
 import 'package:dni_ecommerce/constant/app_dimens.dart';
 import 'package:dni_ecommerce/constant/route_paths.dart';
 import 'package:dni_ecommerce/provider/user/user_provider.dart';
 import 'package:dni_ecommerce/repository/user_repository.dart';
-import 'package:dni_ecommerce/ui/common/dialog/error_dialog.dart';
-import 'package:dni_ecommerce/ui/common/dialog/success_dialog.dart';
+// import 'package:dni_ecommerce/ui/common/dialog/error_dialog.dart';
 import 'package:dni_ecommerce/ui/common/dialog/warning_dialog_view.dart';
 import 'package:dni_ecommerce/ui/common/app_dropdown_base_with_controller_widget.dart';
 import 'package:dni_ecommerce/ui/common/app_textfield_widget.dart';
-import 'package:dni_ecommerce/utils/app_progress_dialog.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
-import 'package:dni_ecommerce/viewobject/holder/profile_update_view_holder.dart';
 import 'package:dni_ecommerce/viewobject/shipping_city.dart';
 import 'package:dni_ecommerce/viewobject/shipping_country.dart';
 import 'package:dni_ecommerce/viewobject/user.dart';
@@ -447,76 +443,39 @@ class _Checkout1ViewState extends State<Checkout1View> {
   }
 
   dynamic callUpdateUserProfile(UserProvider userProvider) async {
-    bool isSuccess = false;
+    final User userData = User(
+      userId: userProvider.appValueHolder.loginUserId,
+      userName: userProvider.user.data.userName,
+      userEmail: userEmailController.text.trim(),
+      userPhone: userPhoneController.text,
+      userAboutMe: userProvider.user.data.userAboutMe,
+      billingFirstName: billingFirstNameController.text,
+      billingLastName: billingLastNameController.text,
+      billingCompany: billingCompanyController.text,
+      billingAddress_1: billingAddress1Controller.text,
+      billingAddress_2: billingAddress2Controller.text,
+      billingCountry: billingCountryController.text,
+      billingState: billingStateController.text,
+      billingCity: billingCityController.text,
+      billingPostalCode: billingPostalCodeController.text,
+      billingEmail: billingEmailController.text,
+      billingPhone: billingPhoneController.text,
+      shippingFirstName: shippingFirstNameController.text,
+      shippingLastName: shippingLastNameController.text,
+      shippingCompany: shippingCompanyController.text,
+      shippingAddress_1: shippingAddress1Controller.text,
+      shippingAddress_2: shippingAddress2Controller.text,
+      shippingCountry: userProvider.selectedCountry.name,
+      shippingState: shippingStateController.text,
+      shippingCity: userProvider.selectedCity.name,
+      shippingPostalCode: shippingPostalCodeController.text,
+      shippingEmail: shippingEmailController.text,
+      shippingPhone: shippingPhoneController.text,
+      // countryId: userProvider.selectedCountry.id,
+      // cityId: userProvider.selectedCity.id,
+    );
 
-    if (await Utils.checkInternetConnectivity()) {
-      final ProfileUpdateParameterHolder profileUpdateParameterHolder =
-          ProfileUpdateParameterHolder(
-        userId: userProvider.appValueHolder.loginUserId,
-        userName: userProvider.user.data.userName,
-        userEmail: userEmailController.text.trim(),
-        userPhone: userPhoneController.text,
-        userAboutMe: userProvider.user.data.userAboutMe,
-        billingFirstName: billingFirstNameController.text,
-        billingLastName: billingLastNameController.text,
-        billingCompany: billingCompanyController.text,
-        billingAddress1: billingAddress1Controller.text,
-        billingAddress2: billingAddress2Controller.text,
-        billingCountry: billingCountryController.text,
-        billingState: billingStateController.text,
-        billingCity: billingCityController.text,
-        billingPostalCode: billingPostalCodeController.text,
-        billingEmail: billingEmailController.text,
-        billingPhone: billingPhoneController.text,
-        shippingFirstName: shippingFirstNameController.text,
-        shippingLastName: shippingLastNameController.text,
-        shippingCompany: shippingCompanyController.text,
-        shippingAddress1: shippingAddress1Controller.text,
-        shippingAddress2: shippingAddress2Controller.text,
-        shippingCountry: userProvider.selectedCountry.name,
-        shippingState: shippingStateController.text,
-        shippingCity: userProvider.selectedCity.name,
-        shippingPostalCode: shippingPostalCodeController.text,
-        shippingEmail: shippingEmailController.text,
-        shippingPhone: shippingPhoneController.text,
-        countryId: userProvider.selectedCountry.id,
-        cityId: userProvider.selectedCity.id,
-      );
-      await AppProgressDialog.showDialog(context);
-      final AppResource<User> _apiStatus = await userProvider
-          .postProfileUpdate(profileUpdateParameterHolder.toMap());
-      if (_apiStatus.data != null) {
-        AppProgressDialog.dismissDialog();
-        isSuccess = true;
-
-        showDialog<dynamic>(
-            context: context,
-            builder: (BuildContext contet) {
-              return SuccessDialog(
-                  message: Utils.getString('edit_profile__success'),
-                  onPressed: () {});
-            });
-      } else {
-        AppProgressDialog.dismissDialog();
-
-        showDialog<dynamic>(
-            context: context,
-            builder: (BuildContext context) {
-              return ErrorDialog(
-                message: _apiStatus.message,
-              );
-            });
-      }
-    } else {
-      showDialog<dynamic>(
-          context: context,
-          builder: (BuildContext context) {
-            return ErrorDialog(
-              message: Utils.getString('error_dialog__no_internet'),
-            );
-          });
-    }
-
-    return isSuccess;
+    await userProvider.updateUserDB(userData);
+    // await userProvider.getUserFromDB(userProvider.appValueHolder.loginUserId);
   }
 }

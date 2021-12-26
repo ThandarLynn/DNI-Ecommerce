@@ -36,9 +36,17 @@ class Utils {
       String originalPrice, String unitPrice) {
     final NumberFormat dataformat = NumberFormat('###.0');
     final double discountPrice =
-        (double.parse(originalPrice) - double.parse(unitPrice)) / 100;
+        100 - ((double.parse(unitPrice) / double.parse(originalPrice)) * 100);
     return dataformat.format(discountPrice);
   }
+
+  // static String calculateDiscountAmount(
+  //     String originalPrice, String discountPercentage) {
+  //   final NumberFormat dataformat = NumberFormat('###.0');
+  //   final double discountAmount =
+  //       double.parse(originalPrice) * double.parse(discountPercentage) / 100;
+  //   return dataformat.format(discountAmount);
+  // }
 
   static dynamic launchURL() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();

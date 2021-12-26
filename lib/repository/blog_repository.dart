@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/api/common/app_status.dart';
 import 'package:dni_ecommerce/api/app_api_service.dart';
-
+// import 'package:dni_ecommerce/viewobject/holder/product_parameter_holder.dart';
 import 'Common/app_repository.dart';
 
 class BlogRepository extends AppRepository {
@@ -44,6 +44,10 @@ class BlogRepository extends AppRepository {
     if (isConnectedToInternet) {
       final AppResource<List<Product>> _resource =
           await _appApiService.getBlogList(limit, offset);
+      // await _appApiService.getProductList(
+      //     ProductParameterHolder().getDiscountParameterHolder().toMap(),
+      //     limit,
+      //     offset);
 
       if (_resource.status == AppStatus.SUCCESS) {
         await _blogDao.deleteAll();

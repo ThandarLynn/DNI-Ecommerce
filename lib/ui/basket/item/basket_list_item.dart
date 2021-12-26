@@ -229,6 +229,8 @@ class _IconAndTextWidgetState extends State<_IconAndTextWidget> {
           shopId: appValueHolder.shopId,
           selectedColorId: widget.basket.selectedColorId,
           selectedColorValue: widget.basket.selectedColorValue,
+          selectedSizeId: widget.basket.selectedSizeId,
+          selectedSizeValue: widget.basket.selectedSizeValue,
           basketPrice: widget.basket.basketPrice,
           basketOriginalPrice: widget.basket.basketOriginalPrice,
           selectedAttributeTotalPrice:

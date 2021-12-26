@@ -1,20 +1,21 @@
-import 'package:dni_ecommerce/api/common/app_resource.dart';
+// import 'package:dni_ecommerce/api/common/app_resource.dart';
 import 'package:dni_ecommerce/config/app_colors.dart';
 import 'package:dni_ecommerce/constant/app_constant.dart';
 import 'package:dni_ecommerce/constant/app_dimens.dart';
-import 'package:dni_ecommerce/constant/route_paths.dart';
+// import 'package:dni_ecommerce/constant/route_paths.dart';
 import 'package:dni_ecommerce/provider/basket/basket_provider.dart';
 import 'package:dni_ecommerce/provider/coupon_discount/coupon_discount_provider.dart';
 import 'package:dni_ecommerce/provider/token/token_provider.dart';
+import 'package:dni_ecommerce/provider/transaction/transaction_detail_provider.dart';
 import 'package:dni_ecommerce/provider/transaction/transaction_header_provider.dart';
 import 'package:dni_ecommerce/provider/user/user_provider.dart';
-import 'package:dni_ecommerce/ui/common/dialog/error_dialog.dart';
-import 'package:dni_ecommerce/utils/app_progress_dialog.dart';
+// import 'package:dni_ecommerce/ui/common/dialog/error_dialog.dart';
+// import 'package:dni_ecommerce/utils/app_progress_dialog.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:dni_ecommerce/viewobject/basket.dart';
 import 'package:dni_ecommerce/viewobject/common/app_value_holder.dart';
-import 'package:dni_ecommerce/viewobject/holder/intent/checkout_status_intent_holder.dart';
-import 'package:dni_ecommerce/viewobject/transaction_header.dart';
+// import 'package:dni_ecommerce/viewobject/holder/intent/checkout_status_intent_holder.dart';
+// import 'package:dni_ecommerce/viewobject/transaction_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +48,7 @@ class _Checkout3ViewState extends State<Checkout3View> {
   CouponDiscountProvider couponDiscountProvider;
   BasketProvider basketProvider;
   final TextEditingController memoController = TextEditingController();
+  TransactionDetailProvider transactionDetailProvider;
 
   void checkStatus() {
     print('Checking Status ... $isCheckBoxSelect');
@@ -57,67 +59,115 @@ class _Checkout3ViewState extends State<Checkout3View> {
     UserProvider userLoginProvider,
     TransactionHeaderProvider transactionSubmitProvider,
   ) async {
-    if (await Utils.checkInternetConnectivity()) {
-      if (userLoginProvider.user != null &&
-          userLoginProvider.user.data != null) {
-        await AppProgressDialog.showDialog(context);
-        final AppResource<TransactionHeader> _apiStatus =
-            await transactionSubmitProvider.postTransactionSubmit(
-                userLoginProvider.user.data,
-                widget.basketList,
-                '',
-                couponDiscountProvider.couponDiscount.toString(),
-                basketProvider.checkoutCalculationHelper.tax.toString(),
-                basketProvider.checkoutCalculationHelper.totalDiscount
-                    .toString(),
-                basketProvider.checkoutCalculationHelper.subTotalPrice
-                    .toString(),
-                basketProvider.checkoutCalculationHelper.shippingTax.toString(),
-                basketProvider.checkoutCalculationHelper.totalPrice.toString(),
-                basketProvider.checkoutCalculationHelper.totalOriginalPrice
-                    .toString(),
-                AppConst.ZERO,
-                AppConst.ZERO,
-                AppConst.ZERO,
-                AppConst.ONE,
-                AppConst.ZERO,
-                AppConst.ZERO,
-                '',
-                basketProvider.checkoutCalculationHelper.shippingCost
-                    .toString(),
-                'Free',
-                memoController.text);
+    await transactionSubmitProvider.addTransaction(
+        userLoginProvider.user.data,
+        widget.basketList,
+        '',
+        couponDiscountProvider.couponDiscount.toString(),
+        basketProvider.checkoutCalculationHelper.tax.toString(),
+        basketProvider.checkoutCalculationHelper.totalDiscount.toString(),
+        basketProvider.checkoutCalculationHelper.subTotalPrice.toString(),
+        basketProvider.checkoutCalculationHelper.shippingTax.toString(),
+        basketProvider.checkoutCalculationHelper.totalPrice.toString(),
+        basketProvider.checkoutCalculationHelper.totalOriginalPrice.toString(),
+        AppConst.ONE,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        '',
+        // basketProvider.checkoutCalculationHelper.shippingCost.toString(),
+        basketProvider.selectedDays,
+        memoController.text);
+    await transactionDetailProvider.addTransactionDetail(
+        userLoginProvider.user.data,
+        widget.basketList,
+        '',
+        couponDiscountProvider.couponDiscount.toString(),
+        basketProvider.checkoutCalculationHelper.tax.toString(),
+        basketProvider.checkoutCalculationHelper.totalDiscount.toString(),
+        basketProvider.checkoutCalculationHelper.subTotalPrice.toString(),
+        basketProvider.checkoutCalculationHelper.shippingTax.toString(),
+        basketProvider.checkoutCalculationHelper.totalPrice.toString(),
+        basketProvider.checkoutCalculationHelper.totalOriginalPrice.toString(),
+        AppConst.ONE,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        '',
+        // basketProvider.checkoutCalculationHelper.shippingCost.toString(),
+        basketProvider.selectedDays,
+        memoController.text);
 
-        if (_apiStatus.data != null) {
-          AppProgressDialog.dismissDialog();
+    // //     if (_apiStatus.data != null) {
+    // // AppProgressDialog.dismissDialog();
 
-          await basketProvider.deleteWholeBasketList();
-          Navigator.pop(context, true);
-          await Navigator.pushNamed(context, RoutePaths.checkoutSuccess,
-              arguments: CheckoutStatusIntentHolder(
-                transactionHeader: _apiStatus.data,
-              ));
-        } else {
-          AppProgressDialog.dismissDialog();
+    await basketProvider.deleteWholeBasketList();
+    Navigator.pop(context, true);
+    // if (await Utils.checkInternetConnectivity()) {
+    //   if (userLoginProvider.user != null &&
+    //       userLoginProvider.user.data != null) {
+    //     await AppProgressDialog.showDialog(context);
+    //     final AppResource<TransactionHeader> _apiStatus =
+    //         await transactionSubmitProvider.postTransactionSubmit(
+    //             userLoginProvider.user.data,
+    //             widget.basketList,
+    //             '',
+    //             couponDiscountProvider.couponDiscount.toString(),
+    //             basketProvider.checkoutCalculationHelper.tax.toString(),
+    //             basketProvider.checkoutCalculationHelper.totalDiscount
+    //                 .toString(),
+    //             basketProvider.checkoutCalculationHelper.subTotalPrice
+    //                 .toString(),
+    //             basketProvider.checkoutCalculationHelper.shippingTax.toString(),
+    //             basketProvider.checkoutCalculationHelper.totalPrice.toString(),
+    //             basketProvider.checkoutCalculationHelper.totalOriginalPrice
+    //                 .toString(),
+    //             AppConst.ZERO,
+    //             AppConst.ZERO,
+    //             AppConst.ZERO,
+    //             AppConst.ONE,
+    //             AppConst.ZERO,
+    //             AppConst.ZERO,
+    //             '',
+    //             basketProvider.checkoutCalculationHelper.shippingCost
+    //                 .toString(),
+    //             'Free',
+    //             memoController.text);
 
-          return showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(
-                  message: _apiStatus.message,
-                );
-              });
-        }
-      }
-    } else {
-      showDialog<dynamic>(
-          context: context,
-          builder: (BuildContext context) {
-            return ErrorDialog(
-              message: Utils.getString('error_dialog__no_internet'),
-            );
-          });
-    }
+    //     if (_apiStatus.data != null) {
+    //       AppProgressDialog.dismissDialog();
+
+    //       await basketProvider.deleteWholeBasketList();
+    //       Navigator.pop(context, true);
+    //       await Navigator.pushNamed(context, RoutePaths.checkoutSuccess,
+    //           arguments: CheckoutStatusIntentHolder(
+    //             transactionHeader: _apiStatus.data,
+    //           ));
+    //     } else {
+    //       AppProgressDialog.dismissDialog();
+
+    //       return showDialog<dynamic>(
+    //           context: context,
+    //           builder: (BuildContext context) {
+    //             return ErrorDialog(
+    //               message: _apiStatus.message,
+    //             );
+    //           });
+    //     }
+    //   }
+    // } else {
+    //   showDialog<dynamic>(
+    //       context: context,
+    //       builder: (BuildContext context) {
+    //         return ErrorDialog(
+    //           message: Utils.getString('error_dialog__no_internet'),
+    //         );
+    //       });
+    // }
   }
 
   dynamic callCardNow(
@@ -125,68 +175,87 @@ class _Checkout3ViewState extends State<Checkout3View> {
     UserProvider userLoginProvider,
     TransactionHeaderProvider transactionSubmitProvider,
   ) async {
-    if (await Utils.checkInternetConnectivity()) {
-      if (userLoginProvider.user != null &&
-          userLoginProvider.user.data != null) {
-        await AppProgressDialog.showDialog(context);
-        print(basketProvider
-            .checkoutCalculationHelper.subTotalPriceFormattedString);
-        final AppResource<TransactionHeader> _apiStatus =
-            await transactionSubmitProvider.postTransactionSubmit(
-                userLoginProvider.user.data,
-                widget.basketList,
-                '',
-                couponDiscountProvider.couponDiscount.toString(),
-                basketProvider.checkoutCalculationHelper.tax.toString(),
-                basketProvider.checkoutCalculationHelper.totalDiscount
-                    .toString(),
-                basketProvider.checkoutCalculationHelper.subTotalPrice
-                    .toString(),
-                basketProvider.checkoutCalculationHelper.shippingTax.toString(),
-                basketProvider.checkoutCalculationHelper.totalPrice.toString(),
-                basketProvider.checkoutCalculationHelper.totalOriginalPrice
-                    .toString(),
-                AppConst.ONE,
-                AppConst.ZERO,
-                AppConst.ZERO,
-                AppConst.ZERO,
-                AppConst.ZERO,
-                AppConst.ZERO,
-                '',
-                basketProvider.checkoutCalculationHelper.shippingCost
-                    .toString(),
-                'Free',
-                memoController.text);
+    // transactionDetailProvider = Provider.of<TransactionDetailProvider>(context);
+    // if (await Utils.checkInternetConnectivity()) {
+    //   if (userLoginProvider.user != null &&
+    //       userLoginProvider.user.data != null) {
+    //     await AppProgressDialog.showDialog(context);
+    //     print(basketProvider
+    //         .checkoutCalculationHelper.subTotalPriceFormattedString);
+    //     final AppResource<TransactionHeader> _apiStatus =
+    await transactionSubmitProvider.addTransaction(
+        userLoginProvider.user.data,
+        widget.basketList,
+        '',
+        couponDiscountProvider.couponDiscount.toString(),
+        basketProvider.checkoutCalculationHelper.tax.toString(),
+        basketProvider.checkoutCalculationHelper.totalDiscount.toString(),
+        basketProvider.checkoutCalculationHelper.subTotalPrice.toString(),
+        basketProvider.checkoutCalculationHelper.shippingTax.toString(),
+        basketProvider.checkoutCalculationHelper.totalPrice.toString(),
+        basketProvider.checkoutCalculationHelper.totalOriginalPrice.toString(),
+        AppConst.ONE,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        '',
+        // basketProvider.checkoutCalculationHelper.shippingCost.toString(),
+        basketProvider.selectedDays,
+        memoController.text);
+    await transactionDetailProvider.addTransactionDetail(
+        userLoginProvider.user.data,
+        widget.basketList,
+        '',
+        couponDiscountProvider.couponDiscount.toString(),
+        basketProvider.checkoutCalculationHelper.tax.toString(),
+        basketProvider.checkoutCalculationHelper.totalDiscount.toString(),
+        basketProvider.checkoutCalculationHelper.subTotalPrice.toString(),
+        basketProvider.checkoutCalculationHelper.shippingTax.toString(),
+        basketProvider.checkoutCalculationHelper.totalPrice.toString(),
+        basketProvider.checkoutCalculationHelper.totalOriginalPrice.toString(),
+        AppConst.ONE,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        AppConst.ZERO,
+        '',
+        // basketProvider.checkoutCalculationHelper.shippingCost.toString(),
+        basketProvider.selectedDays,
+        memoController.text);
 
-        if (_apiStatus.data != null) {
-          AppProgressDialog.dismissDialog();
-          await basketProvider.deleteWholeBasketList();
-          Navigator.pop(context, true);
-          await Navigator.pushNamed(context, RoutePaths.checkoutSuccess,
-              arguments: CheckoutStatusIntentHolder(
-                transactionHeader: _apiStatus.data,
-              ));
-        } else {
-          AppProgressDialog.dismissDialog();
+    // //     if (_apiStatus.data != null) {
+    // // AppProgressDialog.dismissDialog();
 
-          return showDialog<dynamic>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(
-                  message: _apiStatus.message,
-                );
-              });
-        }
-      }
-    } else {
-      showDialog<dynamic>(
-          context: context,
-          builder: (BuildContext context) {
-            return ErrorDialog(
-              message: Utils.getString('error_dialog__no_internet'),
-            );
-          });
-    }
+    await basketProvider.deleteWholeBasketList();
+    Navigator.pop(context, true);
+    // await Navigator.pushNamed(context, RoutePaths.checkoutSuccess,
+    //     arguments: CheckoutStatusIntentHolder(
+    //       transactionHeader: _apiStatus.data,
+    //     ));
+    //     } else {
+    //       AppProgressDialog.dismissDialog();
+
+    //       return showDialog<dynamic>(
+    //           context: context,
+    //           builder: (BuildContext context) {
+    //             return ErrorDialog(
+    //               message: _apiStatus.message,
+    //             );
+    //           });
+    //     }
+    //   }
+    // } else {
+    //   showDialog<dynamic>(
+    //       context: context,
+    //       builder: (BuildContext context) {
+    //         return ErrorDialog(
+    //           message: Utils.getString('error_dialog__no_internet'),
+    //         );
+    //       });
+    // }
   }
 
   // Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
@@ -409,6 +478,8 @@ class _Checkout3ViewState extends State<Checkout3View> {
                 listen: false); // Listen : False is important.
             basketProvider = Provider.of<BasketProvider>(context,
                 listen: false); // Listen : False is important.
+            transactionDetailProvider =
+                Provider.of<TransactionDetailProvider>(context, listen: false);
 
             return SingleChildScrollView(
               child: Container(
@@ -489,70 +560,71 @@ class _Checkout3ViewState extends State<Checkout3View> {
                     const SizedBox(
                       height: AppDimens.space12,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          left: AppDimens.space16, right: AppDimens.space16),
-                      child: Text(
-                        Utils.getString('checkout3__payment_method_online'),
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: AppDimens.space16,
-                    ),
-                    const Divider(
-                      height: 2,
-                    ),
-                    const SizedBox(
-                      height: AppDimens.space8,
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            width: AppDimens.space140,
-                            height: AppDimens.space140,
-                            padding: const EdgeInsets.all(AppDimens.space8),
-                            child: InkWell(
-                              onTap: () {
-                                if (!isPaypalClicked) {
-                                  isCashClicked = false;
-                                  isPaypalClicked = true;
-                                  isStripeClicked = false;
-                                  isBankClicked = false;
-                                  isRazorClicked = false;
-                                  isPayStackClicked = false;
-                                }
+                    // Container(
+                    //   margin: const EdgeInsets.only(
+                    //       left: AppDimens.space16, right: AppDimens.space16),
+                    //   child: Text(
+                    //     Utils.getString('checkout3__payment_method_online'),
+                    //     style: Theme.of(context).textTheme.subtitle1,
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: AppDimens.space16,
+                    // ),
+                    // const Divider(
+                    //   height: 2,
+                    // ),
+                    // const SizedBox(
+                    //   height: AppDimens.space8,
+                    // ),
+                    // SingleChildScrollView(
+                    //   scrollDirection: Axis.horizontal,
+                    //   child: Row(
+                    //     children: <Widget>[
+                    //       Container(
+                    //         width: AppDimens.space140,
+                    //         height: AppDimens.space140,
+                    //         padding: const EdgeInsets.all(AppDimens.space8),
+                    //         child: InkWell(
+                    //           onTap: () {
+                    //             if (!isPaypalClicked) {
+                    //               isCashClicked = false;
+                    //               isPaypalClicked = true;
+                    //               isStripeClicked = false;
+                    //               isBankClicked = false;
+                    //               isRazorClicked = false;
+                    //               isPayStackClicked = false;
+                    //             }
 
-                                setState(() {});
-                              },
-                              child: checkIsPaypalSelected(),
-                            ),
-                          ),
-                          Container(
-                            width: AppDimens.space140,
-                            height: AppDimens.space140,
-                            padding: const EdgeInsets.all(AppDimens.space8),
-                            child: InkWell(
-                              onTap: () async {
-                                if (!isStripeClicked) {
-                                  isCashClicked = false;
-                                  isPaypalClicked = false;
-                                  isStripeClicked = true;
-                                  isBankClicked = false;
-                                  isRazorClicked = false;
-                                  isPayStackClicked = false;
-                                }
+                    //             setState(() {});
+                    //           },
+                    //           child: checkIsPaypalSelected(),
+                    //         ),
+                    //       ),
+                    //       Container(
+                    //         width: AppDimens.space140,
+                    //         height: AppDimens.space140,
+                    //         padding: const EdgeInsets.all(AppDimens.space8),
+                    //         child: InkWell(
+                    //           onTap: () async {
+                    //             if (!isStripeClicked) {
+                    //               isCashClicked = false;
+                    //               isPaypalClicked = false;
+                    //               isStripeClicked = true;
+                    //               isBankClicked = false;
+                    //               isRazorClicked = false;
+                    //               isPayStackClicked = false;
+                    //             }
 
-                                setState(() {});
-                              },
-                              child: checkIsStripeSelected(),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    //             setState(() {});
+                    //           },
+                    //           child: checkIsStripeSelected(),
+                    //         ),
+                    //       ),
+
+                    //     ],
+                    //   ),
+                    // ),
                     Container(
                       margin: const EdgeInsets.only(
                           left: AppDimens.space16, right: AppDimens.space16),

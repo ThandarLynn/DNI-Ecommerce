@@ -1,4 +1,5 @@
 import 'package:dni_ecommerce/config/app_colors.dart';
+import 'package:dni_ecommerce/constant/app_constant.dart';
 import 'package:dni_ecommerce/constant/app_dimens.dart';
 import 'package:dni_ecommerce/utils/utils.dart';
 import 'package:dni_ecommerce/viewobject/transaction_detail.dart';
@@ -27,9 +28,7 @@ class TransactionItemView extends StatelessWidget {
         animation: animationController,
         child: GestureDetector(
           onTap: onTap,
-          child: _ItemWidget(
-            transaction: transaction,
-          ),
+          child: _ItemWidget(transaction: transaction),
         ),
         builder: (BuildContext context, Widget child) {
           return FadeTransition(
@@ -57,22 +56,15 @@ class _ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double balancePrice;
-    String attributeName;
     const Widget _dividerWidget = Divider(
       height: AppDimens.space2,
     );
 
-    if (transaction.productAttributeName != null &&
-        transaction.productAttributeName != '') {
-      attributeName = transaction.productAttributeName.replaceAll('#', ',');
-    }
-
-    if (transaction.originalPrice != '0' && transaction.discountAmount != '0') {
-      balancePrice = (double.parse(transaction.originalPrice) -
-              double.parse(transaction.discountAmount)) *
+    if (transaction.originalPrice != AppConst.ZERO) {
+      balancePrice = double.parse(transaction.price) *
           double.parse(transaction.qty);
     } else {
-      balancePrice = double.parse(transaction.originalPrice) *
+      balancePrice = double.parse(transaction.price) *
           double.parse(transaction.qty);
     }
     return Container(
@@ -111,8 +103,8 @@ class _ItemWidget extends StatelessWidget {
                     transaction.productColorCode != '')
                   Container(
                     margin: const EdgeInsets.all(AppDimens.space10),
-                    width: AppDimens.space32,
-                    height: AppDimens.space32,
+                    width: AppDimens.space40,
+                    height: AppDimens.space40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: hexToColor(transaction.productColorCode),
@@ -121,16 +113,45 @@ class _ItemWidget extends StatelessWidget {
                   )
                 else
                   Container(),
-                if (attributeName != null && attributeName != '')
-                  Flexible(
-                    child: Text(
-                      attributeName ?? '',
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ),
                 const SizedBox(
-                  width: AppDimens.space16,
+                  width: AppDimens.space8,
                 ),
+                if (transaction.productSizeCode != null &&
+                    transaction.productSizeCode != '')
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Stack(
+                          alignment: const Alignment(0.0, 0.0),
+                          children: <Widget>[
+                            Container(
+                              width: AppDimens.space40,
+                              height: AppDimens.space40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: AppColors.grey,
+                                border:
+                                    Border.all(width: 1, color: AppColors.grey),
+                              ),
+                            ),
+                            Container(
+                              width: AppDimens.space24,
+                              height: AppDimens.space24,
+                              margin: const EdgeInsets.only(top: 6),
+                              child: Text(
+                                transaction.productSizeCode,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .copyWith(color: AppColors.black),
+                              ),
+                            )
+                          ],
+                        )
+                      ])
+                else
+                  Container()
               ],
             ),
             _TransactionNoTextWidget(
@@ -144,6 +165,9 @@ class _ItemWidget extends StatelessWidget {
                   : '\$ 0.0',
               title:
                   '${Utils.getString('transaction_detail__discount_avaiable_amount')} :',
+            ),
+            const SizedBox(
+              height: AppDimens.space8,
             ),
             _TransactionNoTextWidget(
               transationInfoText:

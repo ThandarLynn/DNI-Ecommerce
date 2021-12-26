@@ -134,6 +134,128 @@ class TransactionHeaderProvider extends AppProvider {
     isLoading = false;
   }
 
+  Future<dynamic> addTransaction(
+      User user,
+      List<Basket> basketList,
+      String clientNonce,
+      String couponDiscount,
+      String taxAmount,
+      String totalDiscount,
+      String subTotalAmount,
+      String shippingAmount,
+      String balanceAmount,
+      String totalItemAmount,
+      String isCod,
+      String isPaypal,
+      String isStripe,
+      String isBank,
+      String isPayStack,
+      String isRazor,
+      String razorId,
+      // String shippingMethodPrice,
+      // String shippingMethodName,
+      String selectedDays,
+      String memoText,
+      [String text]) async {
+    isLoading = true;
+
+    final List<String> attributeIdStr = <String>[];
+    List<String> attributeNameStr = <String>[];
+    final List<String> attributePriceStr = <String>[];
+    double totalItemCount = 0.0;
+    String transactionId = '';
+    transactionId += basketList[0].id;
+    for (Basket basket in basketList) {
+      totalItemCount += double.parse(basket.qty);
+    }
+
+    final List<Map<String, dynamic>> detailJson = <Map<String, dynamic>>[];
+    for (int i = 0; i < basketList.length; i++) {
+      for (BasketSelectedAttribute basketSelectedAttribute
+          in basketList[i].basketSelectedAttributeList) {
+        attributeIdStr.add(basketSelectedAttribute.headerId);
+        attributeNameStr.add(basketSelectedAttribute.name);
+        attributePriceStr.add(basketSelectedAttribute.price);
+      }
+
+      final DetailMap carJson = DetailMap(
+        basketList[i].productId,
+        basketList[i].product.name,
+        attributeIdStr.join('#').toString(),
+        attributeNameStr.join('#').toString(),
+        attributePriceStr.join('#').toString(),
+        basketList[i].selectedColorId ?? '',
+        basketList[i].selectedColorValue ?? '',
+        basketList[i].selectedSizeId ?? '',
+        basketList[i].selectedSizeValue ?? '',
+        basketList[i].product.unitPrice,
+        basketList[i].basketOriginalPrice,
+        basketList[i].product.discountValue,
+        basketList[i].product.discountAmount,
+        basketList[i].qty,
+        basketList[i].product.discountValue,
+        Utils.calculateDiscountPercent(basketList[i].product.originalPrice,
+                basketList[i].product.unitPrice)
+            .toString(),
+        basketList[i].product.currencyShortForm,
+        '\$',
+        basketList[i].product.productUnit,
+        basketList[i].product.productMeasurement,
+        basketList[i].product.shippingCost,
+      );
+      attributeNameStr = <String>[];
+      detailJson.add(carJson.tojsonData());
+    }
+
+    final TransactionHeader transactionHeader = TransactionHeader(
+      id: transactionId,
+      userId: user.userId,
+      subTotalAmount: Utils.getPriceTwoDecimal(subTotalAmount),
+      discountAmount: Utils.getPriceTwoDecimal(totalDiscount),
+      taxAmount: Utils.getPriceTwoDecimal(taxAmount),
+      shippingAmount: Utils.getPriceTwoDecimal(shippingAmount) ?? '',
+      balanceAmount: Utils.getPriceTwoDecimal(balanceAmount),
+      totalItemAmount: Utils.getPriceTwoDecimal(totalItemAmount),
+      contactName: user.userName,
+      contactPhone: user.userPhone,
+      transStatusId: AppConst.ONE, // 3 = completed
+      currencySymbol: '\$',
+      currencyShortForm: basketList[0].product.currencyShortForm,
+      billingFirstName: user.billingFirstName,
+      billingLastName: user.billingLastName,
+      billingCompany: user.billingCompany,
+      billingAddress1: user.billingAddress_1,
+      billingAddress2: user.billingAddress_2,
+      billingCountry: user.billingCountry,
+      billingState: user.billingState,
+      billingCity: user.billingCity,
+      billingPostalCode: user.billingPostalCode,
+      billingEmail: user.billingEmail,
+      billingPhone: user.billingPhone,
+      shippingFirstName: user.shippingFirstName,
+      shippingLastName: user.shippingLastName,
+      shippingCompany: user.shippingCompany,
+      shippingAddress1: user.shippingAddress_1,
+      shippingAddress2: user.shippingAddress_2,
+      shippingCountry: user.shippingCountry,
+      shippingState: user.shippingState,
+      shippingCity: user.shippingCity,
+      shippingPostalCode: user.shippingPostalCode,
+      shippingEmail: user.shippingEmail,
+      shippingPhone: user.shippingPhone,
+      shippingTaxPercent: appValueHolder.shippingTaxValue,
+      taxPercent: appValueHolder.overAllTaxValue,
+      // shippingMethodAmount: Utils.getPriceTwoDecimal(shippingMethodPrice) ?? '',
+      // shippingMethodName: shippingMethodName ?? '',
+      selectedDays: selectedDays ?? '',
+      totalItemCount: totalItemCount.toString(),
+      isZoneShipping: appValueHolder.zoneShippingEnable,
+    );
+
+    await _repo.addTransaction(
+        transactionListStream, AppStatus.PROGRESS_LOADING, transactionHeader);
+  }
+
   Future<dynamic> postTransactionSubmit(
       User user,
       List<Basket> basketList,
@@ -181,6 +303,8 @@ class TransactionHeaderProvider extends AppProvider {
         attributePriceStr.join('#').toString(),
         basketList[i].selectedColorId ?? '',
         basketList[i].selectedColorValue ?? '',
+        basketList[i].selectedSizeId ?? '',
+        basketList[i].selectedSizeValue ?? '',
         basketList[i].product.unitPrice,
         basketList[i].basketOriginalPrice,
         basketList[i].product.discountValue,
@@ -273,6 +397,8 @@ class DetailMap {
       this.productAttributePrice,
       this.productColorId,
       this.productColorCode,
+      this.productSizeId,
+      this.productSizeCode,
       this.price,
       this.originalPrice,
       this.discountPrice,
@@ -292,6 +418,8 @@ class DetailMap {
       productAttributePrice,
       productColorId,
       productColorCode,
+      productSizeId,
+      productSizeCode,
       price,
       originalPrice,
       discountPrice,
@@ -314,6 +442,8 @@ class DetailMap {
     map['product_attribute_price'] = productAttributePrice;
     map['product_color_id'] = productColorId;
     map['product_color_code'] = productColorCode;
+    map['product_size_id'] = productSizeId;
+    map['product_size_code'] = productSizeCode;
     map['unit_price'] = price;
     map['original_price'] = originalPrice;
     map['discount_price'] = discountPrice;

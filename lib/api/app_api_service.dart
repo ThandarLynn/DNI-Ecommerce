@@ -5,6 +5,7 @@ import 'package:dni_ecommerce/viewobject/gallery.dart';
 import 'package:dni_ecommerce/viewobject/product.dart';
 import 'package:dni_ecommerce/viewobject/shipping_city.dart';
 import 'package:dni_ecommerce/viewobject/shipping_country.dart';
+import 'package:dni_ecommerce/viewobject/shipping_method.dart';
 import 'package:dni_ecommerce/viewobject/sub_category.dart';
 import 'package:dni_ecommerce/viewobject/transaction_detail.dart';
 import 'package:dni_ecommerce/viewobject/transaction_header.dart';
@@ -272,26 +273,30 @@ class AppApiService extends AppApi {
   ///
   Future<AppResource<List<ShippingCountry>>> getCountryList(
       int limit, int offset, Map<dynamic, dynamic> jsonMap) async {
-    final String url =
-        '${AppUrl.app_shipping_country_url}/limit/$limit/offset/$offset';
+    // final String url =
+    //     '${AppUrl.app_shipping_country_url}/limit/$limit/offset/$offset';
 
-    return await postData<ShippingCountry, List<ShippingCountry>>(
-        ShippingCountry(), url, jsonMap);
+    return await postJsonData<ShippingCountry, List<ShippingCountry>>(
+        ShippingCountry(), 'assets/json/shipping_country.json', jsonMap);
   }
 
   Future<AppResource<List<ShippingCity>>> getCityList(
       int limit, int offset, Map<dynamic, dynamic> jsonMap) async {
-    final String url =
-        '${AppUrl.app_shipping_city_url}/limit/$limit/offset/$offset';
+    // final String url =
+    //     '${AppUrl.app_shipping_city_url}/limit/$limit/offset/$offset';
 
-    return await postData<ShippingCity, List<ShippingCity>>(
-        ShippingCity(), url, jsonMap);
+    return await postJsonData<ShippingCity, List<ShippingCity>>(
+        ShippingCity(), 'assets/json/shipping_city.json', jsonMap);
   }
 
-//   //   Future<AppResource<List<ShippingCountry>>> postShopIdForShippingCountry(
-//   //     Map<dynamic, dynamic> jsonMap) async {
-//   //   const String url = '${AppUrl.app_post_app_touch_count_url}';
-//   //    return await postData<ShippingCity, List<ShippingCity>>(ShippingCity(), url, jsonMap);
-//   // }
+  ///
+  /// Get Shipping Method
+  ///
+  Future<AppResource<List<ShippingMethod>>> getShippingMethod() async {
+    // const String url =
+    //     '${AppUrl.ps_shipping_method_url}';
 
+    return await getJsonServerCall<ShippingMethod, List<ShippingMethod>>(
+        ShippingMethod(), 'assets/json/shipping_method.json');
+  }
 }

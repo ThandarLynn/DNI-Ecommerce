@@ -106,25 +106,6 @@ class _CategoryListViewState extends State<CategoryListView>
                 CategoryProvider provider, Widget child) {
               return Stack(children: <Widget>[
                 Column(children: <Widget>[
-                  // const PsAdMobBannerWidget(),
-                  // Visibility(
-                  //   visible: AppConfig.showAdMob &&
-                  //       isSuccessfullyLoaded &&
-                  //       isConnectedToInternet,
-                  //   child: AdmobBanner(
-                  //     adUnitId: Utils.getBannerAdUnitId(),
-                  //     adSize: AdmobBannerSize.FULL_BANNER,
-                  //     listener: (AdmobAdEvent event, Map<String, dynamic> map) {
-                  //       print('BannerAd event is $event');
-                  //       if (event == AdmobAdEvent.loaded) {
-                  //         isSuccessfullyLoaded = true;
-                  //       } else {
-                  //         isSuccessfullyLoaded = false;
-                  //         setState(() {});
-                  //       }
-                  //     },
-                  //   ),
-                  // ),
                   Expanded(
                     child: Container(
                         margin: const EdgeInsets.only(
@@ -171,57 +152,6 @@ class _CategoryListViewState extends State<CategoryListView>
                                                 RoutePaths.subCategoryGrid,
                                                 arguments: provider
                                                     .categoryList.data[index]);
-                                            // // print(provider
-                                            // //     .categoryList
-                                            // //     .data[index]
-                                            // //     .Image
-                                            // //     .imgPath);
-                                            // // final ProductParameterHolder
-                                            // // if (AppConfig.isShowSubCategory) {
-                                            // //   Navigator.pushNamed(context,
-                                            // //       RoutePaths.subCategoryGrid,
-                                            // //       arguments: provider
-                                            // //           .categoryList
-                                            // //           .data[index]);
-                                            // // } else {
-                                            // // final String loginUserId =
-                                            // //     Utils.checkUserLoginId(
-                                            // //         appValueHolder);
-                                            // // final TouchCountParameterHolder
-                                            // //     touchCountParameterHolder =
-                                            // //     TouchCountParameterHolder(
-                                            // //         typeId: provider
-                                            // //             .categoryList
-                                            // //             .data[index]
-                                            // //             .id,
-                                            // //         typeName: AppConst
-                                            // //             .FILTERING_TYPE_NAME_CATEGORY,
-                                            // //         userId: loginUserId);
-
-                                            // // provider.postTouchCount(
-                                            // //     touchCountParameterHolder
-                                            // //         .toMap());
-                                            // final ProductParameterHolder
-                                            //     productParameterHolder =
-                                            //     ProductParameterHolder()
-                                            //         .getLatestParameterHolder();
-                                            // productParameterHolder.searchTerm =
-                                            //     '0';
-                                            // productParameterHolder.catId =
-                                            //     provider.categoryList
-                                            //         .data[index].id;
-                                            // Navigator.pushNamed(context,
-                                            //     RoutePaths.filterProductList,
-                                            //     arguments:
-                                            //         ProductListIntentHolder(
-                                            //       appBarTitle: provider
-                                            //           .categoryList
-                                            //           .data[index]
-                                            //           .name,
-                                            //       productParameterHolder:
-                                            //           productParameterHolder,
-                                            //     ));
-                                            // // }
                                           },
                                         );
                                       } else {

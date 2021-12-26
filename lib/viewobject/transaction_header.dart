@@ -5,6 +5,7 @@ class TransactionHeader extends AppObject<TransactionHeader> {
   TransactionHeader(
       {this.id,
       this.userId,
+      this.selectedDays,
       this.subTotalAmount,
       this.discountAmount,
       this.balanceAmount,
@@ -57,6 +58,7 @@ class TransactionHeader extends AppObject<TransactionHeader> {
 
   String id;
   String userId;
+  String selectedDays;
   String subTotalAmount;
   String discountAmount;
   String balanceAmount;
@@ -118,6 +120,7 @@ class TransactionHeader extends AppObject<TransactionHeader> {
       return TransactionHeader(
           id: dynamicData['order_id'],
           userId: dynamicData['user_id'],
+          selectedDays: dynamicData['selected_days'],
           subTotalAmount: dynamicData['subtotal'],
           discountAmount: dynamicData['discount'],
           balanceAmount: dynamicData['total'],
@@ -178,6 +181,7 @@ class TransactionHeader extends AppObject<TransactionHeader> {
       final Map<String, dynamic> data = <String, dynamic>{};
       data['order_id'] = object.id;
       data['user_id'] = object.userId;
+      data['selected_days'] = object.selectedDays;
       data['subtotal'] = object.subTotalAmount;
       data['discount'] = object.discountAmount;
       data['total'] = object.balanceAmount;

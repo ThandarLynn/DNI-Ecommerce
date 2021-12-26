@@ -6,11 +6,14 @@ class TransactionDetail extends AppObject<TransactionDetail> {
       this.transactionsHeaderId,
       this.shopId,
       this.productId,
+      this.selectedDays,
       this.productAttributeId,
       this.productName,
       this.productAttributeName,
       this.productColorId,
       this.productColorCode,
+      this.productSizeId,
+      this.productSizeCode,
       this.originalPrice,
       this.price,
       this.discountAmount,
@@ -32,6 +35,7 @@ class TransactionDetail extends AppObject<TransactionDetail> {
   String id;
   String transactionsHeaderId;
   String productId;
+  String selectedDays;
   String shopId;
   String productAttributeId;
   String productName;
@@ -39,6 +43,8 @@ class TransactionDetail extends AppObject<TransactionDetail> {
   String productAttributePrice;
   String productColorId;
   String productColorCode;
+  String productSizeId;
+  String productSizeCode;
   String originalPrice;
   String price;
   String discountAmount;
@@ -70,12 +76,15 @@ class TransactionDetail extends AppObject<TransactionDetail> {
           transactionsHeaderId: dynamicData['transactions_header_id'],
           shopId: dynamicData['shop_id'],
           productId: dynamicData['product_id'],
+          selectedDays: dynamicData['selected_days'],
           productAttributeId: dynamicData['product_attribute_id'],
           productName: dynamicData['product_name'],
           productAttributeName: dynamicData['product_attribute_name'],
           productAttributePrice: dynamicData['product_attribute_price'],
           productColorId: dynamicData['product_color_id'],
           productColorCode: dynamicData['product_color_code'],
+          productSizeId: dynamicData['product_size_id'],
+          productSizeCode: dynamicData['product_size_code'],
           originalPrice: dynamicData['original_price'],
           price: dynamicData['price'],
           discountAmount: dynamicData['discount_amount'],
@@ -106,12 +115,15 @@ class TransactionDetail extends AppObject<TransactionDetail> {
       data['transactions_header_id'] = object.transactionsHeaderId;
       data['shop_id'] = object.shopId;
       data['product_id'] = object.productId;
+      data['selected_days'] = object.selectedDays;
       data['product_attribute_id'] = object.productAttributeId;
       data['product_name'] = object.productName;
       data['product_attribute_name'] = object.productAttributeName;
       data['product_attribute_price'] = object.productAttributePrice;
       data['product_color_id'] = object.productColorId;
       data['product_color_code'] = object.productColorCode;
+      data['product_size_id'] = object.productSizeId;
+      data['product_size_code'] = object.productSizeCode;
       data['original_price'] = object.originalPrice;
       data['price'] = object.price;
       data['discount_amount'] = object.discountAmount;

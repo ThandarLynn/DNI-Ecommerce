@@ -59,16 +59,16 @@ class CheckoutCalculationHelper {
 
         // Items Total Discount Calculation
         totalDiscount = totalDiscount +
-            double.parse(basket.product.unitPrice) -
-            double.parse(basket.product.originalPrice);
-        double.parse(basket.qty);
+            (double.parse(basket.product.unitPrice) -
+                    double.parse(basket.product.originalPrice)) *
+                double.parse(basket.qty);
 
         totalItemCount += int.parse(basket.qty);
       }
       // Product Count Calculation
 
       // SubTotal Calculation
-      subTotalPrice = totalOriginalPrice - totalDiscount;
+      subTotalPrice = totalOriginalPrice + totalDiscount;
 
       // Coupon Discount Calculation
       // subTotalPrice - coupondiscount = subTotalPrice  after coupon discount

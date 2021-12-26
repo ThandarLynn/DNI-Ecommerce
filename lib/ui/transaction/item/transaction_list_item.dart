@@ -78,9 +78,10 @@ class _TransactionNoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget _textWidget = Text(
-      'Transaction No : ${transaction.id}' ?? '-',
+      'Transaction No : ${transaction.totalItemAmount}' ?? '-',
       textAlign: TextAlign.left,
       style: Theme.of(context).textTheme.subtitle2,
+      overflow: TextOverflow.ellipsis,
     );
 
     return Padding(
@@ -93,7 +94,8 @@ class _TransactionNoWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Row(
+          Expanded(
+              child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               const Icon(
@@ -105,7 +107,7 @@ class _TransactionNoWidget extends StatelessWidget {
               ),
               _textWidget,
             ],
-          ),
+          )),
           IconButton(
             icon: const Icon(Icons.content_copy),
             iconSize: 24,

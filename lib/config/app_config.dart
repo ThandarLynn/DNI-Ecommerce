@@ -94,5 +94,5 @@ class AppConfig {
   ///
   static const String dateFormat = 'dd-MM-yyyy hh:mm:ss';
 
-  static const String overTaxValue = '0.03';
+  static const String overTaxValue = '0.01';
 }
