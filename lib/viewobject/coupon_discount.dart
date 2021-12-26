@@ -1,5 +1,3 @@
-import 'package:quiver/core.dart';
-
 import 'common/app_object.dart';
 
 class CouponDiscount extends AppObject<CouponDiscount> {
@@ -28,14 +26,6 @@ class CouponDiscount extends AppObject<CouponDiscount> {
   String updatedUserId;
   String addedDateStr;
   String updatedFlag;
-
-  @override
-  bool operator ==(dynamic other) => other is CouponDiscount && id == other.id;
-
-  @override
-  int get hashCode {
-    return hash2(id.hashCode, id.hashCode);
-  }
 
   @override
   String getPrimaryKey() {

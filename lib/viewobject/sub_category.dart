@@ -1,5 +1,4 @@
 import 'package:dni_ecommerce/viewobject/common/app_object.dart';
-import 'package:quiver/core.dart';
 import 'default_icon.dart';
 
 class SubCategory extends AppObject<SubCategory> {
@@ -27,12 +26,6 @@ class SubCategory extends AppObject<SubCategory> {
   String updatedFlag;
   String addedDateStreet;
   DefaultIcon defaultIcon;
-
-  @override
-  bool operator ==(dynamic other) => other is SubCategory && id == other.id;
-
-  @override
-  int get hashCode => hash2(id.hashCode, id.hashCode);
 
   @override
   String getPrimaryKey() {

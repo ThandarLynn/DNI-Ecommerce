@@ -1,5 +1,4 @@
 import 'package:dni_ecommerce/viewobject/common/app_object.dart';
-import 'package:quiver/core.dart';
 
 class ShippingMethod extends AppObject<ShippingMethod> {
   ShippingMethod({
@@ -30,13 +29,6 @@ class ShippingMethod extends AppObject<ShippingMethod> {
   String isPublished;
   String currencySymbol;
   String currencyShortForm;
-  @override
-  bool operator ==(dynamic other) => other is ShippingMethod && id == other.id;
-
-  @override
-  int get hashCode {
-    return hash2(id.hashCode, id.hashCode);
-  }
 
   @override
   String getPrimaryKey() {

@@ -1,4 +1,3 @@
-import 'package:quiver/core.dart';
 import 'common/app_object.dart';
 
 class ItemColor extends AppObject<ItemColor> {
@@ -20,12 +19,6 @@ class ItemColor extends AppObject<ItemColor> {
   String updatedDate;
   String updatedUserId;
   String updatedFlag;
-
-  @override
-  bool operator ==(dynamic other) => other is ItemColor && id == other.id;
-
-  @override
-  int get hashCode => hash2(id.hashCode, id.hashCode);
 
   @override
   String getPrimaryKey() {

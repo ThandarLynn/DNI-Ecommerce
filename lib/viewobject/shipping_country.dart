@@ -1,4 +1,4 @@
-import 'package:quiver/core.dart';
+
 
 import 'common/app_object.dart';
 
@@ -24,14 +24,6 @@ class ShippingCountry extends AppObject<ShippingCountry> {
   String updatedUserId;
   String updatedFlag;
   String addedDateStr;
-
-  @override
-  bool operator ==(dynamic other) => other is ShippingCountry && id == other.id;
-
-  @override
-  int get hashCode {
-    return hash2(id.hashCode, id.hashCode);
-  }
 
   @override
   String getPrimaryKey() {

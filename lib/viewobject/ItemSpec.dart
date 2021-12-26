@@ -1,4 +1,3 @@
-import 'package:quiver/core.dart';
 import 'common/app_object.dart';
 
 class ProductSpecification extends AppObject<ProductSpecification> {
@@ -22,13 +21,6 @@ class ProductSpecification extends AppObject<ProductSpecification> {
   String updatedDate;
   String updatedUserId;
   String updatedFlag;
-
-  @override
-  bool operator ==(dynamic other) =>
-      other is ProductSpecification && id == other.id;
-
-  @override
-  int get hashCode => hash2(id.hashCode, id.hashCode);
 
   @override
   String getPrimaryKey() {
