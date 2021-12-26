@@ -34,16 +34,16 @@ dependencies:
   
   dynamic_theme : 
     path: packages/dynamic_theme
-  # flutter_map: 
-  #   path: packages/flutter_map  
+  flutter_map: 
+    path: packages/flutter_map  
   optimized_cached_image: 
     path: packages/optimized_cached_image  
-  # multi_image_picker: 
-  #   path: packages/multi_image_picker
+  multi_image_picker: 
+    path: packages/multi_image_picker
   easy_localization: 
     path: packages/easy_localization
-  # latlong:
-  #   path: packages/latlong
+  latlong:
+    path: packages/latlong
   flutter_widget_from_html: 0.6.0-rc.2021031201 
   sembast: 3.0.0+4
   path_provider: 2.0.1
@@ -52,8 +52,8 @@ dependencies:
   url_launcher: 6.0.2
   carousel_slider: 3.0.0
   firebase_core: 1.0.1
-  # firebase_messaging: 9.0.0
-  # firebase_database: 6.1.0
+  firebase_messaging: 9.0.0
+  firebase_database: 6.1.0
   firebase_auth: 1.0.1
   photo_view: 0.10.3
   progress_dialog: 1.2.4
@@ -105,9 +105,6 @@ flutter:
    - assets/images/delivery_car_img.png
    - assets/images/trending.png
    - assets/images/user_default_photo.png
-   - assets/json/shipping_country.json
-   - assets/json/shipping_city.json
-   - assets/json/shipping_method.json
    
 
   # An image asset can refer to one or more resolution-specific "variants", see
