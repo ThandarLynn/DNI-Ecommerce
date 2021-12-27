@@ -13,6 +13,7 @@ import 'package:dni_ecommerce/repository/user_repository.dart';
 import 'package:dni_ecommerce/ui/basket/list/basket_list_view.dart';
 import 'package:dni_ecommerce/ui/category/category_list_view.dart';
 import 'package:dni_ecommerce/ui/common/dialog/confirm_dialog_view.dart';
+// import 'package:dni_ecommerce/ui/common/share_app_dialog.dart';
 import 'package:dni_ecommerce/ui/contact/contact_us_view.dart';
 import 'package:dni_ecommerce/ui/dashboard/home/home_dashboard_view.dart';
 import 'package:dni_ecommerce/ui/favourite/favorite_list_view.dart';
@@ -564,26 +565,28 @@ class _HomeViewState extends State<DashboardView>
                   //       Navigator.pop(context);
                   //       updateSelectedIndexWithAnimation(title, index);
                   //     }),
-                  ListTile(
-                    leading: Icon(
-                      Icons.share,
-                      color: AppColors.mainColorWithWhite,
-                    ),
-                    title: Text(
-                      Utils.getString('home__menu_drawer_share_this_app'),
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                    onTap: () {
-                      Navigator.pop(context);
-                      if (Platform.isIOS) {
-                        Utils.launchAppStoreURL(
-                            iOSAppId: AppConfig.iOSAppStoreId,
-                            writeReview: true);
-                      } else {
-                        Utils.launchURL();
-                      }
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: Icon(
+                  //     Icons.share,
+                  //     color: AppColors.mainColorWithWhite,
+                  //   ),
+                  //   title: Text(
+                  //     Utils.getString('home__menu_drawer_share_this_app'),
+                  //     style: Theme.of(context).textTheme.bodyText2,
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.pop(context);
+                  //     showDialog<dynamic>(
+                  //         context: context,
+                  //         builder: (BuildContext context) {
+                  //           return ShareAppDialog(
+                  //             onPressed: () {
+                  //               Navigator.pop(context, true);
+                  //             },
+                  //           );
+                  //         });
+                  //   },
+                  // ),
                   ListTile(
                     leading: Icon(
                       Icons.star_border,
