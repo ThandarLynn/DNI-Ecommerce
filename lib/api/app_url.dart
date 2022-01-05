@@ -66,7 +66,7 @@ class AppUrl {
 
   static const String app_shop_info_url = 'rest/shops/get_shop_info';
 
-  static const String app_bloglist_url = 'homeslider';
+  static const String app_bloglist_url = 'products/lproducts';
 
   static const String app_transactionList_url = 'userOrders';
 

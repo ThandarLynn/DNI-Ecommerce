@@ -10,6 +10,24 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'common/app_resource.dart';
 import 'common/app_status.dart';
 
+void main(){
+  String dateTime = '2020-02-03T08:30:00.000Z';
+  int year = 2020;
+  int month = 2;
+  int day = 3;
+  int hour = 8;
+  int minute = 30;
+
+  var dt = DateTime(year,month,day,hour,minute);
+  print(dt);
+
+  print(DateTime.parse(dateTime).isAtSameMomentAs(dt));
+
+  // 2020-02-03 08:30:00.000Z
+  // 2020-02-03 08:30:00.000Z
+  // true
+}
+
 abstract class AppApi {
   AppResource<T> appObjectConvert<T>(dynamic dataList, T data) {
     return AppResource<T>(dataList.status, dataList.message, data);
